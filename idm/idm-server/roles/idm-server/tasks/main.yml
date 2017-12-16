@@ -1,0 +1,94 @@
+---
+- name: uninstall idm client if it exists
+  command: ipa-client-install --uninstall
+  ignore_errors: yes
+
+- name: set the hostname to the defined hostname
+  command: hostnamectl set-hostname "{{ hostname }}"
+
+- name: enable the RHEL Server repo required for IdM
+  command: subscription-manager repos --enable=rhel-7-server-rpms
+
+# this ensures we have the latest firewalld to pick up our services definitions
+- name: Update the system... this may take a while...
+  yum:
+    name: '*'
+    state: latest
+
+- name: Install IdM packages
+  yum: 
+    name: ipa-server 
+    state: latest
+
+- name: Install IdM DNS packages
+  yum:
+    name: ipa-server-dns
+    state: latest
+  when: setupdns == true
+
+- name: uninstall IdM server if it already exists - this is destructive.
+  command: ipa-server-install --uninstall --unattended
+
+- name: generating idm install options - home directories
+  set_fact: idmserveropts="--mkhomedir"
+  when: makehomedir == true
+
+- name: generating idm install options - host lookup
+  set_fact: idmserveropts="{{ idmserveropts }} --no-host-dns"
+  when: nodnshost == true
+
+- name: generating idm install options - ssh options
+  set_fact: idmserveropts="{{ idmserveropts }} --ssh-trust-dns"
+  when: sshtrustdns == true
+
+- name: generating idm install options - dns setup
+  set_fact: idmserveropts="{{ idmserveropts }} --setup-dns"
+  when: setupdns == true
+
+- name: generating idm install options - reverse lookup zones
+  set_fact: idmserveropts="{{ idmserveropts }} --auto-reverse"
+  when: autoreversedns == true
+
+- name: generating idm install options - dns forwarders
+  set_fact: idmserveropts="{{ idmserveropts }} --forwarder={{ item }}"
+  with_items: "{{ dnsforwarders }}"
+
+- name: generating idm install options - dns forwarding policy
+  set_fact: idmserveropts="{{ idmserveropts }} --forward-policy=only"
+  when: dnsforwardonly == true
+
+# This requires that the installation was previsously run to generate a CSR to be 
+# signed by the external signing authority and that the external-cert-file exists
+
+- name: if the externally signed cert exists, create the target directory
+  file:
+    state: directory
+    dest: "{{ externalcacertfiledestdir }}"
+  when: useextrernalcert == true 
+
+- name: if the externally signed cert exists copy it to the target
+  copy:
+    src: "{{ externalcacertfilesrc }}"
+    dest: "{{ externalcacertfiledest }}"
+    owner: root
+    group: root
+    mode: 0700
+  when: useextrernalcert == true
+
+- name: generating idm install options - use externally signed certificate
+  set_fact: idmserveropts="{{ idmserveropts }} --external-cert-file={{ externalcacertfiledest }}"
+  when: useextrernalcert == true
+
+- name: install idm with the following options...
+  debug:
+    msg: '{{ idmserveropts }}'
+
+- name: Configure IdM - this takes about 10 minutes - coffee time...
+  command: ipa-server-install -U --hostname={{ inventory_hostname }} --domain={{ domainname }} --realm={{ realmname }}  -a {{ idm_admin_password }} -p {{ dirserv_password }} {{ idmserveropts }}
+
+- import_tasks: idm_firewall.yml
+- import_tasks: add_std_user_groups.yml
+- import_tasks: add_std_users.yml
+- import_tasks: add_std_sudo_rules.yml
+- import_tasks: add_std_hbac_rules.yml
+
