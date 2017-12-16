@@ -1,0 +1,216 @@
+---
+# Common OCP Preparation play
+#
+
+  - name: refresh the subscription
+    command: subscription-manager refresh
+
+  - name: disable all existing repos
+    command: subscription-manager repos --disable=*
+
+  - name: enable Satellite tools rpms
+    command: subscription-manager repos --enable=rhel-7-server-satellite-tools-6.2-rpms
+
+  - name: enable RHEL server rpms
+    command: subscription-manager repos --enable=rhel-7-server-rpms
+
+  - name: enable RHEL extras rpms
+    command: subscription-manager repos --enable=rhel-7-server-extras-rpms
+  
+  - name: enable gluster server rpms
+    command: subscription-manager repos --enable=rh-gluster-3-for-rhel-7-server-rpms
+
+  - name: enable openshift container platform rpms
+    command: subscription-manager repos --enable=rhel-7-server-ose-3.6-rpms
+
+  - name: enable fast datapath rpms
+    command: subscription-manager repos --enable=rhel-7-fast-datapath-rpms
+    
+  - name: clean up yum repo info
+    command: yum clean all
+
+  - name: delete any stale yum cache
+    command: rm -rf /var/cache/yum
+
+# install utilities required
+#
+
+# Tower is generating wierd erros installing wget. seems to be interpreting w as a unicode (wide) character identifier
+#  - name: install utilities required wget
+#    yum:
+#      name: wget
+#      state: latest
+
+  - name: install utilities required git
+    yum:
+      name: git
+      state: latest
+
+  - name: install utilities required net-tools
+    yum:
+      name: net-tools
+      state: latest
+
+  - name: install utilities required bind-utils
+    yum:
+      name: bind-utils
+      state: latest
+
+  - name: install utilities required iptables-services
+    yum:
+      name: iptables-services
+      state: latest
+
+  - name: install utilities required bridge-utils
+    yum:
+      name: bridge-utils
+      state: latest
+
+  - name: install utilities required bash-completion
+    yum:
+      name: bash-completion
+      state: latest
+
+  - name: install utilities required httpd-tools
+    yum:
+      name: httpd-tools
+      state: latest
+
+  - name: install utilities required cns-deploy
+    yum:
+      name: cns-deploy
+      state: latest
+
+  - name: install utilities required heketi-client
+    yum:
+      name: heketi-client
+      state: latest
+
+  - name: install utilities required kexec-tools
+    yum:
+      name: kexec-tools
+      state: latest
+
+  - name: install utilities required sos
+    yum:
+      name: sos
+      state: latest
+
+  - name: install utilities required psacct
+    yum:
+      name: psacct
+      state: latest
+
+  - name: disable gluster server rpms
+    command: subscription-manager repos --disable=rh-gluster-3-for-rhel-7-server-rpms
+
+  - name: update the system
+    yum: 
+      name: '*'
+      state: latest
+
+  - name: Install openshift utils atomic-openshift-utils
+    yum:
+      name: atomic-openshift-utils
+      state: latest
+ 
+  - name: Install openshift utils atomic-openshift-excluder
+    yum:
+      name: atomic-openshift-excluder
+      state: latest
+
+  - name: Install openshift utils atomic-openshift-docker-excluder
+    yum:
+      name: atomic-openshift-docker-excluder
+      state: latest
+
+ 
+  # install and configure docker
+
+  - name: Install docker
+    yum:
+      name: docker
+      state: latest
+
+  # modify the docker configuration
+  - name: create the config folder
+    file:
+      path: /etc/systemd/system/docker.service.d
+      state: directory
+
+  - name: modify the docker configuration
+    lineinfile:
+      path: /etc/sysconfig/docker  
+      regexp: 'OPTIONS=.*'
+      line: 'OPTIONS="--selinux-enabled --insecure-registry 172.30.0.0/16 --log-opt max-size=1M --log-opt max-file=3"'
+  
+  - name: create the proxy config file
+    file:
+      dest: /etc/systemd/system/docker.service.d/https-proxy.conf
+      state: touch
+    when: docker_proxy == true
+
+  - name: configure the root environment for proxy
+    template:
+      src: docker-service-proxy.j2
+      dest: /etc/systemd/system/docker.service.d/https-proxy.conf
+    when: docker_proxy == true
+
+
+  # for docker storage using gluster
+  - name: set fusefs on
+    seboolean:
+      name: virt_sandbox_use_fusefs
+      persistent: yes
+      state: yes
+
+  - name: write the docker storage configuration
+    template:
+      src: docker-storage-setup.j2
+      dest: /etc/sysconfig/docker-storage-setup
+      owner: root
+      group: root
+      mode: 0744
+
+  - name: docker storage setup
+    command: docker-storage-setup
+
+  # start docker and re-initialize
+  - name: stop docker 
+    systemd:
+      name: docker
+      enabled: yes
+      state: stopped
+
+  - name: reinitialize docker
+    command: rm -rf /var/lib/docker/*
+
+  - name: start docker 
+    systemd:
+      name: docker
+      enabled: yes
+      state: started
+
+# While we are at it, lets pull the required docker images
+
+  - name: pull the ose-deployer image
+    command: docker pull registry.access.redhat.com/openshift3/ose-deployer
+    when: ocpdeploy_pull_installer_images == true
+
+  - name: pull the ose-docker-registry image
+    command: docker pull registry.access.redhat.com/openshift3/ose-docker-registry
+    when: ocpdeploy_pull_installer_images == true
+
+  - name: pull the ose-haproxy-router image
+    command: docker pull registry.access.redhat.com/openshift3/ose-haproxy-router
+    when: ocpdeploy_pull_installer_images == true
+
+  - name: pull the ose-pod image
+    command: docker pull registry.access.redhat.com/openshift3/ose-pod
+    when: ocpdeploy_pull_installer_images == true
+
+  - name: pull the registry-console image
+    command: docker pull registry.access.redhat.com/openshift3/registry-console
+    when: ocpdeploy_pull_installer_images == true
+
+

@@ -1,0 +1,6 @@
+# manually create host inventory for RHV
+[service_targets]
+rhv5.parmstrong.ca
+rhv6.parmstrong.ca
+rhv7.parmstrong.ca
+rhv8.parmstrong.ca

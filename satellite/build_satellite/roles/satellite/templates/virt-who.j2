@@ -1,0 +1,14 @@
+# Created by ansible
+[poc]
+type="{{ cr_type }}"
+server="{{ cr_controller_hostname }}"
+username="{{ cr_controller_username }}"
+encrypted_password="{{ cr_controller_encrypted_password }}"
+owner="{{ foreman_initial_organization }}"
+env=Library
+hypervisor_id=hostname
+rhsm_username=admin
+rhsm_encrypted_password="{{ foreman_admin_encrypted_password }}"
+rhsm_hostname="{{ ansible_hostname }}"
+rhsm_prefix=/rhsm
+

@@ -1,0 +1,10 @@
+---
+# Add the variables that we need to set for the roles
+#
+openshift_docker_device: ""
+openshift_docker_vgname: "vg_root"
+docker_proxy: false
+docker_https_proxy: ""
+docker_no_proxy_domains: ""
+ocpdeploy_pull_installer_images: false
+

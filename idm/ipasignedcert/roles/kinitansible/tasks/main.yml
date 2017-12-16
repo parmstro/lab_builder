@@ -1,0 +1,6 @@
+---
+# we are going to kinit the ansible user using a keytab
+# the keytab will have been deployed to the host or we will bomb out
+
+- name: initialize the ansible users kerberos session
+  command: "kint -kt {{ ansible_keytab }} ansible"

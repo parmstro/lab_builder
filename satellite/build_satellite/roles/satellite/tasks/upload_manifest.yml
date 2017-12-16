@@ -1,0 +1,13 @@
+---
+# This task copies the manifest from the ansible control host
+# and uploads it to the satellite to enable content
+#
+
+- name: Copy the manifest to the target Satellite server
+  copy:
+    src: "{{ manifest_source }}"
+    dest: "/root/manifest.zip"
+
+- name: Upload the manifest to Satellite
+  command: "hammer subscription upload --file=/root/manifest.zip --organization={{ foreman_initial_organization }}"
+

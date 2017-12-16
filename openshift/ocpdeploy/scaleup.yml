@@ -1,0 +1,19 @@
+# Playbook to run the scaleup play on the OpenShift master
+#
+
+- name: Run the OpenShift Installer on the Master node
+  hosts: openshift_deployment_master
+    become: yes
+
+  tasks:
+  - name: launch the installer
+    command: ansible-playbook -i /etc/ocpdeploy/hosts /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-node/scaleup.yml
+
+  - name: move any new nodes to the standard configuration locations in the hosts file.
+    template:
+      src: ./role/master/templates/ocpafterscaleup.j2
+      dest: /etc/ocpdeploy/hosts
+      owner: root
+      group: root
+      mode: 0744
+

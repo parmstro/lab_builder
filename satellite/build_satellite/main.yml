@@ -1,0 +1,67 @@
+---
+- hosts: satellite-servers
+  vars:
+    redhat_org: "your_org_id_or_name_here"
+    activation_key: "activation_key_here"
+    cdn_proxy_hostname: ""
+    cdn_proxy_port: ""
+    cdn_proxy_username: ""
+    cdn_proxy_password: ""
+    katello_proxy_url: "{{ cdn_proxy_hostname }}"
+    katello_proxy_port: "{{ cdn_proxy_port }}"
+    katello_proxy_username: "{{ cdn_proxy_username }}"
+    katello_proxy_password: "{{ cdn_proxy_password }}"
+    install_idm_client: true
+    ipa_domain: "your_domain_here"
+    ipa_realm: "YOUR_DOMAIN_HERE_IN_CAPS"
+    ipa_server: "ipa_server_fqdn"
+    ipa_admin_password: "pass_as_environment"    
+    generate_certs: true
+    server_certs_dir: "/etc/ipa/private/"
+    server_prv_file: "{{ server_certs_dir }}{{ ansible_hostname }}.pem"
+    server_crt_file: "{{ server_certs_dir }}{{ ansible_hostname }}.crt"
+    server_key_file: "{{ server_certs_dir }}{{ ansible_hostname }}.key"
+    server_csr_file: "{{ server_certs_dir }}{{ ansible_hostname }}.csr"
+    server_ca_file: "/etc/ipa/ca.crt"
+    foreman_admin_email: "admin@{{ ipa_domain }}"
+    foreman_admin_firstname: "admin"
+    foreman_admin_lastname: "istrator"
+    foreman_admin_username: "admin"
+    satellite_server_url: "https://{{ ansible_hostname }}"
+    scenario: "satellite"
+    sat_firewalld_zone: "public"
+    enable_ec2: "true"
+    enable_gce: "true"
+    enable_libvirt: "true"
+    enable_openstack: "true"
+    enable_ovirt: "true"
+    enable_rackspace: "true"
+    enable_vmware: "true"
+    certs_cname: "{{ ansible_hostname }}"
+    certs_node: "{{ ansible_hostname }}"
+    certs_server_cert: "{{ server_crt_file }}"
+    certs_server_cert_req: "{{ server_csr_file }}"
+    certs_server_key: "{{ server_key_file }}"
+    certs_server_ca_cert: "{{ server_ca_file }}"
+    foreman_initial_location: "your_location_here"
+    foreman_initial_organization: "your_organization_here"
+    foreman_ipa_authentication: "true"
+    foreman_proxy_realm: "true"
+    foreman_proxy_keytab: "/etc/foreman-proxy/freeipa.keytab"
+    foreman_proxy_realm_principal: "realm-capsule"
+    foreman_proxy_realm_provider: "freeipa"
+    foreman_proxy_tftp: "true"
+    manifest_source: "ansible_control_host_path"
+    setup_hammer: true
+    setup_virtwho: true
+    setup_discovery: true
+    installer_cmdline: "satellite-installer"
+    cr_type: "esx"
+    cr_controller_hostname: "your_vcentre_server_here"
+    cr_controller_username: "read_only_admin_name"
+    cr_controller_password: "read_only_admin_password"   #This will be encrypted
+ 
+
+  roles:
+    - satellite
+

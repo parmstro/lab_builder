@@ -1,0 +1,12 @@
+[openshift_deployment_master]
+ocpmaster.parmstrong.ca
+
+[openshift_masters]
+ocpmaster.parmstrong.ca 
+
+[openshift_nodes]
+ocpmaster.parmstrong.ca region=infra zone=default schedulable=true
+ocpnode1.parmstrong.ca region=primary zone=east schedulable=true
+ocpnode2.parmstrong.ca region=primary zone=west schedulable=true
+ocpnode3.parmstrong.ca region=primary zone=east schedulable=true
+

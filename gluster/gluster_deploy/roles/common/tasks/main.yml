@@ -1,0 +1,5 @@
+---
+# main play for common role
+
+- import_tasks: repos.yml
+

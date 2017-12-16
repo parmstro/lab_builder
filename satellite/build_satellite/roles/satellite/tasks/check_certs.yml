@@ -1,0 +1,7 @@
+---
+# Call katello-check-certs to verify the certs we just created.
+#
+
+- name: Checking the certificates for Satellite
+  command: katello-certs-check -c {{ server_crt_file }} -k {{ server_key_file }} -r {{ server_csr_file }} -b {{ server_ca_file }}
+

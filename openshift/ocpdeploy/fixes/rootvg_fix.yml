@@ -1,0 +1,26 @@
+# This playbook prepares the nodes  for the 
+# deployment of openshift on the hosts
+# defined in the specified inventory  
+
+ - name: ensure there is enough space in vg_root
+   hosts: openshift_masters
+   become: yes
+
+   tasks:
+
+   - name: add the pv
+     command: pvcreate /dev/sdb
+
+   - name: extend vg_root onto the device
+     command: vgextend vg_root /dev/sdb
+
+   - name: extend lv_root in vg_root
+     command: lvextend -r -L 50GB /dev/vg_root/lv_root
+
+   - name: determine the free space in root
+     command: df -h 
+     register: result
+
+   - name: display the free space in root
+     debug:
+       msg: "{{ result.stdout }}"

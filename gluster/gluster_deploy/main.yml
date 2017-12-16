@@ -1,0 +1,10 @@
+# Lets deploy gluster
+#
+
+- name: Deploy apply common role to gluster cluster nodes
+  hosts: gluster_nodes
+  become: yes
+
+  roles:
+  - common
+  

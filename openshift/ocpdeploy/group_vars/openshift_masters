@@ -1,0 +1,51 @@
+# basic variables for the deployment hosts file
+ssh_user: root
+master_default_subdomain: ocp.parmstrong.ca
+deployment_type: openshift-enterprise
+
+# select the authentication method currently htpasswd OR ldap
+ocpdeploy_auth_method: htpasswd
+
+# if ldap you need these parameters
+# this is just a name - I set it to my realm name
+# the ocpdeploy template is set to manage an IDM instance 
+# if you are using a different ldap you *may* have to modify the attributes
+ocpdeploy_ldap_provider_name: "PARMSTRONG.CA" 
+
+# this user and password needs to be configured in IdM
+# the user is a read-only user with minimal privilege
+ocpdeploy_bind_dn: "uid=bindquery,cn=users,cn=accounts,dc=parmstrong,dc=ca"
+ocpdeploy_bind_password: query123
+ocpdeploy_ca_crt_path: /etc/ipa/ca.crt
+
+# this is the query url used to connect to IdM via ldap
+# ldaps://idm.myorg.com/ou=accounts,ou=users,dc=myorg,dc=com?uid
+ocpdeploy_ldap_url: ldap://idm.parmstrong.ca/cn=users,cn=accounts,dc=parmstrong,dc=ca?uid
+
+ocpdeploy_enable_service_catalog: false
+
+# These variables will set the proxy globally for openshift and docker
+# The last variable tell the installer to auto generate the no_proxy hosts for the cluster
+ocpdeploy_http_proxy: ""
+ocpdeploy_https_proxy: ""
+ocpdeploy_no_proxy: ""
+openshift_generate_no_proxy_hosts: true
+
+# Only provide values here if you are building with external objects that need proxying
+# and you use a different proxy than specified above or you need to add no_proxy hosts for builds
+ocpdeploy_builddefaults_http_proxy: ""
+ocpdeploy_builddefaults_https_proxy: ""
+ocpdeploy_builddefaults_no_proxy: ""
+
+# Only provide values here if you are deploying an internal git server (e.g. GitLab)
+# and you use a different proxy or you need to add no_proxy hosts for git
+ocpdeploy_git_http_proxy: ""
+ocpdeploy_git_https_proxy: ""
+ocpdeploy_git_no_proxy: ""
+
+# this is only for POC use. Don't use NFS for metrics or logging in production
+# # this will be replaced with gluster when I add gluster support to the POC
+nfs_server_hostname: diskstation.parmstrong.ca
+nfs_server_directory: /volume1/openshift
+nfs_server_metrics_volume: metrics
+nfs_server_logging_volume: logging

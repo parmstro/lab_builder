@@ -1,0 +1,68 @@
+---
+# Register the satellite server and configure repositories
+#
+- name: Determine if we are registered to a Satellite or the CDN
+  command: subscription-manager status
+  register: result
+
+- name: Force unregister from existing Satellite or the CDN
+  command: /usr/bin/subscription-manager unregister
+  when: "result.stdout_lines.3 == 'Overall Status: Current'"
+
+- name: Swap out the rhsm.conf file for one that points to Red Hat CDN
+  template:
+    src: "../templates/rhsm.j2"
+    dest: "/etc/rhsm/rhsm.conf"
+    backup: yes
+
+- name: Restart the rhsmcertd daemon
+  service:
+    name: rhsmcertd
+    state: restarted
+
+- name: Register the server to the Red Hat Network using an activation key
+  redhat_subscription:
+    state: present
+    org_id: "{{ redhat_org }}"
+    activationkey: "{{ activation_key }}"
+    rhsm_baseurl: "https://cdn.redhat.com"
+    server_hostname: "subscription.rhsm.redhat.com"
+    server_proxy_hostname: "{{ cdn_proxy_hostname }}"
+    server_proxy_port: "{{ cdn_proxy_port }}"
+    server_proxy_user: "{{ cdn_proxy_username }}"
+    server_proxy_password: "{{ cdn_proxy_password }}"
+    force_register: yes
+
+
+- name: Disable all exiting repositories
+  command: subscription-manager repos --disable=*
+
+- name: Enable the RHEL 7 Server repository
+  command: subscription-manager repos --enable=rhel-7-server-rpms
+
+- name: Enable the RHEL Software Collections repository
+  command: subscription-manager repos --enable=rhel-server-rhscl-7-rpms
+
+- name: Enable the RHEL Optional RPMs Repository
+  command: subscription-manager repos --enable=rhel-7-server-optional-rpms
+
+- name: Enable the Satellite 6.2 RPMs Repository
+  command: subscription-manager repos --enable=rhel-7-server-satellite-6.2-rpms
+
+- name: Ensure the release is not set
+  command: subscription-manager release --unset
+
+- name: Clean the yum metadata
+  command: yum clean all
+
+- name: Update the system
+  yum:
+    name: '*'
+    state: latest
+
+- name: Install the Satellite RPM packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - satellite

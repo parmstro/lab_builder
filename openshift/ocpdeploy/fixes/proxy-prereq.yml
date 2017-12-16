@@ -1,0 +1,46 @@
+# This playbook prepares the nodes  for the 
+# deployment of openshift on the hosts
+# defined in the specified inventory  
+
+ - name: use proxy access to download docker image prerequisites 
+   hosts: openshift_nodes
+   become: yes
+
+   tasks:
+
+   - name: create the proxy config file
+     file:
+       dest: /etc/systemd/system/docker.service.d/https-proxy.conf
+       state: touch
+
+   - name: configure the root environment for proxy
+     lineinfile:
+       path: /etc/systemd/system/docker.service.d/https-proxy.conf
+       line: "[Service]"
+
+   - name: configure the root environment for proxy
+     lineinfile:
+       path: /etc/systemd/system/docker.service.d/https-proxy.conf
+       line: "Environment=\"HTTPS_PROXY=https://curluser:curlpassword@proxy2.gonet.gov.on.ca:3128\" \"NO_PROXY=localhost,127.0.0.1,docker-registry-default.ocp.its-rh-poc.net\""
+
+   - name: start docker
+     service:
+       name: docker
+       state: started
+
+   - name: pull the ose-deployer image
+     command: docker pull registry.access.redhat.com/openshift3/ose-deployer
+
+   - name: pull the ose-docker-registry image
+     command: docker pull registry.access.redhat.com/openshift3/ose-docker-registry
+
+   - name: pull the ose-haproxy-router image
+     command: docker pull registry.access.redhat.com/openshift3/ose-haproxy-router
+
+   - name: pull the ose-pod image
+     command: docker pull registry.access.redhat.com/openshift3/ose-pod
+
+   - name: pull the registry-console image
+     command: docker pull registry.access.redhat.com/openshift3/registry-console
+
+     

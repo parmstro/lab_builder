@@ -1,0 +1,48 @@
+- name: Install required libraries
+  package:
+    name: python-pyOpenSSL
+    state: present
+
+- name: Generate private key
+  openssl_privatekey:
+    path: "{{ private_key_path }}"
+    passphrase: "{{ passphrase }}"
+    cipher: "{{ cipher }}"
+    size: "{{ size }}"
+    force: false
+    type: RSA
+    state: present
+
+- name: Generate public key
+  openssl_publickey:
+    path: "{{ public_key_path }}"
+    privatekey_path: "{{ privatekey_path }}"
+    privatekey_passphrase: "{{ passphrase }}"
+    format: "{{ format }}"
+    state: present
+
+- name: Generate csr
+  openssl_csr:
+    path: "{{ csr_path }}"
+    privatekey_path: "{{ privatekey_path }}"
+    privatekey_passphrase: "{{ passphrase }}"
+    state: present
+    commonName: "{{ ansible_hostname }}"
+    emailAddress: "{{ emailAddress }}"
+    organizationName: "{{ organizationName }}"
+    organizationalUnitName: "{{ organizationUnitName }}"
+    countryName: "{{ countryName }}"
+    stateOrProvinceName: "{{ stateOrProvinceName }}"
+    localityName: "{{ localityName }}"
+    digest: "{{ digest }}"
+    subjectAltName: "DNS:{{ ansible_hostname }}"
+    subjectAltName_critical: true
+
+- name: Add the service to IPA
+  command: "ipa service-add {{ principal }}"
+
+- name: Have IPA sign the certificate for the service
+  command: "ipa cert-request --add --principal={{ principal }} {{ csr_path }} | grep -i 'Serial number:'| awk '{gsub(\" Serial number: \",\"\"); print $1}'  | ipa cert-show --out={{ crt_path }}"
+
+- name: Retrieve the keytab for the service
+  command: "pa-getkeytab -s {{ ipa_server }} -p {{ principal }} -k {{ keytab_path }}"
