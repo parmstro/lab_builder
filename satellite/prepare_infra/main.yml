@@ -1,0 +1,16 @@
+# Apply the domain, realm and subnet roles to our Satellite server.
+#
+---
+- name: Add the domain, realm and subnet to our Satellite
+
+  hosts: satellite
+  vars:
+    sat_organization: RedHatCanada
+    sat_location: Hespeler
+  
+  roles:
+    - capsule_domain
+    - capsule_realm
+    - capsule_subnet
+    - capsule_compute_resource
+    - capsuel_compute_profile 

@@ -1,0 +1,44 @@
+---
+
+- name: pull the ose-docker-registry image
+  command: "docker pull registry.access.redhat.com/openshift3/ose-docker-registry:v3.6.173.0.49"
+
+- name: pull the ose-pod image
+  command: "docker pull registry.access.redhat.com/openshift3/ose-pod:v3.6.173.0.49"
+
+- name: pull the ose-sti-builder image
+  command: "docker pull registry.access.redhat.com/openshift3/ose-sti-builder:v3.6.173.0.49"
+
+- name: pull the registry-console image
+  command: "docker pull registry.access.redhat.com/openshift3/registry-console:v3.6"
+
+- name: pull the registry-console image
+  command: "docker pull registry.access.redhat.com/openshift3/logging-kibana:v3.6"
+
+- name: pull the registry-console image
+  command: "docker pull registry.access.redhat.com/openshift3/logging-elasticsearch:v3.6"
+
+- name: pull the registry-console image
+  command: "docker pull registry.access.redhat.com/openshift3/logging-fluentd:v3.6"
+
+- name: pull the registry-console image
+  command: "docker pull registry.access.redhat.com/openshift3/logging-auth-proxy:v3.6"
+
+- name: pull the registry-console image
+  command: "docker pull registry.access.redhat.com/openshift3/logging-curator:v3.6"
+
+- name: pull the registry-console image
+  command: "docker pull registry.access.redhat.com/openshift3/metrics-cassandra:v3.6"
+
+- name: pull the registry-console image
+  command: "docker pull registry.access.redhat.com/openshift3/metrics-hawkular-metrics:v3.6"
+
+- name: pull the registry-console image
+  command: "docker pull registry.access.redhat.com/openshift3/metrics-heapster:v3.6"
+
+- name: pull the registry-console image
+  command: "docker pull registry.access.redhat.com/rhscl/postgresql-95-rhel7 "
+
+- name: pull the registry-console image
+  command: "docker pull registry.access.redhat.com/rhscl/php-70-rhel7"
+

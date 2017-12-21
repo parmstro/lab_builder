@@ -29,3 +29,13 @@
       group: root
       mode: 0744
 
+
+  - name: pull the ose-deployer image
+    command: "docker pull registry.access.redhat.com/openshift3/ose-deployer:v3.6.173.0.49"
+    when: ocpdeploy_pull_installer_images == true
+
+  - name: pull the ose-haproxy-router image
+    command: "docker pull registry.access.redhat.com/openshift3/ose-haproxy-router:v3.6.173.0.49"
+    when: ocpdeploy_pull_installer_images == true
+
+

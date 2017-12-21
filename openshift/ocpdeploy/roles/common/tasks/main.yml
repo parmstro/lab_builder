@@ -193,24 +193,7 @@
 
 # While we are at it, lets pull the required docker images
 
-  - name: pull the ose-deployer image
-    command: docker pull registry.access.redhat.com/openshift3/ose-deployer
-    when: ocpdeploy_pull_installer_images == true
-
-  - name: pull the ose-docker-registry image
-    command: docker pull registry.access.redhat.com/openshift3/ose-docker-registry
-    when: ocpdeploy_pull_installer_images == true
-
-  - name: pull the ose-haproxy-router image
-    command: docker pull registry.access.redhat.com/openshift3/ose-haproxy-router
-    when: ocpdeploy_pull_installer_images == true
-
-  - name: pull the ose-pod image
-    command: docker pull registry.access.redhat.com/openshift3/ose-pod
-    when: ocpdeploy_pull_installer_images == true
-
-  - name: pull the registry-console image
-    command: docker pull registry.access.redhat.com/openshift3/registry-console
+  - include_tasks: pull-docker-images.yml
     when: ocpdeploy_pull_installer_images == true
 
 
