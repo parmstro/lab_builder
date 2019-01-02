@@ -8,17 +8,19 @@
     state: latest
 
 - name: Ensure that iptables is not installed
-  service:
+  systemd:
     name: iptables
     state: stopped
     enabled: no
+    masked: yes
   ignore_errors: true
 
 - name: Ensure that the Firewalld service is enabled and running
-  service:
+  systemd:
     name: firewalld
     state: started
     enabled: yes
+    masked: no
 
 - name: Configure Firewalld services and ports for Satellite - HTTP
   firewalld:

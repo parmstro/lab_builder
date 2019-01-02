@@ -23,7 +23,7 @@
   register: result
 
 - set_fact:
-    is_success: {{ result.stdout }}
+    is_success: "{{ result.stdout }}"
 
 - debug:
     msg: "Success"

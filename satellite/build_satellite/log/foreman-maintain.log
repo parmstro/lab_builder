@@ -1,0 +1,638 @@
+# Logfile created on 2019-01-02 14:47:46 -0500 by logger.rb/41954
+I, [2019-01-02 14:47:46-0500 #21257]  INFO -- : Config file /usr/share/gems/gems/foreman_maintain-0.2.11/config/foreman_maintain.yml not found, using default configuration
+D, [2019-01-02 14:47:46-0500 #21257] DEBUG -- : Running command rpm -q satellite with stdin nil
+D, [2019-01-02 14:47:46-0500 #21257] DEBUG -- : output of the command:
+ satellite-6.4.1-1.el7sat.noarch
+D, [2019-01-02 14:47:46-0500 #21257] DEBUG -- : Running command rpm -q 'candlepin' with stdin nil
+D, [2019-01-02 14:47:46-0500 #21257] DEBUG -- : output of the command:
+ candlepin-2.4.8-1.el7.noarch
+D, [2019-01-02 14:47:46-0500 #21257] DEBUG -- : Running command rpm -q satellite with stdin nil
+D, [2019-01-02 14:47:46-0500 #21257] DEBUG -- : output of the command:
+ satellite-6.4.1-1.el7sat.noarch
+D, [2019-01-02 14:47:46-0500 #21257] DEBUG -- : Running command rpm -q 'foreman' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:47:46-0500 #21257] DEBUG -- : output of the command:
+ 1.18.0.39
+D, [2019-01-02 14:47:46-0500 #21257] DEBUG -- : Running command rpm -q 'tfm-rubygem-foreman_openscap' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : output of the command:
+ 0.10.3
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : Running command rpm -q 'foreman-proxy' with stdin nil
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : output of the command:
+ foreman-proxy-1.18.0.1-1.el7sat.noarch
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : Running command rpm -q 'foreman' with stdin nil
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : output of the command:
+ foreman-1.18.0.39-1.el7sat.noarch
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : Running command rpm -q 'ruby193-rubygem-foreman-tasks' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : output of the command:
+ package ruby193-rubygem-foreman-tasks is not installed
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : Running command rpm -q 'tfm-rubygem-foreman-tasks' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : output of the command:
+ 0.13.4.2
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : Running command rpm -q 'gofer' with stdin nil
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : output of the command:
+ package gofer is not installed
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : Running command rpm -q 'rubygem-hammer_cli' with stdin nil
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : output of the command:
+ package rubygem-hammer_cli is not installed
+D, [2019-01-02 14:47:47-0500 #21257] DEBUG -- : Running command rpm -q 'tfm-rubygem-hammer_cli' with stdin nil
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : output of the command:
+ tfm-rubygem-hammer_cli-0.13.1.1-1.el7sat.noarch
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : Running command rpm -q 'foreman-installer' with stdin nil
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : output of the command:
+ foreman-installer-1.18.0.2-1.el7sat.noarch
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : Running command rpm -q 'foreman-installer' with stdin nil
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : output of the command:
+ foreman-installer-1.18.0.2-1.el7sat.noarch
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : Running command rpm -q 'katello' with stdin nil
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : output of the command:
+ katello-3.7.0-8.el7sat.noarch
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : Running command rpm -q 'pulp-server' with stdin nil
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : output of the command:
+ pulp-server-2.16.4.1-1.el7sat.noarch
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : Running command rpm -q 'puppetserver' with stdin nil
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : output of the command:
+ puppetserver-5.3.1-1.el7sat.noarch
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : Running command rpm -q 'puppetserver' with stdin nil
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : output of the command:
+ puppetserver-5.3.1-1.el7sat.noarch
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : Running command rpm -q satellite with stdin nil
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : output of the command:
+ satellite-6.4.1-1.el7sat.noarch
+D, [2019-01-02 14:47:48-0500 #21257] DEBUG -- : Running command rpm -q 'satellite' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:47:49-0500 #21257] DEBUG -- : output of the command:
+ 6.4.1
+D, [2019-01-02 14:47:49-0500 #21257] DEBUG -- : Running command which scl with stdin nil
+D, [2019-01-02 14:47:49-0500 #21257] DEBUG -- : output of the command:
+ /usr/bin/scl
+D, [2019-01-02 14:47:49-0500 #21257] DEBUG -- : Running command which passenger-recycler with stdin nil
+D, [2019-01-02 14:47:49-0500 #21257] DEBUG -- : output of the command:
+ /usr/bin/passenger-recycler
+I, [2019-01-02 14:47:49-0500 #21257]  INFO -- : Running foreman-maintain command with arguments [["service", "restart"]]
+D, [2019-01-02 14:47:49-0500 #21257] DEBUG -- : Running command /usr/share/candlepin/cpdb --help |  grep -c '\-\-validate' with stdin nil
+D, [2019-01-02 14:47:49-0500 #21257] DEBUG -- : output of the command:
+ 2
+I, [2019-01-02 14:47:52-0500 #21257]  INFO -- : === Scenario 'preparation steps required to run the next scenarios' started ===
+I, [2019-01-02 14:47:52-0500 #21257]  INFO -- : --- Execution step 'Setup hammer' [hammer-setup] started ---
+D, [2019-01-02 14:47:52-0500 #21257] DEBUG -- : Running command systemctl status httpd with stdin nil
+D, [2019-01-02 14:47:52-0500 #21257] DEBUG -- : output of the command:
+ ● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 10:23:24 EST; 4h 24min ago
+     Docs: man:httpd(8)
+           man:apachectl(8)
+ Main PID: 6120 (httpd)
+   Status: "Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec"
+   CGroup: /system.slice/httpd.service
+           ├─6120 /usr/sbin/httpd -DFOREGROUND
+           ├─6141 (wsgi:pulp)     -DFOREGROUND
+           ├─6142 (wsgi:pulp)     -DFOREGROUND
+           ├─6143 (wsgi:pulp)     -DFOREGROUND
+           ├─6144 (wsgi:pulp-cont -DFOREGROUND
+           ├─6145 (wsgi:pulp-cont -DFOREGROUND
+           ├─6146 (wsgi:pulp-cont -DFOREGROUND
+           ├─6147 (wsgi:pulp_forg -DFOREGROUND
+           ├─6148 PassengerWatchdog
+           ├─6151 PassengerHelperAgent
+           ├─6159 PassengerLoggingAgent
+           ├─6166 /usr/sbin/httpd -DFOREGROUND
+           ├─6167 /usr/sbin/httpd -DFOREGROUND
+           ├─6168 /usr/sbin/httpd -DFOREGROUND
+           ├─6169 /usr/sbin/httpd -DFOREGROUND
+           ├─6170 /usr/sbin/httpd -DFOREGROUND
+           ├─6171 /usr/sbin/httpd -DFOREGROUND
+           ├─6172 /usr/sbin/httpd -DFOREGROUND
+           └─6173 /usr/sbin/httpd -DFOREGROUND
+
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: gofer.messaging.adapter.qpid.connection:INFO: open: URL: ssl://localhost|SSL: ca: /etc/pki/katello/certs/katello-default-ca.crt|key: None|certificate: /etc/pki/katello/qpid_client_striped.crt|host-validation: False
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: pulp.server.agent.direct.services:INFO: Task reply handler, started.
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: pulp.server.agent.direct.services:INFO: AMQP reply handler started
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: pulp.server.webservices.application:INFO: *************************************************************
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: pulp.server.webservices.application:INFO: The Pulp server has been successfully initialized
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: pulp.server.webservices.application:INFO: *************************************************************
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6142]: gofer.messaging.adapter.qpid.connection:INFO: opened: qpid+ssl://localhost:5671
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6142]: gofer.messaging.adapter.connect:INFO: connected: qpid+ssl://localhost:5671
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: gofer.messaging.adapter.qpid.connection:INFO: opened: qpid+ssl://localhost:5671
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: gofer.messaging.adapter.connect:INFO: connected: qpid+ssl://localhost:5671
+I, [2019-01-02 14:47:55-0500 #21257]  INFO -- : Hammer setup is not valid. Fixing configuration.
+D, [2019-01-02 14:47:55-0500 #21257] DEBUG -- : Running command hostname -f with stdin nil
+D, [2019-01-02 14:47:55-0500 #21257] DEBUG -- : output of the command:
+ sat6.labbuilder.ca
+D, [2019-01-02 14:47:55-0500 #21257] DEBUG -- : Running command hostname -f with stdin nil
+D, [2019-01-02 14:47:55-0500 #21257] DEBUG -- : output of the command:
+ sat6.labbuilder.ca
+I, [2019-01-02 14:47:55-0500 #21257]  INFO -- : Matching hostname was not found in hammer configs. Using https://sat6.labbuilder.ca/
+D, [2019-01-02 14:47:55-0500 #21257] DEBUG -- : Running command hostname -f with stdin nil
+D, [2019-01-02 14:47:55-0500 #21257] DEBUG -- : output of the command:
+ sat6.labbuilder.ca
+I, [2019-01-02 14:57:43-0500 #21257]  INFO -- : --- Execution step 'Setup hammer' finished ---
+I, [2019-01-02 14:57:43-0500 #21257]  INFO -- : foreman-maintain command finished with 
+I, [2019-01-02 14:57:57-0500 #22521]  INFO -- : Config file /usr/share/gems/gems/foreman_maintain-0.2.11/config/foreman_maintain.yml not found, using default configuration
+D, [2019-01-02 14:57:57-0500 #22521] DEBUG -- : Running command rpm -q satellite with stdin nil
+D, [2019-01-02 14:57:57-0500 #22521] DEBUG -- : output of the command:
+ satellite-6.4.1-1.el7sat.noarch
+D, [2019-01-02 14:57:57-0500 #22521] DEBUG -- : Running command rpm -q 'candlepin' with stdin nil
+D, [2019-01-02 14:57:57-0500 #22521] DEBUG -- : output of the command:
+ candlepin-2.4.8-1.el7.noarch
+D, [2019-01-02 14:57:57-0500 #22521] DEBUG -- : Running command rpm -q satellite with stdin nil
+D, [2019-01-02 14:57:57-0500 #22521] DEBUG -- : output of the command:
+ satellite-6.4.1-1.el7sat.noarch
+D, [2019-01-02 14:57:57-0500 #22521] DEBUG -- : Running command rpm -q 'foreman' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:57:57-0500 #22521] DEBUG -- : output of the command:
+ 1.18.0.39
+D, [2019-01-02 14:57:57-0500 #22521] DEBUG -- : Running command rpm -q 'tfm-rubygem-foreman_openscap' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : output of the command:
+ 0.10.3
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : Running command rpm -q 'foreman-proxy' with stdin nil
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : output of the command:
+ foreman-proxy-1.18.0.1-1.el7sat.noarch
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : Running command rpm -q 'foreman' with stdin nil
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : output of the command:
+ foreman-1.18.0.39-1.el7sat.noarch
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : Running command rpm -q 'ruby193-rubygem-foreman-tasks' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : output of the command:
+ package ruby193-rubygem-foreman-tasks is not installed
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : Running command rpm -q 'tfm-rubygem-foreman-tasks' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : output of the command:
+ 0.13.4.2
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : Running command rpm -q 'gofer' with stdin nil
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : output of the command:
+ package gofer is not installed
+D, [2019-01-02 14:57:58-0500 #22521] DEBUG -- : Running command rpm -q 'rubygem-hammer_cli' with stdin nil
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : output of the command:
+ package rubygem-hammer_cli is not installed
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : Running command rpm -q 'tfm-rubygem-hammer_cli' with stdin nil
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : output of the command:
+ tfm-rubygem-hammer_cli-0.13.1.1-1.el7sat.noarch
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : Running command rpm -q 'foreman-installer' with stdin nil
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : output of the command:
+ foreman-installer-1.18.0.2-1.el7sat.noarch
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : Running command rpm -q 'foreman-installer' with stdin nil
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : output of the command:
+ foreman-installer-1.18.0.2-1.el7sat.noarch
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : Running command rpm -q 'katello' with stdin nil
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : output of the command:
+ katello-3.7.0-8.el7sat.noarch
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : Running command rpm -q 'pulp-server' with stdin nil
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : output of the command:
+ pulp-server-2.16.4.1-1.el7sat.noarch
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : Running command rpm -q 'puppetserver' with stdin nil
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : output of the command:
+ puppetserver-5.3.1-1.el7sat.noarch
+D, [2019-01-02 14:57:59-0500 #22521] DEBUG -- : Running command rpm -q 'puppetserver' with stdin nil
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : output of the command:
+ puppetserver-5.3.1-1.el7sat.noarch
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : Running command rpm -q satellite with stdin nil
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : output of the command:
+ satellite-6.4.1-1.el7sat.noarch
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : Running command rpm -q 'satellite' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : output of the command:
+ 6.4.1
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : Running command which scl with stdin nil
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : output of the command:
+ /usr/bin/scl
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : Running command which passenger-recycler with stdin nil
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : output of the command:
+ /usr/bin/passenger-recycler
+I, [2019-01-02 14:58:00-0500 #22521]  INFO -- : Running foreman-maintain command with arguments [["service", "status"]]
+I, [2019-01-02 14:58:00-0500 #22521]  INFO -- : === Scenario 'Status Services' started ===
+I, [2019-01-02 14:58:00-0500 #22521]  INFO -- : --- Execution step 'Get status of applicable services' [service-status] started ---
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : Running command rpm -q 'foreman' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : output of the command:
+ 1.18.0.39
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : Running command rpm -q 'mongodb-server' with stdin nil
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : output of the command:
+ package mongodb-server is not installed
+D, [2019-01-02 14:58:00-0500 #22521] DEBUG -- : Running command rpm -q 'mongodb' with stdin nil
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : output of the command:
+ package mongodb is not installed
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : Running command rpm -q 'rh-mongodb34-mongodb-server' with stdin nil
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : output of the command:
+ rh-mongodb34-mongodb-server-3.4.9-1.el7.x86_64
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : Running command rpm -q 'rh-mongodb34-mongodb' with stdin nil
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : output of the command:
+ rh-mongodb34-mongodb-3.4.9-1.el7.x86_64
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : Running command scl enable rh-mongodb34 -- mongo --host localhost --port 27017 --eval 'db.version()' pulp_database with stdin nil
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : output of the command:
+ MongoDB shell version v3.4.9
+connecting to: mongodb://localhost:27017/pulp_database
+MongoDB server version: 3.4.9
+3.4.9
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : Running command rpm -q 'rh-mongodb34-mongodb' with stdin nil
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : output of the command:
+ rh-mongodb34-mongodb-3.4.9-1.el7.x86_64
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : Mongo 3.4.9 detected, using commands from rh-mongodb34 SCL
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : Running command hostname -f with stdin nil
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : output of the command:
+ sat6.labbuilder.ca
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : Running command rpm -q 'puppetserver' with stdin nil
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : output of the command:
+ puppetserver-5.3.1-1.el7sat.noarch
+D, [2019-01-02 14:58:01-0500 #22521] DEBUG -- : Running command systemctl is-enabled rh-mongodb34-mongod 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled postgresql 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled qdrouterd 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled qpidd 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled squid 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled pulp_celerybeat 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled pulp_resource_manager 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled pulp_streamer 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled pulp_workers 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled smart_proxy_dynflow_core 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled tomcat 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled tomcat6 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ Failed to get unit file state for tomcat6.service: No such file or directory
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled dynflowd 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled elasticsearch 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ Failed to get unit file state for elasticsearch.service: No such file or directory
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled httpd 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled puppetserver 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled foreman-proxy 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command rpm -q 'foreman' --queryformat="%{VERSION}" with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ 1.18.0.39
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command hostname -f with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ sat6.labbuilder.ca
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command rpm -q 'puppetserver' with stdin nil
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : output of the command:
+ puppetserver-5.3.1-1.el7sat.noarch
+D, [2019-01-02 14:58:02-0500 #22521] DEBUG -- : Running command systemctl is-enabled rh-mongodb34-mongod 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled postgresql 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled qdrouterd 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled qpidd 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled squid 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled pulp_celerybeat 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled pulp_resource_manager 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled pulp_streamer 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled pulp_workers 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled smart_proxy_dynflow_core 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled tomcat 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled tomcat6 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ Failed to get unit file state for tomcat6.service: No such file or directory
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled dynflowd 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled elasticsearch 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ Failed to get unit file state for elasticsearch.service: No such file or directory
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled httpd 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled puppetserver 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl is-enabled foreman-proxy 2>&1 | tail -1 with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ enabled
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status rh-mongodb34-mongod with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● rh-mongodb34-mongod.service - High-performance, schema-free document-oriented database
+   Loaded: loaded (/usr/lib/systemd/system/rh-mongodb34-mongod.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 09:52:37 EST; 5h 5min ago
+ Main PID: 957 (mongod)
+   CGroup: /system.slice/rh-mongodb34-mongod.service
+           └─957 /opt/rh/rh-mongodb34/root/usr/bin/mongod -f /etc/opt/rh/rh-mongodb34/mongod.conf run
+
+Jan 02 09:56:25 sat6.labbuilder.ca mongod.27017[957]: [conn9] build index on: pulp_database.scheduled_calls properties: { v: 2, key: { resource: -1 }, name: "resource_-1", ns: "pulp_database.scheduled_calls", background: true }
+Jan 02 09:56:25 sat6.labbuilder.ca mongod.27017[957]: [conn9] build index done.  scanned 0 total records. 0 secs
+Jan 02 09:56:25 sat6.labbuilder.ca mongod.27017[957]: [conn9] command pulp_database.$cmd command: createIndexes { createIndexes: "scheduled_calls", indexes: [ { unique: false, background: true, name: "resource_-1", key: { resource: -1 } } ] } numYields:0 reslen:113 locks:{ Global: { acquireCount: { r: 1, w: 1 } }, Database: { acquireCount: { w: 1, W: 2 } }, Collection: { acquireCount: { w: 1 } } } protocol:op_query 758ms
+Jan 02 09:56:25 sat6.labbuilder.ca mongod.27017[957]: [conn9] build index on: pulp_database.scheduled_calls properties: { v: 2, key: { last_updated: -1 }, name: "last_updated_-1", ns: "pulp_database.scheduled_calls", background: true }
+Jan 02 09:56:25 sat6.labbuilder.ca mongod.27017[957]: [conn9] build index done.  scanned 0 total records. 0 secs
+Jan 02 09:56:25 sat6.labbuilder.ca mongod.27017[957]: [conn9] command pulp_database.$cmd command: createIndexes { createIndexes: "scheduled_calls", indexes: [ { unique: false, background: true, name: "last_updated_-1", key: { last_updated: -1 } } ] } numYields:0 reslen:113 locks:{ Global: { acquireCount: { r: 1, w: 1 } }, Database: { acquireCount: { w: 1, W: 2 } }, Collection: { acquireCount: { w: 1 } } } protocol:op_query 270ms
+Jan 02 09:56:26 sat6.labbuilder.ca mongod.27017[957]: [conn9] update pulp_database.workers query: { _id: "scheduler@sat6.labbuilder.ca" } planSummary: IDHACK update: { $set: { last_heartbeat: new Date(1546440985910) } } keysExamined:0 docsExamined:0 nMatched:0 nModified:0 upsert:1 keysInserted:1 numYields:0 locks:{ Global: { acquireCount: { r: 3, w: 3 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } 508ms
+Jan 02 09:56:26 sat6.labbuilder.ca mongod.27017[957]: [conn9] command pulp_database.$cmd command: update { update: "workers", ordered: true, updates: [ { q: { _id: "scheduler@sat6.labbuilder.ca" }, u: { $set: { last_heartbeat: new Date(1546440985910) } }, multi: false, upsert: true } ] } numYields:0 reslen:131 locks:{ Global: { acquireCount: { r: 3, w: 3 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } protocol:op_query 508ms
+Jan 02 14:54:21 sat6.labbuilder.ca mongod.27017[957]: [conn233] received client metadata from 127.0.0.1:34882 conn233: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.4.9" }, os: { type: "Linux", name: "Red Hat Enterprise Linux Server release 7.6 (Maipo)", architecture: "x86_64", version: "Kernel 3.10.0-957.1.3.el7.x86_64" } }
+Jan 02 14:58:01 sat6.labbuilder.ca mongod.27017[957]: [conn242] received client metadata from 127.0.0.1:35018 conn242: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.4.9" }, os: { type: "Linux", name: "Red Hat Enterprise Linux Server release 7.6 (Maipo)", architecture: "x86_64", version: "Kernel 3.10.0-957.1.3.el7.x86_64" } }
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status postgresql with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● postgresql.service - PostgreSQL database server
+   Loaded: loaded (/etc/systemd/system/postgresql.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 09:57:13 EST; 5h 0min ago
+ Main PID: 3825 (postgres)
+   CGroup: /system.slice/postgresql.service
+           ├─ 3825 /usr/bin/postgres -D /var/lib/pgsql/data -p 5432
+           ├─ 3826 postgres: logger process                        
+           ├─ 3828 postgres: checkpointer process                  
+           ├─ 3829 postgres: writer process                        
+           ├─ 3830 postgres: wal writer process                    
+           ├─ 3831 postgres: autovacuum launcher process           
+           ├─ 3832 postgres: stats collector process               
+           ├─ 4971 postgres: candlepin candlepin 127.0.0.1(52044) idl
+           ├─ 4972 postgres: candlepin candlepin 127.0.0.1(52046) idl
+           ├─ 4973 postgres: candlepin candlepin 127.0.0.1(52048) idl
+           ├─20203 postgres: foreman foreman [local] idle          
+           ├─20215 postgres: foreman foreman [local] idle          
+           ├─20216 postgres: foreman foreman [local] idle          
+           ├─20221 postgres: foreman foreman [local] idle          
+           ├─20222 postgres: foreman foreman [local] idle          
+           ├─20225 postgres: foreman foreman [local] idle          
+           ├─22173 postgres: candlepin candlepin 127.0.0.1(34570) idl
+           ├─22174 postgres: candlepin candlepin 127.0.0.1(34572) idl
+           ├─22175 postgres: candlepin candlepin 127.0.0.1(34574) idl
+           ├─22176 postgres: candlepin candlepin 127.0.0.1(34576) idl
+           ├─22177 postgres: candlepin candlepin 127.0.0.1(34578) idl
+           ├─22178 postgres: candlepin candlepin 127.0.0.1(34580) idl
+           ├─22179 postgres: candlepin candlepin 127.0.0.1(34582) idl
+           ├─22180 postgres: candlepin candlepin 127.0.0.1(34584) idl
+           ├─22486 postgres: foreman foreman [local] idle          
+           ├─28218 postgres: candlepin candlepin 127.0.0.1(57020) idl
+           └─28219 postgres: candlepin candlepin 127.0.0.1(57022) idl
+
+Jan 02 09:57:12 sat6.labbuilder.ca systemd[1]: Starting PostgreSQL database server...
+Jan 02 09:57:13 sat6.labbuilder.ca systemd[1]: Started PostgreSQL database server.
+Jan 02 09:57:14 sat6.labbuilder.ca systemd[1]: Reloading PostgreSQL database server.
+Jan 02 09:57:14 sat6.labbuilder.ca systemd[1]: Reloaded PostgreSQL database server.
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status qdrouterd with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● qdrouterd.service - Qpid Dispatch router daemon
+   Loaded: loaded (/usr/lib/systemd/system/qdrouterd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 09:57:20 EST; 5h 0min ago
+ Main PID: 4269 (qdrouterd)
+   CGroup: /system.slice/qdrouterd.service
+           └─4269 /usr/sbin/qdrouterd -c /etc/qpid-dispatch/qdrouterd.conf
+
+Jan 02 09:57:21 sat6.labbuilder.ca qdrouterd[4269]: Wed Jan  2 09:57:21 2019 CONN_MGR (info) Configured Listener: 0.0.0.0:5647 proto=any, role=normal, sslProfile=server
+Jan 02 09:57:21 sat6.labbuilder.ca qdrouterd[4269]: Wed Jan  2 09:57:21 2019 CONN_MGR (info) Configured Listener: 0.0.0.0:5646 proto=any, role=inter-router, sslProfile=server
+Jan 02 09:57:21 sat6.labbuilder.ca qdrouterd[4269]: Wed Jan  2 09:57:21 2019 CONN_MGR (info) Configured Connector: localhost:5671 proto=any, role=route-container , sslProfile=client
+Jan 02 09:57:21 sat6.labbuilder.ca qdrouterd[4269]: Wed Jan  2 09:57:21 2019 POLICY (info) Policy configured maxConnections: 65535, policyDir: '', access rules enabled: 'false'
+Jan 02 09:57:21 sat6.labbuilder.ca qdrouterd[4269]: Wed Jan  2 09:57:21 2019 POLICY (info) Policy fallback defaultVhost is defined: '$default'
+Jan 02 09:57:21 sat6.labbuilder.ca qdrouterd[4269]: Wed Jan  2 09:57:21 2019 SERVER (info) Operational, 2 Threads Running
+Jan 02 09:57:24 sat6.labbuilder.ca qdrouterd[4269]: Wed Jan  2 09:57:24 2019 ROUTER_CORE (info) Link Route Activated 'linkRoute/0' on connection broker
+Jan 02 09:57:24 sat6.labbuilder.ca qdrouterd[4269]: Wed Jan  2 09:57:24 2019 ROUTER_CORE (info) Link Route Activated 'linkRoute/1' on connection broker
+Jan 02 09:57:24 sat6.labbuilder.ca qdrouterd[4269]: Wed Jan  2 09:57:24 2019 ROUTER_CORE (info) Link Route Activated 'linkRoute/2' on connection broker
+Jan 02 09:57:24 sat6.labbuilder.ca qdrouterd[4269]: Wed Jan  2 09:57:24 2019 ROUTER_CORE (info) Link Route Activated 'linkRoute/3' on connection broker
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status qpidd with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● qpidd.service - An AMQP message broker daemon.
+   Loaded: loaded (/usr/lib/systemd/system/qpidd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 09:56:08 EST; 5h 1min ago
+     Docs: man:qpidd(1)
+           http://qpid.apache.org/
+ Main PID: 3147 (qpidd)
+   CGroup: /system.slice/qpidd.service
+           └─3147 /usr/sbin/qpidd --config /etc/qpid/qpidd.conf
+
+Jan 02 09:56:08 sat6.labbuilder.ca systemd[1]: Started An AMQP message broker daemon..
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status squid with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● squid.service - Squid caching proxy
+   Loaded: loaded (/usr/lib/systemd/system/squid.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 09:52:35 EST; 5h 5min ago
+ Main PID: 875 (squid)
+   CGroup: /system.slice/squid.service
+           ├─875 /usr/sbin/squid -f /etc/squid/squid.conf
+           └─877 (squid-1) -f /etc/squid/squid.conf
+
+Jan 02 09:52:35 sat6.labbuilder.ca systemd[1]: Starting Squid caching proxy...
+Jan 02 09:52:35 sat6.labbuilder.ca cache_swap.sh[866]: init_cache_dir /var/spool/squid...
+Jan 02 09:52:35 sat6.labbuilder.ca squid[875]: Squid Parent: will start 1 kids
+Jan 02 09:52:35 sat6.labbuilder.ca squid[875]: Squid Parent: (squid-1) process 877 started
+Jan 02 09:52:35 sat6.labbuilder.ca systemd[1]: Started Squid caching proxy.
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status pulp_celerybeat with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● pulp_celerybeat.service - Pulp's Celerybeat
+   Loaded: loaded (/usr/lib/systemd/system/pulp_celerybeat.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 09:56:20 EST; 5h 1min ago
+ Main PID: 3268 (celery)
+   CGroup: /system.slice/pulp_celerybeat.service
+           └─3268 /usr/bin/python /usr/bin/celery beat --app=pulp.server.async.celery_instance.celery --scheduler=pulp.server.async.scheduler.Scheduler
+
+Jan 02 13:26:25 sat6.labbuilder.ca pulp[3268]: celery.beat:INFO: Scheduler: Sending due task download_deferred_content (pulp.server.controllers.repository.queue_download_deferred)
+Jan 02 13:36:25 sat6.labbuilder.ca pulp[3268]: celery.beat:INFO: Scheduler: Sending due task download_deferred_content (pulp.server.controllers.repository.queue_download_deferred)
+Jan 02 13:46:25 sat6.labbuilder.ca pulp[3268]: celery.beat:INFO: Scheduler: Sending due task download_deferred_content (pulp.server.controllers.repository.queue_download_deferred)
+Jan 02 13:56:25 sat6.labbuilder.ca pulp[3268]: celery.beat:INFO: Scheduler: Sending due task download_deferred_content (pulp.server.controllers.repository.queue_download_deferred)
+Jan 02 14:06:25 sat6.labbuilder.ca pulp[3268]: celery.beat:INFO: Scheduler: Sending due task download_deferred_content (pulp.server.controllers.repository.queue_download_deferred)
+Jan 02 14:16:25 sat6.labbuilder.ca pulp[3268]: celery.beat:INFO: Scheduler: Sending due task download_deferred_content (pulp.server.controllers.repository.queue_download_deferred)
+Jan 02 14:26:25 sat6.labbuilder.ca pulp[3268]: celery.beat:INFO: Scheduler: Sending due task download_deferred_content (pulp.server.controllers.repository.queue_download_deferred)
+Jan 02 14:36:25 sat6.labbuilder.ca pulp[3268]: celery.beat:INFO: Scheduler: Sending due task download_deferred_content (pulp.server.controllers.repository.queue_download_deferred)
+Jan 02 14:46:25 sat6.labbuilder.ca pulp[3268]: celery.beat:INFO: Scheduler: Sending due task download_deferred_content (pulp.server.controllers.repository.queue_download_deferred)
+Jan 02 14:56:25 sat6.labbuilder.ca pulp[3268]: celery.beat:INFO: Scheduler: Sending due task download_deferred_content (pulp.server.controllers.repository.queue_download_deferred)
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status pulp_resource_manager with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● pulp_resource_manager.service - Pulp Resource Manager
+   Loaded: loaded (/usr/lib/systemd/system/pulp_resource_manager.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 09:56:23 EST; 5h 1min ago
+ Main PID: 3447 (celery)
+   CGroup: /system.slice/pulp_resource_manager.service
+           ├─3447 /usr/bin/python /usr/bin/celery worker -A pulp.server.async.app -n resource_manager@%h -Q resource_manager -c 1 --events --umask 18 --pidfile=/var/run/pulp/resource_manager.pid
+           └─3664 /usr/bin/python /usr/bin/celery worker -A pulp.server.async.app -n resource_manager@%h -Q resource_manager -c 1 --events --umask 18 --pidfile=/var/run/pulp/resource_manager.pid
+
+Jan 02 09:56:31 sat6.labbuilder.ca celery[3447]: -------------- [queues]
+Jan 02 09:56:31 sat6.labbuilder.ca celery[3447]: .> resource_manager exchange=resource_manager(direct) key=resource_manager
+Jan 02 09:56:31 sat6.labbuilder.ca celery[3447]: .> resource_manager@sat6.labbuilder.ca.dq2 exchange=C.dq2(direct) key=resource_manager@sat6.labbuilder.ca
+Jan 02 09:56:31 sat6.labbuilder.ca pulp[3664]: pulp.server.db.connection:INFO: Attempting to connect to localhost:27017
+Jan 02 09:56:31 sat6.labbuilder.ca pulp[3447]: kombu.transport.qpid:INFO: Connected to qpid with SASL mechanism ANONYMOUS
+Jan 02 09:56:31 sat6.labbuilder.ca pulp[3447]: celery.worker.consumer.connection:INFO: Connected to qpid://localhost:5671//
+Jan 02 09:56:31 sat6.labbuilder.ca pulp[3664]: pulp.server.db.connection:INFO: Attempting to connect to localhost:27017
+Jan 02 09:56:31 sat6.labbuilder.ca pulp[3447]: kombu.transport.qpid:INFO: Connected to qpid with SASL mechanism ANONYMOUS
+Jan 02 09:56:32 sat6.labbuilder.ca pulp[3664]: pulp.server.db.connection:INFO: Write concern for Mongo connection: {}
+Jan 02 09:56:32 sat6.labbuilder.ca pulp[3447]: celery.apps.worker:INFO: resource_manager@sat6.labbuilder.ca ready.
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status pulp_streamer with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● pulp_streamer.service - The Pulp lazy content loading streamer
+   Loaded: loaded (/usr/lib/systemd/system/pulp_streamer.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 09:56:25 EST; 5h 1min ago
+ Main PID: 3531 (pulp_streamer)
+   CGroup: /system.slice/pulp_streamer.service
+           └─3531 /usr/bin/python /usr/bin/pulp_streamer --nodaemon --syslog --prefix=pulp_streamer --pidfile= --python /usr/share/pulp/wsgi/streamer.tac
+
+Jan 02 09:56:32 sat6.labbuilder.ca pulp_streamer[3531]: pulp.plugins.loader.manager:INFO: Loaded plugin docker_importer for types: docker_blob,docker_image,docker_manifest,docker_manifest_list,docker_tag
+Jan 02 09:56:32 sat6.labbuilder.ca pulp_streamer[3531]: pulp.plugins.loader.manager:INFO: Loaded plugin yum_profiler for types: rpm,erratum
+Jan 02 09:56:32 sat6.labbuilder.ca pulp_streamer[3531]: pulp.plugins.loader.manager:INFO: Loaded plugin puppet_whole_repo_profiler for types: puppet_module
+Jan 02 09:56:32 sat6.labbuilder.ca pulp_streamer[3531]: pulp.plugins.loader.manager:INFO: Loaded plugin yum for types: rpm
+Jan 02 09:56:32 sat6.labbuilder.ca pulp_streamer[3531]: pulp.plugins.loader.manager:INFO: Loaded plugin rhui for types: rpm
+Jan 02 09:56:32 sat6.labbuilder.ca pulp_streamer[3531]: [-] Log opened.
+Jan 02 09:56:32 sat6.labbuilder.ca pulp_streamer[3531]: [-] twistd 12.2.0 (/usr/bin/python 2.7.5) starting up.
+Jan 02 09:56:32 sat6.labbuilder.ca pulp_streamer[3531]: [-] reactor class: twisted.internet.epollreactor.EPollReactor.
+Jan 02 09:56:32 sat6.labbuilder.ca pulp_streamer[3531]: [-] Site starting on 8751
+Jan 02 09:56:32 sat6.labbuilder.ca pulp_streamer[3531]: [-] Starting factory <twisted.web.server.Site instance at 0x7f4f636b4d40>
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status pulp_workers with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● pulp_workers.service - Pulp Celery Workers
+   Loaded: loaded (/usr/lib/systemd/system/pulp_workers.service; enabled; vendor preset: disabled)
+   Active: active (exited) since Wed 2019-01-02 09:56:21 EST; 5h 1min ago
+ Main PID: 3344 (code=exited, status=0/SUCCESS)
+   CGroup: /system.slice/pulp_workers.service
+
+Jan 02 09:56:21 sat6.labbuilder.ca systemd[1]: Starting Pulp Celery Workers...
+Jan 02 09:56:21 sat6.labbuilder.ca systemd[1]: Started Pulp Celery Workers.
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status smart_proxy_dynflow_core with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● smart_proxy_dynflow_core.service - Foreman smart proxy dynflow core service
+   Loaded: loaded (/usr/lib/systemd/system/smart_proxy_dynflow_core.service; enabled; vendor preset: disabled)
+  Drop-In: /etc/systemd/system/smart_proxy_dynflow_core.service.d
+           └─90-limits.conf
+   Active: active (running) since Wed 2019-01-02 14:43:48 EST; 14min ago
+     Docs: https://github.com/theforeman/smart_proxy_dynflow
+  Process: 21001 ExecStart=/usr/bin/smart_proxy_dynflow_core -d -p /var/run/foreman-proxy/smart_proxy_dynflow_core.pid (code=exited, status=0/SUCCESS)
+ Main PID: 21034 (ruby)
+   CGroup: /system.slice/smart_proxy_dynflow_core.service
+           └─21034 ruby /usr/bin/smart_proxy_dynflow_core -d -p /var/run/foreman-proxy/smart_proxy_dynflow_core.pid
+
+Jan 02 14:43:44 sat6.labbuilder.ca systemd[1]: Stopped Foreman smart proxy dynflow core service.
+Jan 02 14:43:44 sat6.labbuilder.ca systemd[1]: Starting Foreman smart proxy dynflow core service...
+Jan 02 14:43:48 sat6.labbuilder.ca systemd[1]: Started Foreman smart proxy dynflow core service.
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status tomcat with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● tomcat.service - Apache Tomcat Web Application Container
+   Loaded: loaded (/usr/lib/systemd/system/tomcat.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 10:04:02 EST; 4h 54min ago
+ Main PID: 4784 (java)
+   CGroup: /system.slice/tomcat.service
+           └─4784 /usr/lib/jvm/jre/bin/java -Xms1024m -Xmx4096m -classpath /usr/share/tomcat/bin/bootstrap.jar:/usr/share/tomcat/bin/tomcat-juli.jar:/usr/share/java/commons-daemon.jar -Dcatalina.base=/usr/share/tomcat -Dcatalina.home=/usr/share/tomcat -Djava.endorsed.dirs= -Djava.io.tmpdir=/var/cache/tomcat/temp -Djava.util.logging.config.file=/usr/share/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager org.apache.catalina.startup.Bootstrap start
+
+Jan 02 10:04:59 sat6.labbuilder.ca server[4784]: Jan 02, 2019 10:04:59 AM org.apache.catalina.startup.HostConfig deployDirectory
+Jan 02 10:04:59 sat6.labbuilder.ca server[4784]: INFO: Deployment of web application directory /var/lib/tomcat/webapps/candlepin has finished in 54,294 ms
+Jan 02 10:04:59 sat6.labbuilder.ca server[4784]: Jan 02, 2019 10:04:59 AM org.apache.coyote.AbstractProtocol start
+Jan 02 10:04:59 sat6.labbuilder.ca server[4784]: INFO: Starting ProtocolHandler ["http-bio-8080"]
+Jan 02 10:04:59 sat6.labbuilder.ca server[4784]: Jan 02, 2019 10:04:59 AM org.apache.coyote.AbstractProtocol start
+Jan 02 10:04:59 sat6.labbuilder.ca server[4784]: INFO: Starting ProtocolHandler ["http-bio-8443"]
+Jan 02 10:05:00 sat6.labbuilder.ca server[4784]: Jan 02, 2019 10:05:00 AM org.apache.coyote.AbstractProtocol start
+Jan 02 10:05:00 sat6.labbuilder.ca server[4784]: INFO: Starting ProtocolHandler ["ajp-bio-8009"]
+Jan 02 10:05:00 sat6.labbuilder.ca server[4784]: Jan 02, 2019 10:05:00 AM org.apache.catalina.startup.Catalina start
+Jan 02 10:05:00 sat6.labbuilder.ca server[4784]: INFO: Server startup in 54833 ms
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status dynflowd with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● dynflowd.service - Foreman jobs daemon
+   Loaded: loaded (/usr/lib/systemd/system/dynflowd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 14:32:07 EST; 25min ago
+     Docs: https://theforeman.org
+  Process: 19869 ExecStop=/usr/sbin/dynflowd stop (code=exited, status=0/SUCCESS)
+  Process: 19947 ExecStart=/usr/sbin/dynflowd start (code=exited, status=0/SUCCESS)
+   CGroup: /system.slice/dynflowd.service
+           ├─20011 dynflow_executor             
+           └─20013 dynflow_executor_monitor     
+
+Jan 02 14:31:51 sat6.labbuilder.ca systemd[1]: Starting Foreman jobs daemon...
+Jan 02 14:32:05 sat6.labbuilder.ca dynflowd[19947]: /usr/share/foreman/lib/foreman.rb:8: warning: already initialized constant Foreman::UUID_REGEXP
+Jan 02 14:32:05 sat6.labbuilder.ca dynflowd[19947]: /usr/share/foreman/lib/foreman.rb:8: warning: previous definition of UUID_REGEXP was here
+Jan 02 14:32:05 sat6.labbuilder.ca dynflowd[19947]: /usr/share/foreman/lib/core_extensions.rb:182: warning: already initialized constant ActiveSupport::MessageEncryptor::DEFAULT_CIPHER
+Jan 02 14:32:05 sat6.labbuilder.ca dynflowd[19947]: /opt/theforeman/tfm-ror51/root/usr/share/gems/gems/activesupport-5.1.6/lib/active_support/message_encryptor.rb:22: warning: previous definition of DEFAULT_CIPHER was here
+Jan 02 14:32:06 sat6.labbuilder.ca dynflowd[19947]: Dynflow Executor: start in progress
+Jan 02 14:32:06 sat6.labbuilder.ca dynflowd[19947]: /opt/theforeman/tfm/root/usr/share/gems/gems/daemons-1.2.3/lib/daemons/daemonize.rb:75: warning: conflicting chdir during another chdir block
+Jan 02 14:32:06 sat6.labbuilder.ca dynflowd[19947]: /opt/theforeman/tfm/root/usr/share/gems/gems/daemons-1.2.3/lib/daemons/daemonize.rb:108: warning: conflicting chdir during another chdir block
+Jan 02 14:32:06 sat6.labbuilder.ca dynflowd[19947]: dynflow_executor: process with pid 20011 started.
+Jan 02 14:32:07 sat6.labbuilder.ca systemd[1]: Started Foreman jobs daemon.
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status httpd with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 10:23:24 EST; 4h 34min ago
+     Docs: man:httpd(8)
+           man:apachectl(8)
+ Main PID: 6120 (httpd)
+   Status: "Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec"
+   CGroup: /system.slice/httpd.service
+           ├─ 6120 /usr/sbin/httpd -DFOREGROUND
+           ├─ 6141 (wsgi:pulp)     -DFOREGROUND
+           ├─ 6142 (wsgi:pulp)     -DFOREGROUND
+           ├─ 6143 (wsgi:pulp)     -DFOREGROUND
+           ├─ 6144 (wsgi:pulp-cont -DFOREGROUND
+           ├─ 6145 (wsgi:pulp-cont -DFOREGROUND
+           ├─ 6146 (wsgi:pulp-cont -DFOREGROUND
+           ├─ 6147 (wsgi:pulp_forg -DFOREGROUND
+           ├─ 6148 PassengerWatchdog
+           ├─ 6151 PassengerHelperAgent
+           ├─ 6159 PassengerLoggingAgent
+           ├─ 6166 /usr/sbin/httpd -DFOREGROUND
+           ├─ 6167 /usr/sbin/httpd -DFOREGROUND
+           ├─ 6168 /usr/sbin/httpd -DFOREGROUND
+           ├─ 6169 /usr/sbin/httpd -DFOREGROUND
+           ├─ 6170 /usr/sbin/httpd -DFOREGROUND
+           ├─ 6171 /usr/sbin/httpd -DFOREGROUND
+           ├─ 6172 /usr/sbin/httpd -DFOREGROUND
+           ├─ 6173 /usr/sbin/httpd -DFOREGROUND
+           ├─22432 /bin/bash /usr/bin/tfm-ruby /usr/share/gems/gems/passenger-4.0.18/helper-scripts/rack-preloader.rb
+           ├─22440 scl enable tfm bash /tmp/tmp.W20Qju3ybh
+           ├─22441 /bin/bash /var/tmp/sclHYST8r
+           ├─22464 bash /tmp/tmp.W20Qju3ybh
+           └─22465 ruby /usr/share/gems/gems/passenger-4.0.18/helper-scripts/rack-preloader.rb
+
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: gofer.messaging.adapter.qpid.connection:INFO: open: URL: ssl://localhost|SSL: ca: /etc/pki/katello/certs/katello-default-ca.crt|key: None|certificate: /etc/pki/katello/qpid_client_striped.crt|host-validation: False
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: pulp.server.agent.direct.services:INFO: Task reply handler, started.
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: pulp.server.agent.direct.services:INFO: AMQP reply handler started
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: pulp.server.webservices.application:INFO: *************************************************************
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: pulp.server.webservices.application:INFO: The Pulp server has been successfully initialized
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: pulp.server.webservices.application:INFO: *************************************************************
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6142]: gofer.messaging.adapter.qpid.connection:INFO: opened: qpid+ssl://localhost:5671
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6142]: gofer.messaging.adapter.connect:INFO: connected: qpid+ssl://localhost:5671
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: gofer.messaging.adapter.qpid.connection:INFO: opened: qpid+ssl://localhost:5671
+Jan 02 10:23:38 sat6.labbuilder.ca pulp[6143]: gofer.messaging.adapter.connect:INFO: connected: qpid+ssl://localhost:5671
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status puppetserver with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● puppetserver.service - puppetserver Service
+   Loaded: loaded (/usr/lib/systemd/system/puppetserver.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 13:58:38 EST; 59min ago
+ Main PID: 12321 (java)
+   CGroup: /system.slice/puppetserver.service
+           └─12321 /usr/bin/java -Xms2G -Xmx2G -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger -Djava.security.egd=/dev/urandom -XX:OnOutOfMemoryError=kill -9 %p -cp /opt/puppetlabs/server/apps/puppetserver/puppet-server-release.jar:/opt/puppetlabs/server/apps/puppetserver/jruby-1_7.jar:/opt/puppetlabs/server/data/puppetserver/jars/* clojure.main -m puppetlabs.trapperkeeper.main --config /etc/puppetlabs/puppetserver/conf.d --bootstrap-config /etc/puppetlabs/puppetserver/services.d/,/opt/puppetlabs/server/apps/puppetserver/config/services.d/ --restart-file /opt/puppetlabs/server/data/puppetserver/restartcounter
+
+Jan 02 13:56:45 sat6.labbuilder.ca systemd[1]: Starting puppetserver Service...
+Jan 02 13:58:38 sat6.labbuilder.ca systemd[1]: Started puppetserver Service.
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : Running command systemctl status foreman-proxy with stdin nil
+D, [2019-01-02 14:58:03-0500 #22521] DEBUG -- : output of the command:
+ ● foreman-proxy.service - Foreman Proxy
+   Loaded: loaded (/usr/lib/systemd/system/foreman-proxy.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2019-01-02 14:40:43 EST; 17min ago
+ Main PID: 20732 (ruby)
+   CGroup: /system.slice/foreman-proxy.service
+           └─20732 ruby /usr/share/foreman-proxy/bin/smart-proxy --no-daemonize
+
+Jan 02 14:40:41 sat6.labbuilder.ca systemd[1]: Starting Foreman Proxy...
+Jan 02 14:40:43 sat6.labbuilder.ca systemd[1]: Started Foreman Proxy.
+I, [2019-01-02 14:58:03-0500 #22521]  INFO -- : --- Execution step 'Get status of applicable services' finished ---
+I, [2019-01-02 14:58:03-0500 #22521]  INFO -- : === Scenario 'Status Services' finished ===
+I, [2019-01-02 14:58:03-0500 #22521]  INFO -- : foreman-maintain command finished with 

@@ -4,7 +4,11 @@
 # We use an activation key to ensure accuracy in our pools and repositories
 
 
-- import_tasks: registration_and_repositories.yml
+- import_tasks: registration.yml
+
+- import_tasks: repositories.yml
+
+- import_tasks: install_chronyd.yml
 
 - import_tasks: install_idm_client.yml
   when: install_idm_client == true
@@ -26,7 +30,9 @@
   when: setup_hammer == true
 
 - import_tasks: upload_manifest.yml
-  when: setup_hammer == true
+  when: 
+    - upload_manifest == true 
+    - setup_hammer == true
 
 - import_tasks: setup_virtwho.yml
   when: setup_virtwho == true

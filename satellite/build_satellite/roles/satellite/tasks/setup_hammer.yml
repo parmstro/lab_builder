@@ -10,6 +10,6 @@
 
 - name: Create the configuration file
   template:
-    src: sli_config.j2
+    src: cli_config.j2
     dest: /root/.hammer/cli_config.yml
 
