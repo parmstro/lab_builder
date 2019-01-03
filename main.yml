@@ -1,0 +1,16 @@
+---
+# This is the start of the main lab build. 
+# Please read any Readme.md files in each directory before starting
+# You will be happy you did because this pig is a mess.
+#
+# If you need to make the original system 
+# check out bootstrap.yml
+# and the README.md
+#
+- name: Lab Builder is starting.
+  hosts: localhost
+  become: yes
+
+  roles:
+  - buildmaster
+

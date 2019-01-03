@@ -3,13 +3,18 @@
 # additional setup commands 
 #
 
-- name: Create a directory for the hammer config for the root user
-  file:
-    dest: /root/.hammer
-    state: directory
+#- name: Create a directory for the hammer config for the root user
+#  file:
+#    dest: /root/.hammer
+#    state: directory
 
-- name: Create the configuration file
-  template:
-    src: cli_config.j2
-    dest: /root/.hammer/cli_config.yml
+#- name: Create the configuration file
+#  template:
+#    src: cli_config.j2
+#    dest: /root/.hammer/cli_config.yml
+
+- name: Reflect that hammer is automatically configured
+  debug:
+    msg: "In this version of Satellite the hammer cli is automatically configured for root."
+
 

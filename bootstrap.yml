@@ -1,0 +1,14 @@
+---
+# This is the REAL start of the main lab build. 
+# This builds the Satellite server that is on the thumbdrive
+# Boot strapping requires a bunch of things and particular 
+# configurations to build the iso, so please read the README.md
+#
+#
+- name: Lab Builder is bootstrapping.
+  hosts: localhost
+  become: yes
+
+  roles:
+  - bootstrap
+
