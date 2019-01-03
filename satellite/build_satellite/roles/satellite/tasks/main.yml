@@ -1,39 +1,16 @@
 ---
 # This play sets up the main Satellite Server
 # This must complete successfully before creating any capsule servers
-# We use an activation key to ensure accuracy in our pools and repositories
+# This play now uses the yml template method for generating the installation configuration
+# Please see satellite-answers.default.yml in the template directory
+#
 
+- name: Deploy the configuration Template to foreman-installer directory (backup original)
+  template:
+    src: templates/satellite-answers.yml
+    dest: /etc/foreman-installer/scenarios.d/satellite-answers.yml
+    backup: yes
 
-- import_tasks: registration.yml
-
-- import_tasks: repositories.yml
-
-- import_tasks: install_chronyd.yml
-
-- import_tasks: install_idm_client.yml
-  when: install_idm_client == true
-
-- import_tasks: generate_certs.yml
-  when: generate_certs == true and install_idm_client == true
-
-- import_tasks: check_certs.yml
-  when: generate_certs == true and install_idm_client == true
-
-- import_tasks: foreman_prepare_realm.yml
-  when: generate_certs == true and install_idm_client == true
-
-- import_tasks: sat_firewalld_config.yml
-
-- import_tasks: install_satellite.yml
-
-- import_tasks: setup_hammer.yml
-  when: setup_hammer == true
-
-- import_tasks: upload_manifest.yml
-  when: 
-    - upload_manifest == true 
-    - setup_hammer == true
-
-- import_tasks: setup_virtwho.yml
-  when: setup_virtwho == true
+- name: Install the Satellite Server
+  command: "satellite-installer --scenario={{ scenario }}"
 

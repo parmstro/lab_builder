@@ -2,6 +2,5 @@
 - hosts: satellite-servers
 
   roles:
-    - common
     - satellite
 
