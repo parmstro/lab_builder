@@ -1,12 +1,5 @@
-# Format:
-# <classname>: false - don't include this class
-# <classname>: true - include and use the defaults
-# <classname>:
-#   <param>: <value> - include and override the default(s)
-#
-# See params.pp in each class for what options are available
-
 ---
+
 certs:
   generate: true
   deploy: true
@@ -20,8 +13,8 @@ katello:
 foreman:
   organizations_enabled: true
   locations_enabled: true
-  initial_organization: "{{ foreman_initial_organization }}"
-  initial_location: "{{ foreman_initial_location }}"
+  initial_organization: {{ foreman_initial_organization }}
+  initial_location: {{ foreman_initial_location }}
   custom_repo: true
   configure_epel_repo: false
   configure_scl_repo: false
@@ -78,16 +71,16 @@ foreman_proxy_content:
   enable_deb: false
 foreman_proxy::plugin::ansible: true
 puppet:
-  server: "{{ enable_puppet_server }}"
+  server: {{ enable_puppet_server }}
   server_environments_owner: apache
   server_foreman_ssl_cert: /etc/pki/katello/puppet/puppet_client.crt
   server_foreman_ssl_key: /etc/pki/katello/puppet/puppet_client.key
   server_foreman_ssl_ca: /etc/pki/katello/puppet/puppet_client_ca.crt
   server_passenger_min_instances: 1
-foreman::compute::ec2: "{{ foreman_compute_ec2 }}"
-foreman::compute::gce: "{{ foreman_compute_gce }}"
-foreman::compute::libvirt: "{{ foreman_compute_libvirt }}"
-foreman::compute::openstack: "{{ foreman_compute_openstack }}"
-foreman::compute::ovirt: "{{ foreman_compute_ovirt }}"
-foreman::compute::rackspace: "{{{ foreman_compute_rackspace }}"
-foreman::compute::vmware: "{{ foreman_compute_vmware }}"
+foreman::compute::ec2: {{ foreman_compute_ec2 }}
+foreman::compute::gce: {{ foreman_compute_gce }}
+foreman::compute::libvirt: {{ foreman_compute_libvirt }}
+foreman::compute::openstack: {{ foreman_compute_openstack }}
+foreman::compute::ovirt: {{ foreman_compute_ovirt }}
+foreman::compute::rackspace: {{ foreman_compute_rackspace }}
+foreman::compute::vmware: {{ foreman_compute_vmware }}

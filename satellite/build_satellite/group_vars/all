@@ -51,7 +51,7 @@ setup_virtwho: false
 setup_discovery: true
 setup_infrastructure: false
 compute_resources:
-  compute_resource:
+  compute_resource_1:
     name: "VMware"
     type: "esx"
     controller_hostname: "your_vcentre_server_here"
@@ -59,7 +59,7 @@ compute_resources:
     controller_password: "service_password"   #Provide this as a variable in a private file - will be encryped.
     virtwho_username: "readonly_admin_name"
     virtwho_password: "virtwho_password"    #Provide this as a variable in a private file - will be encrypted.
-  compute_resource:
+  compute_resource_2:
     name: "RHV"
     type: ovirt
     controller_hostname: "your_rhvm_server_here"
