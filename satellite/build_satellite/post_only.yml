@@ -1,0 +1,7 @@
+---
+- hosts: satellite-servers
+  become: yes
+
+  roles:
+    - satellite_post
+

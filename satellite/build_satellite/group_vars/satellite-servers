@@ -1,0 +1,177 @@
+# used for preparing the Satellite Server
+sat_firewalld_zone: "public"
+install_idm_client: false
+ipa_domain: "newlab.local"
+ipa_realm: "NEWLAB.LOCAL"
+ipa_server: "sat6.newlab.local"
+ipa_admin_password: "pass_as_environment"
+ipa_generate_certs: false
+ipa_server_certs_dir: "/etc/ipa/private/"
+ipa_server_prv_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.pem"
+ipa_server_crt_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.crt"
+ipa_server_key_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.key"
+ipa_server_csr_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.csr"
+ipa_server_ca_file: "/etc/ipa/ca.crt"
+
+# used for installing the Satellite Server
+# See template file in ../roles/satellite/templates/satellite-answers.yml
+redhat_org: "6856506"
+activation_key: "satbootstrap"
+satellite_server_url: "https://{{ ansible_fqdn }}"
+scenario: "satellite"
+foreman_initial_location: "lab"
+foreman_initial_organization: "NewLab"
+foreman_admin_email: "admin@{{ ipa_domain }}"
+foreman_admin_firstname: "admin"
+foreman_admin_lastname: "istrator"
+foreman_admin_username: "admin"
+foreman_compute_ec2: "true"
+foreman_compute_gce: "true"
+foreman_compute_libvirt: "true"
+foreman_compute_openstack: "true"
+foreman_compute_ovirt: "true"
+foreman_compute_rackspace: "true"
+foreman_compute_vmware: "true"
+enable_puppet_server: "false"
+certs_cname: "{{ ansible_fqdn }}"
+certs_node: "{{ ansible_fqdn }}"
+foreman_ipa_authentication: "false"
+foreman_proxy_realm: "false"
+foreman_proxy_keytab: "/etc/foreman-proxy/freeipa.keytab"
+foreman_proxy_realm_principal: "realm-capsule"
+foreman_proxy_realm_provider: "freeipa"
+foreman_proxy_tftp: "true"
+foreman_proxy_puppet: "false"
+
+# used in post installation configuration
+# What defines a repo is its organization, product, repository set name, architecture and release version
+# These are needed to synch. See README.md for more information on determining these values
+setup_hammer: "true"
+upload_manifest: "true"
+manifest_src_location: "/root/bootstrap_manifest.zip"
+setup_repositories: "true"
+repos_mandatory:
+   - name: "'Red Hat Enterprise Linux 7 Server (RPMs)'"
+     product: "'Red Hat Enterprise Linux Server'"
+     basearch: "x86_64"
+     releasever: "7Server"
+   
+   - name: "'Red Hat Enterprise Linux 7 Server (Kickstart)'"
+     product: "'Red Hat Enterprise Linux Server'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "'Red Hat Ansible Engine 2.7 RPMs for Red Hat Enterprise Linux 7 Server'"
+     product: "'Red Hat Ansible Engine'"
+     basearch: "x86_64"
+     releasever: ""
+
+   - name: "'Red Hat Enterprise Linux 7 Server - Extras (RPMs)'"
+     product: "'Red Hat Enterprise Linux Server'"
+     basearch: "x86_64"
+     releasever: ""
+
+   - name: "'Red Hat Enterprise Linux 7 Server - RH Common (RPMs)'"
+     product: "'Red Hat Enterprise Linux Server'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "'Red Hat Enterprise Linux 7 Server - Optional (RPMs)'"
+     product: "'Red Hat Enterprise Linux Server'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "'Red Hat Enterprise Virtualization Hypervisor 7 (RPMs)'"
+     product: "'Red Hat Virtualization'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "'Red Hat Virtualization Manager v4.2 (RHEL 7 Server) (RPMs)'"
+     product: "'Red Hat Virtualization Manager'"
+     basearch: "x86_64"
+     releasever: ""
+
+   - name: "'Red Hat Virtualization 4 Management Agents for RHEL 7 (RPMs)'"
+     product: "'Red Hat Virtualization'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "'Red Hat Virtualization Manager 4 Tools (RHEL 7 Server) (RPMs)'"
+     product: "'Red Hat Virtualization Manager'"
+     basearch: "x86_64"
+     releasever: ""
+
+   - name: "'Red Hat Gluster Storage 3 Server (RPMs)'"
+     product: "'Red Hat Gluster Storage Server for On-premise'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+repos_optional:
+   - name: "'Red Hat OpenShift Container Platform 3.11 (RPMs)'"
+     product: "'Red Hat OpenShift Container Platform'"
+     basearch: "x86_64"
+     releasever: ""
+
+   - name: "'Red Hat CloudForms Management Engine 5.9 (RPMs)'"
+     product: "'Red Hat CloudForms'"
+     basearch: "x86_64"
+     releasever: ""
+
+   - name: "'Red Hat Enterprise Linux High Availability (for RHEL 7 Server) (RPMs)'"
+     product: "'Red Hat Enterprise Linux High Availability (for RHEL Server)'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "'Red Hat Enterprise Linux Resilient Storage (for RHEL 7 Server) (RPMs)'"
+     product: "'Red Hat Enterprise Linux Resilient Storage (for RHEL Server)'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "'Red Hat Gluster Storage 3 NFS (RPMs)'"
+     product: "'Red Hat Gluster Storage Server for On-premise'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "'Red Hat Gluster Storage 3 Samba (for RHEL 7 Server) (RPMs)'"
+     product: "'Red Hat Gluster Storage Server for On-premise'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "'Red Hat Gluster Storage 3 Big Data (RPMs)'"
+     product: "'Red Hat Gluster Storage Server for On-premise'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "'Red Hat Gluster Storage 3 Splunk (RPMs)'"
+     product: "'Red Hat Gluster Storage Server for On-premise'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "'Red Hat Gluster Storage 3 Nagios (RPMs)'"
+     product: "'Red Hat Gluster Storage Nagios Server'"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+setup_environments: "true"
+setup_base_soe_cv: "true"
+setup_discovery: "true"
+setup_infrastructure: "false"
+setup_virtwho: "false"
+compute_resources:
+  compute_resource_1:
+    name: "VMware"
+    type: "esx"
+    controller_hostname: "your_vcentre_server_here"
+    controller_username: "service_admin_name"
+    controller_password: "service_password"   #Provide this as a variable in a private file - will be encryped.
+    virtwho_username: "readonly_admin_name"
+    virtwho_password: "virtwho_password"    #Provide this as a variable in a private file - will be encrypted.
+  compute_resource_2:
+    name: "RHV"
+    type: ovirt
+    controller_hostname: "your_rhvm_server_here"
+    controller_username: "service_admin_name"
+    controller_password: "service_password"   #Provide this as a variable in a private file
+    virtwho_username: "readonly_admin_name"
+    virtwho_password: "virtwho_password"    #Provide this as a variable in a private file - will be encrypted.
+

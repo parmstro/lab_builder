@@ -1,0 +1,12 @@
+---
+# This playbook configures the mandatory repositories outlined in the
+# group_variable file satellite-servers 
+#
+# NOTE: you are responsible for ensuring that any required repositories
+# outlined in your group_variable file are also enabled by the manifest
+# specified in the variable file. If not, this play will fail on missing repos
+
+- name: Generate the mandatory repositories commands with release versions
+  include_tasks: enable_repository.yml
+  loop: "{{ repos_optional }}"
+
