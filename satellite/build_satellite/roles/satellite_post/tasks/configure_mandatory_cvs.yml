@@ -8,4 +8,5 @@
 - name: Creating the specified content views
   include_tasks: create_cv.yml
   loop: "{{ cvs_mandatory }}"
-
+  loop_control:
+    loop_var: cv

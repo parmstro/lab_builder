@@ -182,6 +182,7 @@ lifecycle_environments:
      prior: "'Prod'"
 
 setup_base_soe_cv: "true"
+errata_end_date: "2019-01-01"
 cvs_mandatory:
   - name: SOE_RHEL
     desc: "'Our Red Hat Enterprise Linux Standard Operating Environment Content'"
@@ -197,20 +198,19 @@ cvs_mandatory:
     - name: "all-packages-no-errata"
       type: "rpm"
       inclusion: "true"
-      desc: "Give me all the gold"
+      desc: "'Give me all the gold'"
+      originalpackages: "true"
       repositories: "all"
-      rules:
-      - name: "all-packages-no-errata"
-        allpkgnoerrata: "true"
-
+        
     - name: "errata-by-date-monthly"
       type: "erratum"
       inclusion: "true"
-      desc: "include the errata to end date"
+      desc: "'include the errata to end date'"
       repositories: "all"
       rules:
-      - name: "'enddate rule - {{ errata_end_date }}'"
-        end-date: "2019-01-01"
+      - name: "errata-by-date-{{ errata_end_date }}"
+        enddate: "2019-01-01"
+        datetype: "issued"
         types:
         - "enhancement"
         - "bugfix"
@@ -219,11 +219,13 @@ cvs_mandatory:
     - name: "no-firefox"
       type: "rpm"
       inclusion: "false"
-      desc: "no firefox on servers"
+      desc: "'no firefox on servers'"
+      originalpackages: "true"
       repositories: "all"
       rules:
       - name: "firefox*"
-
+        basearch: "x86_64"
+ 
 setup_discovery: "true"
 setup_infrastructure: "false"
 setup_virtwho: "false"
