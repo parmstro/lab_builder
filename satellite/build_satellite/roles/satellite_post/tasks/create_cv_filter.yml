@@ -1,0 +1,12 @@
+---
+# This play creates the Content View Filters for a Content View
+#
+
+- name: Determine if the Content View Filter already exists
+  command: "hammer content-view filter info --content-view={{ active_cv }} --name={{ item.name }} --organization={{ active_org }}"
+  register: cvf_exists
+
+- name: Creating Content View Filter {{ item.name }}
+  command: "hammer content-view filter create --type={{ item.type }} --name={{ item.name }} --description={{ item.desc }} --inclusion={{ item.inclusion }} --organization={{ active_org }} --content-view={{ active_cv }}"
+  when: "cvf_exists.stdout = ''"
+

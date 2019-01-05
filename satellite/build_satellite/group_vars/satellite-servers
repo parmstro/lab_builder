@@ -47,8 +47,10 @@ foreman_proxy_puppet: "false"
 # What defines a repo is its organization, product, repository set name, architecture and release version
 # These are needed to synch. See README.md for more information on determining these values
 setup_hammer: "true"
+
 upload_manifest: "true"
 manifest_src_location: "/root/bootstrap_manifest.zip"
+
 setup_repositories: "true"
 repos_mandatory:
    - name: "'Red Hat Enterprise Linux 7 Server (RPMs)'"
@@ -152,8 +154,76 @@ repos_optional:
      basearch: "x86_64"
      releasever: "7Server"
 
-setup_environments: "true"
+
+setup_lifecycle_environments: "true"
+lifecycle_environments:
+   - name: "'Dev'"
+     label: "Dev"
+     desc: "'Our Development Servers'"
+     org: "'Default Organization'"
+     prior: "'Library'"
+
+   - name: "'QA'"
+     label: "QA"
+     desc: "'Our Quality Assurance Servers'"
+     org: "'Default Organization'"
+     prior: "'Dev'"
+
+   - name: "'Prod'"
+     label: "Prod"
+     desc: "'Our Production Servers'"
+     org: "'Default Organization'"
+     prior: "'QA'"
+
+   - name: "'Retired'"
+     label: "Retired"
+     desc: "'Our Retired Servers'"
+     org: "'Default Organization'"
+     prior: "'Prod'"
+
 setup_base_soe_cv: "true"
+cvs_mandatory:
+  - name: SOE_RHEL
+    desc: "'Our Red Hat Enterprise Linux Standard Operating Environment Content'"
+    org: "'Default Organization'"
+    repositories:
+    - "Red Hat Ansible Engine 2.7 RPMs for Red Hat Enterprise Linux 7 Server x86_64"
+    - "Red Hat Enterprise Linux 7 Server - Extras RPMs x86_64"
+    - "Red Hat Enterprise Linux 7 Server Kickstart x86_64 7Server"
+    - "Red Hat Enterprise Linux 7 Server - Optional RPMs x86_64 7Server"
+    - "Red Hat Enterprise Linux 7 Server - RH Common RPMs x86_64 7Server"
+    - "Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server"
+    filters:
+    - name: "all-packages-no-errata"
+      type: "rpm"
+      inclusion: "true"
+      desc: "Give me all the gold"
+      repositories: "all"
+      rules:
+      - name: "all-packages-no-errata"
+        allpkgnoerrata: "true"
+
+    - name: "errata-by-date-monthly"
+      type: "erratum"
+      inclusion: "true"
+      desc: "include the errata to end date"
+      repositories: "all"
+      rules:
+      - name: "'enddate rule - {{ errata_end_date }}'"
+        end-date: "2019-01-01"
+        types:
+        - "enhancement"
+        - "bugfix"
+        - "security"
+
+    - name: "no-firefox"
+      type: "rpm"
+      inclusion: "false"
+      desc: "no firefox on servers"
+      repositories: "all"
+      rules:
+      - name: "firefox*"
+
 setup_discovery: "true"
 setup_infrastructure: "false"
 setup_virtwho: "false"

@@ -1,0 +1,39 @@
+---
+# This play creates an individual content view from specified paramters
+# Call this with a dictionary defining the content-view.
+#
+# Specify the list as cvs_mandatory or cvs_optional in the vars file
+#
+# We ARE NOT using auto-publish for composites as we will control that 
+# through the monthly content configuration with Tower
+#
+# Creating the content view is many layered:
+# - create the view
+# - add the repositories
+# - add the filters
+# - add any ansible content
+# 
+- name: Determine if the Content View Exists
+  command: "hammer --output=json content-view info --organization={{ item.org }} --name={{ item.name }}"
+  register: cv_exists
+
+- name: Creating Content View {{ item.name }} in Organization {{ item.org }}
+  command: "hammer content-view create --name={{ item.name }} --description={{ item.desc }} --organization={{ item.org }}"
+  when: "cv_exists.stdout == ''"
+
+# update overwrites any existing repository information
+- name: Add the repositories to the Content View
+  command: "hammer content-view update --name={{ item.name }} --organization={{ item.org }} --repositories={{ item.repositories | join(', ') | quote }}"
+
+- set_fact:
+    active_cv: "{{ item.name }}"
+- set_fact:
+    active_org: "{{ item.org }}"
+
+# Add the filters
+# hammer content-view filter create --type rpm --name all-rpms-no-errata --description "Get everything that is golden" --inclusion=true --organization "Default Organization" --content-view test
+- name: Add the filters to the Content View
+  include_tasks: create_cv_filter.yml
+  loop: "{{ item.filters }}"
+
+

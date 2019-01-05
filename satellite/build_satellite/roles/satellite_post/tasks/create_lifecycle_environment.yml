@@ -1,0 +1,36 @@
+---
+# This play creates an individual lifecycle environment.
+# Loop over this with a list of lifecycle_environments
+# 
+# - name: "'lifecycle environment name'"
+#   label: "lifecycle_environment_label" # no spaces
+#   desc: "'lifecycle environment description'"
+#   prior: "Making the chain"
+#   org: Default_Organization or initial Org.
+
+# Determine if the lifecycle already exists
+#
+
+- set_fact:
+    lifecycle_environment_absent: false
+
+- name: Determine if lifecycle environment {{ item.name }} exists
+  command: "hammer --output=json lifecycle-environment info --organization={{ item.org }} --name={{ item.name }}"
+  register: result
+  ignore_errors: true
+
+- debug:
+    msg: "{{ result.stdout }}"
+
+- set_fact:
+    lifecycle_environment_absent: true
+  when: "result.stdout == ''"  
+
+- debug:
+    msg: "Lifecycle Environment exists, skipping creation."
+  when: "lifecycle_environment_absent == false"
+
+- name: Creating lifecycle environment {{ item.name }} in Org {{ item.org }} 
+  command: "hammer lifecycle-environment create --name={{ item.name }} --label={{ item.label }} --description={{ item.desc }} --organization={{ item.org }} --prior={{ item.prior }}"
+  when: "lifecycle_environment_absent == true"
+
