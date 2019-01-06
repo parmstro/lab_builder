@@ -3,31 +3,46 @@
 
 # used for preparing the Satellite Server
 sat_firewalld_zone: "public"
-install_idm_client: false
+install_ipa_client: "true"
+
+# The IPA client can only be configured after the IPA Server is installed
+# We will ues these values after the Satellite and IPA serves are bootstrapped
+configure_ipa_client: "false"
 ipa_domain: "newlab.local"
 ipa_realm: "NEWLAB.LOCAL"
-ipa_server: "sat6.newlab.local"
+ipa_server_fqdn: "ipa1.newlab.local"
 ipa_admin_password: "pass_as_environment"
-ipa_generate_certs: false
+ipa_generate_certs: "false"
 ipa_server_certs_dir: "/etc/ipa/private/"
-ipa_server_prv_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.pem"
-ipa_server_crt_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.crt"
-ipa_server_key_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.key"
-ipa_server_csr_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.csr"
+ipa_server_prv_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.pem"
+ipa_server_crt_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.crt"
+ipa_server_key_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.key"
+ipa_server_csr_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.csr"
 ipa_server_ca_file: "/etc/ipa/ca.crt"
 
 # used for installing the Satellite Server
 # See template file in ../roles/satellite/templates/satellite-answers.yml
+scenario: "satellite"
 redhat_org: "6856506"
 activation_key: "satbootstrap"
-satellite_server_url: "https://{{ ansible_fqdn }}"
-scenario: "satellite"
-foreman_initial_location: "lab"
-foreman_initial_organization: "NewLab"
-foreman_admin_email: "admin@{{ ipa_domain }}"
+certs_node_fqdn: "{{ ansible_fqdn }}"
+certs_ca_common_name: "{{ ansible_fqdn }}"
+foreman_foreman_url: "https://{{ ansible_fqdn }}"
+foreman_servername: "{{ ansible_fqdn }}"
+foreman_server_ssl_ca: "/etc/pki/katello/certs/katello-default-ca.crt"
+foreman_server_ssl_chain: "/etc/pki/katello/certs/katello-server-ca.crt"
+foreman_server_ssl_cert: "/etc/pki/katello/certs/katello-apache.crt"
+foreman_server_ssl_certs_dir: ""
+foreman_server_ssl_key: "/etc/pki/katello/private/katello-apache.key"
+foreman_server_ssl_crl: ""
+foreman_admin_username: "admin"
+foreman_admin_password: "pass_as_environment"
 foreman_admin_firstname: "admin"
 foreman_admin_lastname: "istrator"
-foreman_admin_username: "admin"
+foreman_admin_email: "admin@{{ ipa_domain }}"
+foreman_initial_organization: "NewLab"
+foreman_initial_location: "lab"
+foreman_ipa_authentication: "false"
 foreman_compute_ec2: "true"
 foreman_compute_gce: "true"
 foreman_compute_libvirt: "true"
@@ -35,16 +50,21 @@ foreman_compute_openstack: "true"
 foreman_compute_ovirt: "true"
 foreman_compute_rackspace: "true"
 foreman_compute_vmware: "true"
-enable_puppet_server: "false"
-certs_cname: "{{ ansible_fqdn }}"
-certs_node: "{{ ansible_fqdn }}"
-foreman_ipa_authentication: "false"
-foreman_proxy_realm: "false"
-foreman_proxy_keytab: "/etc/foreman-proxy/freeipa.keytab"
-foreman_proxy_realm_principal: "realm-capsule"
-foreman_proxy_realm_provider: "freeipa"
 foreman_proxy_tftp: "true"
+foreman_proxy_dhcp: "true"
+foreman_proxy_dhcp_gateway: "192.168.252.1"
+foreman_proxy_dhcp_range: 
+foreman_proxy_dhcp_option_domain: ["{{ ipa_domain }}"]
+foreman_proxy_dhcp_interface: "eth0"
+foreman_proxy_dhcp_pxeserver: "{{ ansible_fqdn }}"
+foreman_proxy_dhcp_network: ""
+foreman_proxy_dhcp_netmask: "255.255.252.0"
+foreman_proxy_realm: "false"
+foreman_proxy_realm_provider: "freeipa"
+foreman_proxy_realm_keytab: "/etc/foreman-proxy/freeipa.keytab"
+foreman_proxy_realm_principal: "realm-capsule@{{ ipa_realm }}"
 foreman_proxy_puppet: "false"
+puppet_enable_puppet_server: "false"
 
 # used in post installation configuration
 # What defines a repo is its organization, product, repository set name, architecture and release version
@@ -387,17 +407,21 @@ ccvs_optional:
 setup_discovery: "true"
 setup_infrastructure: "false"
 setup_virtwho: "false"
+
+# This can be fleshed out after we create the bootable image
+# This will get updated on launch after bootstrapping the first server
+# The startup service will call git pull to update the local repository
+# Compute resources can only be built after the hypervisors are deployed.
 compute_resources:
-  compute_resource_1:
-    name: "VMware"
+  - name: "VMware"
     type: "esx"
     controller_hostname: "your_vcentre_server_here"
     controller_username: "service_admin_name"
     controller_password: "service_password"   #Provide this as a variable in a private file - will be encryped.
     virtwho_username: "readonly_admin_name"
     virtwho_password: "virtwho_password"    #Provide this as a variable in a private file - will be encrypted.
-  compute_resource_2:
-    name: "RHV"
+
+  - name: "RHV"
     type: ovirt
     controller_hostname: "your_rhvm_server_here"
     controller_username: "service_admin_name"
