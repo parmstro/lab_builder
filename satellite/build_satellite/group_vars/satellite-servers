@@ -192,6 +192,7 @@ cvs_mandatory:
     org: "'Default Organization'"
     repositories:
     - "Red Hat Ansible Engine 2.7 RPMs for Red Hat Enterprise Linux 7 Server x86_64"
+    - "Red Hat Satellite Tools 6.4 for RHEL 7 Server RPMs x86_64"
     - "Red Hat Enterprise Linux 7 Server - Extras RPMs x86_64"
     - "Red Hat Enterprise Linux 7 Server Kickstart x86_64 7Server"
     - "Red Hat Enterprise Linux 7 Server - Optional RPMs x86_64 7Server"
@@ -297,8 +298,8 @@ cvs_optional:
     desc: "'Our Current RHEV Hypervisor Content'"
     org: "'Default Organization'"
     repositories:
-    - "Red Hat Satellite Tools 6.3 for RHEL 7 Server RPMs x86_64"
-    - "Red Hat Ansible Engine 2.5 RPMs for Red Hat Enterprise Linux 7 Server x86_64"
+    - "Red Hat Satellite Tools 6.4 for RHEL 7 Server RPMs x86_64"
+    - "Red Hat Ansible Engine 2.7 RPMs for Red Hat Enterprise Linux 7 Server x86_64"
     - "Red Hat Virtualization Host 7 RPMs x86_64"
     - "Red Hat Virtualization Host 7 Build RPMs x86_64"
     filters:
