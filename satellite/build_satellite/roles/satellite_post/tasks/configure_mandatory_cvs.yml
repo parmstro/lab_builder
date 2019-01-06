@@ -10,3 +10,10 @@
   loop: "{{ cvs_mandatory }}"
   loop_control:
     loop_var: cv
+
+- name: Publish the specified content views
+  include_tasks: publish_cv.yml
+  loop: "{{ cvs_mandatory }}"
+  loop_control:
+    loop_var: cv
+

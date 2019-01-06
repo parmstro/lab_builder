@@ -5,8 +5,18 @@
 # Define your mandatory content views in the satellite-servers variable file
 # using a list
 #
-- name: Creating the specified OPTIONAL COMPOSITE content views
+- name: Creating the specified content views
   include_tasks: create_ccv.yml
   loop: "{{ ccvs_optional }}"
+  loop_control:
+    loop_var: ccv
+  when: "ccvs_optional is defined"
 
+# Publish requires the cv loop variable. 
+# Lets hope we don't crash here.
+- name: Publish the specified content views
+  include_tasks: publish_cv.yml
+  loop: "{{ ccvs_optional }}"
+  loop_control:
+    loop_var: cv
 

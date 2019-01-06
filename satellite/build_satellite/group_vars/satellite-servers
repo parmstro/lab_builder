@@ -1,3 +1,6 @@
+# The real way to do this is to take a json dump of a foreman environment
+# and then feed that to an ansible play to recreate. 
+
 # used for preparing the Satellite Server
 sat_firewalld_zone: "public"
 install_idm_client: false
@@ -195,17 +198,56 @@ cvs_mandatory:
     - "Red Hat Enterprise Linux 7 Server - RH Common RPMs x86_64 7Server"
     - "Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server"
     filters:
-    - name: "all-packages-no-errata"
+    - name: "IncludePackagesNoErrata"
       type: "rpm"
       inclusion: "true"
-      desc: "'Give me all the gold'"
+      desc: "'Include all packages with no errata for all repositories'"
       originalpackages: "true"
       repositories: "all"
-        
-    - name: "errata-by-date-monthly"
+    - name: "IncludeErrataByDate"
       type: "erratum"
       inclusion: "true"
-      desc: "'include the errata to end date'"
+      desc: "'Include all errata updated as of the 1st of the month'"
+      repositories: "all"
+      rules:
+      - name: "errata-by-date-{{ errata_end_date }}"
+        enddate: "2019-01-01"
+        datetype: "issued"
+        types:
+        - "enhancement"
+        - "bugfix"
+        - "security"
+    - name: "NoFireFox"
+      type: "rpm"
+      inclusion: "false"
+      desc: "'Do provide Firefox to be installed on servers'"
+      originalpackages: "true"
+      repositories: "all"
+      rules:
+      - name: "firefox*"
+        basearch: "x86_64"
+
+cvs_optional:
+  - name: OCP3
+    desc: "'Our Current OpenShift Container Platform Content'"
+    org: "'Default Organization'"
+    repositories:
+    - "Red Hat OpenShift Application Runtimes Node.js v10 RPMs x86_64"
+    - "Red Hat Enterprise Linux Fast Datapath RHEL 7 Server RPMs x86_64 7Server"
+    - "Red Hat Gluster Storage 3.1 Server RPMs x86_64 7Server"
+    - "Red Hat OpenShift Container Platform 3.11 RPMs x86_64"
+    - "Single Sign-On 7.1 RHEL 7 Server RPMs x86_64"
+    filters:
+    - name: "IncludePackagesNoErrata"
+      type: "rpm"
+      inclusion: "true"
+      desc: "'Include all packages with no errata for all repositories'"
+      originalpackages: "true"
+      repositories: "all"
+    - name: "IncludeErrataByDate"
+      type: "erratum"
+      inclusion: "true"
+      desc: "'Include all errata updated as of the 1st of the month'"
       repositories: "all"
       rules:
       - name: "errata-by-date-{{ errata_end_date }}"
@@ -216,16 +258,131 @@ cvs_mandatory:
         - "bugfix"
         - "security"
 
-    - name: "no-firefox"
+  - name: RHS_Gluster
+    desc: "'Our Current Non-Hyperconverged Gluster Content'"
+    org: "'Default Organization'"
+    repositories:
+    - "Red Hat Storage Console Main for Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server"
+    - "Red Hat Storage Console Installer for Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server"
+    - "Red Hat Storage Console Agent for Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server"
+    - "Red Hat Gluster Storage 3.1 Splunk RPMs x86_64 7Server"
+    - "Red Hat Gluster Storage 3.1 Server RPMs x86_64 7Server"
+    - "Red Hat Gluster Storage 3.1 Samba for RHEL 7 Server RPMs x86_64 7Server"
+    - "Red Hat Gluster Storage 3.1 NFS RPMs x86_64 7Server"
+    - "Red Hat Gluster Storage 3.1 Nagios RPMs x86_64 7Server"
+    - "Red Hat Gluster Storage 3.1 Console RPMs x86_64 7Server"
+    - "Red Hat Gluster Storage 3.1 Big Data RPMs x86_64 7Server"
+    filters:
+    - name: "IncludePackagesNoErrata"
       type: "rpm"
-      inclusion: "false"
-      desc: "'no firefox on servers'"
+      inclusion: "true"
+      desc: "'Include all packages with no errata for all repositories'"
       originalpackages: "true"
       repositories: "all"
+    - name: "IncludeErrataByDate"
+      type: "erratum"
+      inclusion: "true"
+      desc: "'Include all errata updated as of the 1st of the month'"
+      repositories: "all"
       rules:
-      - name: "firefox*"
-        basearch: "x86_64"
- 
+      - name: "errata-by-date-{{ errata_end_date }}"
+        enddate: "2019-01-01"
+        datetype: "issued"
+        types:
+        - "enhancement"
+        - "bugfix"
+        - "security"
+
+  - name: RHVH
+    desc: "'Our Current RHEV Hypervisor Content'"
+    org: "'Default Organization'"
+    repositories:
+    - "Red Hat Satellite Tools 6.3 for RHEL 7 Server RPMs x86_64"
+    - "Red Hat Ansible Engine 2.5 RPMs for Red Hat Enterprise Linux 7 Server x86_64"
+    - "Red Hat Virtualization Host 7 RPMs x86_64"
+    - "Red Hat Virtualization Host 7 Build RPMs x86_64"
+    filters:
+    - name: "IncludePackagesNoErrata"
+      type: "rpm"
+      inclusion: "true"
+      desc: "'Include all packages with no errata for all repositories'"
+      originalpackages: "true"
+      repositories: "all"
+    - name: "IncludeErrataByDate"
+      type: "erratum"
+      inclusion: "true"
+      desc: "'Include all errata updated as of the 1st of the month'"
+      repositories: "all"
+      rules:
+      - name: "errata-by-date-{{ errata_end_date }}"
+        enddate: "2019-01-01"
+        datetype: "issued"
+        types:
+        - "enhancement"
+        - "bugfix"
+        - "security"
+
+  - name: RHVM
+    desc: "'Our Current RHEV Manager Content'"
+    org: "'Default Organization'"
+    repositories:
+    - "JBoss Enterprise Application Platform 7 RHEL 7 Server RPMs x86_64 7Server"
+    - "Red Hat Virtualization Manager v4.2 RHEL 7 Server RPMs x86_64"
+    - "Red Hat Virtualization Host 7 Build RPMs x86_64"
+    - "Red Hat Virtualization Manager 4 Tools RHEL 7 Server RPMs x86_64"
+    filters:
+    - name: "IncludePackagesNoErrata"
+      type: "rpm"
+      inclusion: "true"
+      desc: "'Include all packages with no errata for all repositories'"
+      originalpackages: "true"
+      repositories: "all"
+    - name: "IncludeErrataByDate"
+      type: "erratum"
+      inclusion: "true"
+      desc: "'Include all errata updated as of the 1st of the month'"
+      repositories: "all"
+      rules:
+      - name: "errata-by-date-{{ errata_end_date }}"
+        enddate: "2019-01-01"
+        datetype: "issued"
+        types:
+        - "enhancement"
+        - "bugfix"
+        - "security"
+
+ccvs_mandatory:
+  - name: SOE_OCP
+    desc: "'Our Current OpenShift Standard Operating Environment Content'"
+    org: "'Default Organization'"
+    components:
+    - "SOE_RHEL"
+    - "OCP3"
+    - "RHS_Gluster"
+
+  - name: SOE_RHVM
+    desc: "'Our Current RHV Manager Standard Operating Environment Content'"
+    org: "'Default Organization'"
+    components:
+    - "SOE_RHEL"
+    - "RHVM"
+    - "RHS_Gluster"
+
+  - name: SOE_RHVH_HC
+    desc: "'Our Current RHV Hyperconverged Infrastructure Standard Operating Environment Content'"
+    org: "'Default Organization'"
+    components:
+    - "RHVH"
+    - "RHS_Gluster"
+
+ccvs_optional:
+# TODO: Add the MSSQL content view and component
+  - name: SOE_MSSQL
+    desc: "'Our Current MSSQL on Linux Standard Operating Environment Content'"
+    org: "'Default Organization'"
+    components:
+    - "SOE_RHEL"
+
 setup_discovery: "true"
 setup_infrastructure: "false"
 setup_virtwho: "false"
