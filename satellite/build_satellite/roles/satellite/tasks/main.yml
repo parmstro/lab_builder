@@ -7,8 +7,8 @@
 
 - name: Deploy the configuration Template to foreman-installer directory (backup original)
   template:
-    src: templates/satellite-answers.yml
-    dest: /etc/foreman-installer/scenarios.d/satellite-answers.yml
+    src: templates/satellite-answers.yaml
+    dest: /etc/foreman-installer/scenarios.d/satellite-answers.yaml
     backup: yes
 
 - name: Install the Satellite Server
