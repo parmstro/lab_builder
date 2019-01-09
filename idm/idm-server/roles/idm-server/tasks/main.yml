@@ -1,5 +1,9 @@
 ---
-- name: uninstall idm client if it exists
+- name: uninstall the idm server if it exists
+  command: ipa-server-install --uninstall
+  ignore_errors: yes
+
+- name: uninstall idm client if it exists, should be uninstalled with the server
   command: ipa-client-install --uninstall
   ignore_errors: yes
 

@@ -21,6 +21,14 @@
     format: "{{ format }}"
     state: present
 
+- name: Update the pki ssl configuration to generate a csr with subjectAltNames
+  template:
+    src: openssl.cnf.j2
+    dest: /etc/pki/tls/openssl.cnf
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Generate csr
   openssl_csr:
     path: "{{ csr_path }}"
@@ -45,4 +53,4 @@
   command: "ipa cert-request --add --principal={{ principal }} {{ csr_path }} | grep -i 'Serial number:'| awk '{gsub(\" Serial number: \",\"\"); print $1}'  | ipa cert-show --out={{ crt_path }}"
 
 - name: Retrieve the keytab for the service
-  command: "pa-getkeytab -s {{ ipa_server }} -p {{ principal }} -k {{ keytab_path }}"
+  command: "ipa-getkeytab -s {{ ipa_server }} -p {{ principal }} -k {{ keytab_path }}"

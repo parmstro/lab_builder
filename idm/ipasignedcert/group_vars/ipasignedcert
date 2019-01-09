@@ -21,3 +21,6 @@ localityName: "Hespeler"
 emailAddress: "ipaadmin@parmstrong.ca"
 digest: sha256
 ansible_keytab: "/etc/ansible.keytab"
+san_DNS_1: "{{ ansible_hostname }}"
+san_DNS_2: ""
+san_DNS_3: ""

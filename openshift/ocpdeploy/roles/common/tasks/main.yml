@@ -8,23 +8,26 @@
   - name: disable all existing repos
     command: subscription-manager repos --disable=*
 
-  - name: enable Satellite tools rpms
-    command: subscription-manager repos --enable=rhel-7-server-satellite-tools-6.2-rpms
+  - name: enable Satellite tools repository
+    command: subscription-manager repos --enable=rhel-7-server-satellite-tools-6.4-rpms
 
-  - name: enable RHEL server rpms
+  - name: enable RHEL server repository
     command: subscription-manager repos --enable=rhel-7-server-rpms
 
-  - name: enable RHEL extras rpms
+  - name: enable RHEL extras repository
     command: subscription-manager repos --enable=rhel-7-server-extras-rpms
   
-  - name: enable gluster server rpms
-    command: subscription-manager repos --enable=rh-gluster-3-for-rhel-7-server-rpms
+  - name: enable gluster client repository
+    command: subscription-manager repos --enable=rh-gluster-3-client-for-rhel-7-server-rpms
 
-  - name: enable openshift container platform rpms
-    command: subscription-manager repos --enable=rhel-7-server-ose-3.6-rpms
+  - name: enable openshift container platform repository
+    command: subscription-manager repos --enable=rhel-7-server-ose-3.11-rpms
 
-  - name: enable fast datapath rpms
+  - name: enable fast datapath repository
     command: subscription-manager repos --enable=rhel-7-fast-datapath-rpms
+
+  - name: enable the ansible 2.6 repository
+    command: subscription-manager repos --enable=rhel-7-server-ansible-2.6-rpms
     
   - name: clean up yum repo info
     command: yum clean all
@@ -76,15 +79,15 @@
       name: httpd-tools
       state: latest
 
-  - name: install utilities required cns-deploy
-    yum:
-      name: cns-deploy
-      state: latest
+#  - name: install utilities required cns-deploy
+#    yum:
+#      name: cns-deploy
+#      state: latest
 
-  - name: install utilities required heketi-client
-    yum:
-      name: heketi-client
-      state: latest
+#  - name: install utilities required heketi-client
+#    yum:
+#      name: heketi-client
+#      state: latest
 
   - name: install utilities required kexec-tools
     yum:
@@ -101,27 +104,17 @@
       name: psacct
       state: latest
 
-  - name: disable gluster server rpms
-    command: subscription-manager repos --disable=rh-gluster-3-for-rhel-7-server-rpms
+  - name: install the gluster fuse client
+    yum:
+      name: glusterfs-fuse
+      state: latest
+
+  - name: disable gluster client rpms
+    command: subscription-manager repos --disable=rh-gluster-3-client-for-rhel-7-server-rpms
 
   - name: update the system
     yum: 
       name: '*'
-      state: latest
-
-  - name: Install openshift utils atomic-openshift-utils
-    yum:
-      name: atomic-openshift-utils
-      state: latest
- 
-  - name: Install openshift utils atomic-openshift-excluder
-    yum:
-      name: atomic-openshift-excluder
-      state: latest
-
-  - name: Install openshift utils atomic-openshift-docker-excluder
-    yum:
-      name: atomic-openshift-docker-excluder
       state: latest
 
  

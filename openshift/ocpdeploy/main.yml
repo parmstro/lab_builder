@@ -9,9 +9,9 @@
    roles:
    - common
 
- - name: apply the install configuration to the masters
-   hosts: openshift_masters
+ - name: apply the install configuration to the deployment master
+   hosts: openshift_deployment_master
    become: yes
 
    roles:
-   - master
+   - deployment_master

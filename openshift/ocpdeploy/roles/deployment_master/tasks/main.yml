@@ -29,13 +29,29 @@
       group: root
       mode: 0744
 
+  # If we are installing multiple masters, insert the external DNS records for wildcard for app sub domain
+  #
+  - name: create application subdomain record in DNS for each master (round-robin)
+    nsupdate:
+      server: "{{ ocpdeploy_dnsupdate_server }}"
+      zone: "{{ ocpdeploy_dnsupdate_zone }}"
+      record: "{{ ocpdeploy_master_default_subdomain
+
+    when: ocpdeploy_app_subdomain_lb_method = 'round-robin'
+
+  # If we are installing a native loadbalancer, insert the DNS records for loadbalancer master names
+
+  - name: install the openshift-ansible package
+    yum:
+      name: openshift-ansible
+      state: latest
 
   - name: pull the ose-deployer image
-    command: "docker pull registry.access.redhat.com/openshift3/ose-deployer:v3.6.173.0.49"
+    command: "docker pull registry.access.redhat.com/openshift3/ose-deployer:latest"
     when: ocpdeploy_pull_installer_images == true
 
   - name: pull the ose-haproxy-router image
-    command: "docker pull registry.access.redhat.com/openshift3/ose-haproxy-router:v3.6.173.0.49"
+    command: "docker pull registry.access.redhat.com/openshift3/ose-haproxy-router:latest"
     when: ocpdeploy_pull_installer_images == true
 
 

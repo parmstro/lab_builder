@@ -1,10 +1,10 @@
 # basic variables for the deployment hosts file
-ssh_user: root
-master_default_subdomain: ocp.parmstrong.ca
-deployment_type: openshift-enterprise
+ocpdeploy_ssh_user: root
+ocpdeploy_master_default_subdomain: ocp.parmstrong.ca
+ocpdeploy_deployment_type: openshift-enterprise
 
 # select the authentication method currently htpasswd OR ldap
-ocpdeploy_auth_method: htpasswd
+ocpdeploy_auth_method: ldap
 
 # if ldap you need these parameters
 # this is just a name - I set it to my realm name
@@ -22,7 +22,26 @@ ocpdeploy_ca_crt_path: /etc/ipa/ca.crt
 # ldaps://idm.myorg.com/ou=accounts,ou=users,dc=myorg,dc=com?uid
 ocpdeploy_ldap_url: ldap://idm.parmstrong.ca/cn=users,cn=accounts,dc=parmstrong,dc=ca?uid
 
-ocpdeploy_enable_service_catalog: false
+ocpdeploy_enable_service_catalog: true
+
+# Thes variables are used to control DDNS updates using nsupdate for 
+# ocp master nodes
+ocpdeploy_app_subdomain_lb_method: round-robin
+ocpdeploy_dnsupdate_server: idm.parmstrong.ca
+ocpdeploy_dnsupdate_zone: parmstrong.ca
+ocpdeploy_master_default_subdomain_wildcard: "*.testansible"
+ocpdeploy_master_default_subdomain_addresses: "[192.168.252.141, 192.168.252.143, 192.168.252.132]"
+
+# These variables control the registration of the system to get secured containers.
+ocpdeploy_oreg_url: "registry.redhat.io:443/openshift3/ose-${component}:${version}"
+ocpdeploy_oreg_auth_user: "parmstro@redhat.com"
+ocpdeploy_oreg_auth_password: "intentionallyLeftBlank"
+
+# These variables control the configuration of a loadbalancer for Clustered Master servers
+ocpdeploy_master_cluster_method: native
+ocpdeploy_master_cluster_hostname: openshift-internal.parmstrong.ca
+ocpdeploy_master_cluster_public_hostname: openshift-cluster.parmstrong.ca
+
 
 # These variables will set the proxy globally for openshift and docker
 # The last variable tell the installer to auto generate the no_proxy hosts for the cluster
