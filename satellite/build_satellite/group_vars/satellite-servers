@@ -1,6 +1,6 @@
 # The real way to do this is to take a json dump of a foreman environment
 # and then feed that to an ansible play to recreate. 
-init_system: "true"
+init_system: true
 bootstrap_fqdn: "sat6.labbuilder.ca"
 bootstrap_ip: "192.168.252.19"
 bootstrap_prefix: "22"
@@ -13,7 +13,7 @@ install_ipa_client: "true"
 
 # The IPA client can only be configured after the IPA Server is installed
 # We will ues these values after the Satellite and IPA serves are bootstrapped
-configure_ipa_client: "false"
+ipa_install_client: "false"
 ipa_domain: "newlab.local"
 ipa_realm: "NEWLAB.LOCAL"
 ipa_server_fqdn: "ipa1.newlab.local"
@@ -31,10 +31,10 @@ ipa_server_ca_file: "/etc/ipa/ca.crt"
 scenario: "satellite"
 redhat_org: "6856506"
 activation_key: "satbootstrap"
-cdn_proxy_hostname: "proxy.fqdn.here"
-cdn_proxy_port: "443"
-cdn_proxy_username: "proxy_user"
-cdn_proxy_password: "enter_as_environment_var"
+cdn_proxy_hostname: ""
+cdn_proxy_port: ""
+cdn_proxy_username: ""
+cdn_proxy_password: ""
 certs_node_fqdn: "{{ ansible_fqdn }}"
 certs_ca_common_name: "{{ ansible_fqdn }}"
 foreman_foreman_url: "https://{{ ansible_fqdn }}"
