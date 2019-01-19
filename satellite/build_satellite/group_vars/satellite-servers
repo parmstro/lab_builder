@@ -9,7 +9,7 @@ bootstrap_adapter: "enp0s25"
 
 # used for preparing the Satellite Server
 sat_firewalld_zone: "public"
-install_ipa_client: true
+install_ipa_client: "true"
 
 # The IPA client can only be configured after the IPA Server is installed
 # We will ues these values after the Satellite and IPA serves are bootstrapped
