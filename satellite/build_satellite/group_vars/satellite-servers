@@ -1,19 +1,19 @@
 # The real way to do this is to take a json dump of a foreman environment
 # and then feed that to an ansible play to recreate. 
-init_system: "true"
+init_system: true
 bootstrap_fqdn: "sat6.labbuilder.ca"
-bootstrap_ip4:: "192.168.252.19"
+bootstrap_ip4: "192.168.252.19"
 bootstrap_prefix: "22"
 bootstrap_gateway: "192.168.252.1"
 bootstrap_adapter: "enp0s25"
 
 # used for preparing the Satellite Server
 sat_firewalld_zone: "public"
-install_ipa_client: "true"
+install_ipa_client: true
 
 # The IPA client can only be configured after the IPA Server is installed
 # We will ues these values after the Satellite and IPA serves are bootstrapped
-configure_ipa_client: "false"
+configure_ipa_client: false
 ipa_domain: "newlab.local"
 ipa_realm: "NEWLAB.LOCAL"
 ipa_server_fqdn: "ipa1.newlab.local"
