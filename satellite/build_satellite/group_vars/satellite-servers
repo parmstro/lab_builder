@@ -1,5 +1,11 @@
 # The real way to do this is to take a json dump of a foreman environment
 # and then feed that to an ansible play to recreate. 
+init_system: "true"
+bootstrap_fqdn: "sat6.labbuilder.ca"
+bootstrap_ip: "192.168.252.19"
+bootstrap_prefix: "22"
+bootstrap_gateway: "192.168.252.1"
+bootstrap_adapter: "enp0s25"
 
 # used for preparing the Satellite Server
 sat_firewalld_zone: "public"
@@ -44,8 +50,8 @@ foreman_admin_password: "pass_as_environment"
 foreman_admin_firstname: "admin"
 foreman_admin_lastname: "istrator"
 foreman_admin_email: "admin@{{ ipa_domain }}"
-foreman_initial_organization: "NewLab"
-foreman_initial_location: "lab"
+foreman_initial_organization: "Default Organization"
+foreman_initial_location: "Default Location"
 foreman_ipa_authentication: "false"
 foreman_compute_ec2: "true"
 foreman_compute_gce: "true"

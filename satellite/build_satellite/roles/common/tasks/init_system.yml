@@ -1,0 +1,23 @@
+---
+# Set then fqdn, ip address, netmask on the bootstrap adapter
+#
+
+- name: Set the fqdn
+  command: "hostnamectl set-hostname {{ bootstrap_fqdn }}"
+
+- name: Set the network configuration
+  command: "nmcli con add save yes con-name bootstrap ifname {{ bootstrap_adapter }}  type ethernet ip4  {{ bootstrap_ip4 }}/{{ bootstrap_prefix }} gw4 {{ bootstrap_gateway }}"
+
+- name: Bring the new connection online
+  command: "nmcli con up bootstrap"
+
+- name: Test Connectivity
+  wait_for:
+    host: 8.8.8.8
+    port: 53
+    timeout: 10
+
+- debug:
+    msg: "Can reach the internet continuing..."
+
+   

@@ -1,12 +1,5 @@
 ---
 # This play creates an individual lifecycle environment.
-# Loop over this with a list of lifecycle_environments
-# 
-# - name: "'lifecycle environment name'"
-#   label: "lifecycle_environment_label" # no spaces
-#   desc: "'lifecycle environment description'"
-#   prior: "Making the chain"
-#   org: Default_Organization or initial Org.
 
 # Determine if the lifecycle already exists
 #

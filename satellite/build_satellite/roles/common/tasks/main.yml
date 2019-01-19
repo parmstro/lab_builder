@@ -2,6 +2,9 @@
 # setup the server for the installation of Satellite or Capsule
 #
 
+- import_tasks: init_system.yml
+  when: init_system == true
+
 - import_tasks: registration.yml
 - import_tasks: repositories.yml
 - import_tasks: install_chronyd.yml

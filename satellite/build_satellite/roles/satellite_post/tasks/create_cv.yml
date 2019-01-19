@@ -28,7 +28,6 @@
   command: "hammer content-view update --name={{ cv.name }} --organization={{ cv.org }} --repositories={{ cv.repositories | join(',') | quote }}"
 
 # Add the filters
-# hammer content-view filter create --type rpm --name all-rpms-no-errata --description "Get everything that is golden" --inclusion=true --organization "Default Organization" --content-view test
 - name: Add the filters to the Content View
   include_tasks: create_cv_filter.yml
   loop: "{{ cv.filters }}"
