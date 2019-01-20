@@ -6,7 +6,7 @@
   command: "hostnamectl set-hostname {{ bootstrap_fqdn }}"
 
 - name: Set the network configuration
-  command: "nmcli con add save yes con-name bootstrap ifname {{ bootstrap_adapter }}  type ethernet ip4  {{ bootstrap_ip4 }}/{{ bootstrap_prefix }} gw4 {{ bootstrap_gateway }} ipv4.dns '8.8.8.8 8.8.4.4'"
+  command: "nmcli con add save yes con-name bootstrap ifname {{ bootstrap_adapter }}  type ethernet ip4  {{ bootstrap_ip4 }}/{{ bootstrap_prefix }} gw4 {{ bootstrap_gateway }} ipv4.dns '{{ bootstrap_dns }} 8.8.8.8'"
 
 - name: Bring the new connection online
   command: "nmcli con up bootstrap"
