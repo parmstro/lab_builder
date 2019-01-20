@@ -11,12 +11,12 @@
     dest: "/root/manifest.zip"
 
 - name: Remove any existing manifest
-  command: "hammer subscription delete-manifest --organization={{ foreman_initial_organization }}"
+  command: "hammer subscription delete-manifest --organization='{{ foreman_initial_organization }}'"
 
 - name: Upload the manifest to Satellite
   #command: "hammer subscription upload --file=/root/manifest.zip --organization={{ foreman_initial_organization }}"
-  command: "hammer subscription upload --file=/root/manifest.zip --organization={{ foreman_initial_organization }}"
+  command: "hammer subscription upload --file=/root/manifest.zip --organization='{{ foreman_initial_organization }}'"
 
 - name: Refresh the manifest from CDN to get latest subscriptions
-  command: "hammer subscription refresh-manifest --organization={{ foreman_initial_organization }}"
+  command: "hammer subscription refresh-manifest --organization='{{ foreman_initial_organization }}'"
 
