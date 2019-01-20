@@ -9,11 +9,11 @@ bootstrap_adapter: "enp0s25"
 
 # used for preparing the Satellite Server
 sat_firewalld_zone: "public"
-install_ipa_client: "true"
+
 
 # The IPA client can only be configured after the IPA Server is installed
 # We will ues these values after the Satellite and IPA serves are bootstrapped
-configure_ipa_client: false
+ipa_install_client: false
 ipa_domain: "newlab.local"
 ipa_realm: "NEWLAB.LOCAL"
 ipa_server_fqdn: "ipa1.newlab.local"
