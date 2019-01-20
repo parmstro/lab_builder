@@ -10,8 +10,9 @@
     src: "{{ manifest_src_location }}"
     dest: "/root/manifest.zip"
 
-- name: Remove any existing manifest
+- name: Remove any existing manifest, ignore if it doesn't exist
   command: "hammer subscription delete-manifest --organization='{{ foreman_initial_organization }}'"
+  ignore_errors: true
 
 - name: Upload the manifest to Satellite
   command: "hammer subscription upload --file=/root/manifest.zip --organization='{{ foreman_initial_organization }}'"
