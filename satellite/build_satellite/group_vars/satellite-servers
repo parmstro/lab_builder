@@ -5,6 +5,7 @@ bootstrap_fqdn: "sat6.labbuilder.ca"
 bootstrap_ip4: "192.168.252.19"
 bootstrap_prefix: "22"
 bootstrap_gateway: "192.168.252.1"
+bootstrap_dns: "192.168.252.10"
 bootstrap_adapter: "enp0s25"
 
 # used for preparing the Satellite Server
