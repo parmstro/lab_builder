@@ -4,7 +4,7 @@
 # latest version. 
 
 - name: Get the list of content-view versions for the component content view as yaml
-  command: "hammer --output=yaml content-view version list --organization={{ ccv.org }} --content-view={{ ccvc }}"
+  command: "hammer --output=yaml content-view version list --organization='{{ ccv.org }}' --content-view={{ ccvc }}"
   register: result
 
 - name: The most recent version is the first listed. Append the ID to the list.

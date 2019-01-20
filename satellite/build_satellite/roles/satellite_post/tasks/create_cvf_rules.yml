@@ -4,13 +4,13 @@
 #
 
 - name: Determine if CV Filter has existing rules
-  command: "hammer --no-headers content-view filter rule list --content-view={{ cv.name }} --organization={{ cv.org }} --content-view-filter={{ cvf.name }}"
+  command: "hammer --no-headers content-view filter rule list --content-view={{ cv.name }} --organization='{{ cv.org }}' --content-view-filter={{ cvf.name }}"
   register: cvfr_exists
   ignore_errors: true
 
 - name: Creating the base command
   set_fact:
-    hammer_command: "hammer content-view filter rule create --organization={{ cv.org }} --content-view={{ cv.name }} --content-view-filter={{ cvf.name }}"
+    hammer_command: "hammer content-view filter rule create --organization='{{ cv.org }}' --content-view={{ cv.name }} --content-view-filter={{ cvf.name }}"
 
 - name: Add erratum types if applicable
   set_fact:

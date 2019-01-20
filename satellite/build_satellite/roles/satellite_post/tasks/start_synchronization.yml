@@ -9,7 +9,7 @@
     products_to_sync: "{{ repos_mandatory | map(attribute='product') | list | unique }}"
 
 - name: Sync the mandatory products with the CDN
-  command: "hammer product synchronize --async --organization={{ foreman_initial_organization }} --name={{ item }}"
+  command: "hammer product synchronize --async --organization='{{ foreman_initial_organization }}' --name={{ item }}"
   with_items: "{{ products_to_sync }}"
 
 - name: Get the unique list of optional products
@@ -17,6 +17,6 @@
     products_to_sync: "{{ repos_optional | map(attribute='product') | list | unique }}"
 
 - name: Sync the optional products with the CDN
-  command: "hammer product synchronize --async --organization={{ foreman_initial_organization }} --name={{ item }}"
+  command: "hammer product synchronize --async --organization='{{ foreman_initial_organization }}' --name={{ item }}"
   with_items: "{{ products_to_sync }}"
 

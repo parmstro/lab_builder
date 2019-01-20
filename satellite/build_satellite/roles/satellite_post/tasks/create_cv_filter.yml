@@ -3,16 +3,16 @@
 #
 
 - name: Determine if the Content View Filter already exists
-  command: "hammer content-view filter info --content-view={{ cv.name }} --name={{ cvf.name }} --organization={{ cv.org }}"
+  command: "hammer content-view filter info --content-view={{ cv.name }} --name={{ cvf.name }} --organization='{{ cv.org }}'"
   register: cvf_exists
   ignore_errors: true
 
 - set_fact:
-    hammer_command: "hammer content-view filter create --type={{ cvf.type }} --name={{ cvf.name }} --description={{ cvf.desc }} --inclusion={{ cvf.inclusion }} --organization={{ cv.org }} --content-view={{ cv.name }} --original-packages={{ cvf.originalpackages }}"
+    hammer_command: "hammer content-view filter create --type={{ cvf.type }} --name={{ cvf.name }} --description={{ cvf.desc }} --inclusion={{ cvf.inclusion }} --organization='{{ cv.org }}' --content-view={{ cv.name }} --original-packages={{ cvf.originalpackages }}"
   when: "cvf.type == 'rpm'"
 
 - set_fact:
-    hammer_command: "hammer content-view filter create --type={{ cvf.type }} --name={{ cvf.name }} --description={{ cvf.desc }} --inclusion={{ cvf.inclusion }} --organization={{ cv.org }} --content-view={{ cv.name }}"
+    hammer_command: "hammer content-view filter create --type={{ cvf.type }} --name={{ cvf.name }} --description={{ cvf.desc }} --inclusion={{ cvf.inclusion }} --organization='{{ cv.org }}' --content-view={{ cv.name }}"
   when: "cvf.type != 'rpm'"
 
 - debug:

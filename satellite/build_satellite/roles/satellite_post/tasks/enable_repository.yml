@@ -8,11 +8,11 @@
 #
 - name: Ensure repository {{ item.name }} is not already enabled
   set_fact:
-    hammer_command: "hammer repository-set disable --basearch={{ item.basearch }} --organization={{ foreman_initial_organization }} --product={{ item.product }} --name={{ item.name }} --releasever={{ item.releasever }}"
+    hammer_command: "hammer repository-set disable --basearch={{ item.basearch }} --organization='{{ foreman_initial_organization }}' --product={{ item.product }} --name={{ item.name }} --releasever={{ item.releasever }}"
   when: "item.releasever != ''"
 
 - set_fact:
-    hammer_command: "hammer repository-set disable --basearch={{ item.basearch }} --organization={{ foreman_initial_organization }} --product={{ item.product }} --name={{ item.name }}"
+    hammer_command: "hammer repository-set disable --basearch={{ item.basearch }} --organization='{{ foreman_initial_organization }}' --product={{ item.product }} --name={{ item.name }}"
   when: "item.releasever == ''"
 
 - command: "{{ hammer_command }}"
@@ -20,11 +20,11 @@
 
 - name: Enabling repository {{ item.name }}
   set_fact: 
-    hammer_command: "hammer repository-set enable --basearch={{ item.basearch }} --organization={{ foreman_initial_organization }} --product={{ item.product }} --name={{ item.name }} --releasever={{ item.releasever }}"
+    hammer_command: "hammer repository-set enable --basearch={{ item.basearch }} --organization='{{ foreman_initial_organization }}' --product={{ item.product }} --name={{ item.name }} --releasever={{ item.releasever }}"
   when: "item.releasever != ''"
 
 - set_fact:
-    hammer_command: "hammer repository-set enable --basearch={{ item.basearch }} --organization={{ foreman_initial_organization }} --product={{ item.product }} --name={{ item.name }}"
+    hammer_command: "hammer repository-set enable --basearch={{ item.basearch }} --organization='{{ foreman_initial_organization }}' --product={{ item.product }} --name={{ item.name }}"
   when: "item.releasever == ''"
 
 - name: Enable the repository
