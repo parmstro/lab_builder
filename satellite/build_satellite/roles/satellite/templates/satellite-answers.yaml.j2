@@ -272,7 +272,7 @@ foreman_proxy:
   dhcp_pxefilename: pxelinux.0
   dhcp_network: "{{ foreman_proxy_dhcp_network }}"
   dhcp_netmask: "{{ foreman_proxy_dhcp_netmask }}"
-  dhcp_nameservers: 192.168.252.10
+  dhcp_nameservers: "192.168.252.10,192.168.252.11"
   dhcp_server: 127.0.0.1
   dhcp_config: /etc/dhcp/dhcpd.conf
   dhcp_leases: /var/lib/dhcpd/dhcpd.leases
