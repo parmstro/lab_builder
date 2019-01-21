@@ -2,11 +2,13 @@
 # and then feed that to an ansible play to recreate. 
 init_system: true
 bootstrap_fqdn: "sat6.labbuilder.ca"
+bootstrap_domain: "labbuilder.ca"
 bootstrap_ip4: "192.168.252.19"
 bootstrap_prefix: "22"
 bootstrap_gateway: "192.168.252.1"
 bootstrap_dns: "192.168.252.10"
 bootstrap_adapter: "enp0s25"
+bootstrap_con_name: "enp0s25"
 bootstrap_add_utils:
   - bind-utils
   - screen
@@ -18,9 +20,9 @@ sat_firewalld_zone: "public"
 # The IPA client can only be configured after the IPA Server is installed
 # We will ues these values after the Satellite and IPA serves are bootstrapped
 ipa_install_client: false
-ipa_domain: "newlab.local"
-ipa_realm: "NEWLAB.LOCAL"
-ipa_server_fqdn: "ipa1.newlab.local"
+ipa_domain: "labbuilder.ca"
+ipa_realm: "LABBUILDER.CA"
+ipa_server_fqdn: "ipa1.labbuilder.ca"
 ipa_admin_password: "pass_as_environment"
 ipa_generate_certs: "false"
 ipa_server_certs_dir: "/etc/ipa/private/"
@@ -64,15 +66,26 @@ foreman_compute_openstack: "true"
 foreman_compute_ovirt: "true"
 foreman_compute_rackspace: "true"
 foreman_compute_vmware: "true"
-foreman_proxy_tftp: "true"
+
+foreman_proxy_dns: "true"
+foreman_proxy_dns_interface: "{{ bootstrap_adapter }}"
+foreman_proxy_dns_zone: "{{ bootstrap_domain }}"
+foreman_proxy_dns_forwarders: "192.168.252.10"
+foreman_proxy_dns_reverse: "192.168.in-addr.arpa"
+
 foreman_proxy_dhcp: "true"
-foreman_proxy_dhcp_gateway: "192.168.252.1"
-foreman_proxy_dhcp_range: "192.168.254.172 192.168.254.204" 
-foreman_proxy_dhcp_option_domain: ["{{ ipa_domain }}"]
 foreman_proxy_dhcp_interface: "{{ bootstrap_adapter }}"
+foreman_proxy_dhcp_range: "192.168.254.172 192.168.254.204" 
+foreman_proxy_dhcp_gateway: "192.168.252.1"
+foreman_proxy_dhcp_nameservers: "192.168.252.10 192.168.252.11"
+foreman_proxy_dhcp_option_domain: ["{{ bootstrap_domain }}"]
 foreman_proxy_dhcp_pxeserver: "{{ ansible_fqdn }}"
 foreman_proxy_dhcp_network: ""
 foreman_proxy_dhcp_netmask: "255.255.252.0"
+
+foreman_proxy_tftp: "true"
+foreman_proxy_tftp_servername: "{{ ansible_fqdn }}"
+
 foreman_proxy_realm: "false"
 foreman_proxy_realm_provider: "freeipa"
 foreman_proxy_realm_keytab: "/etc/foreman-proxy/freeipa.keytab"

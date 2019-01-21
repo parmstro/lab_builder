@@ -2,26 +2,35 @@
 # Set then fqdn, ip address, netmask on the bootstrap adapter
 #
 
-- name: Set the fqdn
+- name: "Set the fqdn for this host: {{ bootstrap_fqdn }}"
   command: "hostnamectl set-hostname {{ bootstrap_fqdn }}"
 
-- name: Clean up any network connections
-  command: "nmcli con delete bootstrap"
+- name: "Clean up any existing bootstrap network connections for: {{ bootstrap_con_name }}"
+  command: "nmcli con delete {{ bootstrap_con_name }}"
   ignore_errors: true
 
-- name: Set the network configuration
-  command: "nmcli con add save yes con-name bootstrap ifname {{ bootstrap_adapter }}  type ethernet ip4  {{ bootstrap_ip4 }}/{{ bootstrap_prefix }} gw4 {{ bootstrap_gateway }} ipv4.dns '{{ bootstrap_dns }} 8.8.8.8'"
+- name: "Reset the network configuration for: {{ bootstrap_con_name }}"
+  command: "nmcli con add save yes con-name {{ bootstrap_con_name }} ifname {{ bootstrap_adapter }}  type ethernet ip4  {{ bootstrap_ip4 }}/{{ bootstrap_prefix }} gw4 {{ bootstrap_gateway }} ipv4.dns '{{ bootstrap_dns }} 8.8.8.8'"
 
-- name: Bring the new connection online
-  command: "nmcli con up bootstrap"
+- name: "Bring the connection {{ bootstrap_con_name }} online"
+  command: "nmcli con up {{ bootstrap_con_name }}"
 
-- name: Test Connectivity
+- name: "Test Connectivity to Google"
   wait_for:
     host: 8.8.8.8
     port: 53
     timeout: 10
 
+- name: "Test connectivity to our FQDN"
+  wait_for:
+    host: "{{ bootstrap_fqdn }}"
+    port: 22
+    timeout: 10
+
 - debug:
     msg: "Can reach the internet continuing..."
 
+- debug:
+    msg: "Building system {{ ansible_fqdn }}"
    
+
