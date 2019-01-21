@@ -64,7 +64,7 @@ foreman_compute_vmware: "true"
 foreman_proxy_tftp: "true"
 foreman_proxy_dhcp: "true"
 foreman_proxy_dhcp_gateway: "192.168.252.1"
-foreman_proxy_dhcp_range: 
+foreman_proxy_dhcp_range: "192.168.254.172 192.168.254.204" 
 foreman_proxy_dhcp_option_domain: ["{{ ipa_domain }}"]
 foreman_proxy_dhcp_interface: "{{ bootstrap_adapter }}"
 foreman_proxy_dhcp_pxeserver: "{{ ansible_fqdn }}"
