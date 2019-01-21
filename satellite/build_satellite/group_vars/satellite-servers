@@ -66,7 +66,7 @@ foreman_proxy_dhcp: "true"
 foreman_proxy_dhcp_gateway: "192.168.252.1"
 foreman_proxy_dhcp_range: 
 foreman_proxy_dhcp_option_domain: ["{{ ipa_domain }}"]
-foreman_proxy_dhcp_interface: "eth0"
+foreman_proxy_dhcp_interface: "{{ bootstrap_adapter }}"
 foreman_proxy_dhcp_pxeserver: "{{ ansible_fqdn }}"
 foreman_proxy_dhcp_network: ""
 foreman_proxy_dhcp_netmask: "255.255.252.0"
