@@ -4,4 +4,4 @@
   roles:
     - common
     - satellite
-
+    - satellite_post

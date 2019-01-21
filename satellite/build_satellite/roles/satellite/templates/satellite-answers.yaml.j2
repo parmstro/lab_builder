@@ -301,7 +301,12 @@ foreman_proxy:
   dns_tsig_keytab: /etc/foreman-proxy/dns.keytab
   dns_tsig_principal: foremanproxy/sat6.labbuilder.ca@LABBUILDER.CA
   dns_forwarders: []
-  realm: "{{ foreman_proxy_realm }}"
+  libvirt_network: default
+  libvirt_connection: qemu:///system
+  bmc: false
+  bmc_listen_on: https
+  bmc_default_provider: ipmitool
+  realm: false
   realm_listen_on: https
   realm_provider: "{{ foreman_proxy_realm_provider }}"
   realm_keytab: "{{ foreman_proxy_realm_keytab }}"
@@ -458,7 +463,200 @@ katello:
   pulp_db_unsafe_autoretry: false
   pulp_db_write_concern: 
   pulp_manage_db: true
-
 puppet:
-  version: absent
-  server: "{{ puppet_enable_puppet_server }}"
+  version: present
+  user: puppet
+  group: puppet
+  dir: /etc/puppetlabs/puppet
+  codedir: /etc/puppetlabs/code
+  vardir: /opt/puppetlabs/puppet/cache
+  logdir: /var/log/puppetlabs/puppet
+  rundir: /var/run/puppetlabs
+  ssldir: /etc/puppetlabs/puppet/ssl
+  sharedir: /opt/puppetlabs/puppet
+  manage_packages: true
+  dir_owner: root
+  dir_group: 
+  package_provider: 
+  package_source: 
+  port: 8140
+  listen: false
+  listen_to: []
+  pluginsync: true
+  splay: false
+  splaylimit: '1800'
+  autosign: /etc/puppetlabs/puppet/autosign.conf
+  autosign_entries: []
+  autosign_mode: '0664'
+  autosign_content: 
+  autosign_source: 
+  runinterval: 1800
+  usecacheonfailure: true
+  runmode: service
+  unavailable_runmodes: []
+  cron_cmd: 
+  systemd_cmd: 
+  systemd_randomizeddelaysec: 0
+  agent_noop: false
+  show_diff: false
+  module_repository: 
+  configtimeout: 
+  ca_server: 
+  ca_port: 
+  ca_crl_filepath: 
+  prerun_command: 
+  postrun_command: 
+  dns_alt_names: []
+  use_srv_records: false
+  srv_domain: labbuilder.ca
+  pluginsource: puppet:///plugins
+  pluginfactsource: puppet:///pluginfacts
+  additional_settings: {}
+  agent_additional_settings: {}
+  agent_restart_command: /usr/bin/systemctl reload-or-restart puppet
+  classfile: $statedir/classes.txt
+  hiera_config: $confdir/hiera.yaml
+  auth_template: puppet/auth.conf.erb
+  allow_any_crl_auth: false
+  auth_allowed:
+  - $1
+  client_package:
+  - puppet-agent
+  agent: true
+  remove_lock: true
+  report: true
+  client_certname: sat6.labbuilder.ca
+  puppetmaster: 
+  systemd_unit_name: puppet-run
+  service_name: puppet
+  syslogfacility: 
+  environment: production
+  server: true
+  server_admin_api_whitelist:
+  - localhost
+  - sat6.labbuilder.ca
+  server_manage_user: true
+  server_user: puppet
+  server_group: puppet
+  server_dir: /etc/puppetlabs/puppet
+  server_ip: 0.0.0.0
+  server_port: 8140
+  server_ca: true
+  server_ca_crl_sync: false
+  server_crl_enable: 
+  server_ca_auth_required: true
+  server_ca_client_whitelist:
+  - localhost
+  - sat6.labbuilder.ca
+  server_http: false
+  server_http_port: 8139
+  server_http_allow: []
+  server_reports: foreman
+  server_implementation: puppetserver
+  server_passenger: true
+  server_puppetserver_dir: /etc/puppetlabs/puppetserver
+  server_puppetserver_vardir: /opt/puppetlabs/server/data/puppetserver
+  server_puppetserver_rundir: /var/run/puppetlabs/puppetserver
+  server_puppetserver_logdir: /var/log/puppetlabs/puppetserver
+  server_puppetserver_version: 5.1.0
+  server_service_fallback: true
+  server_passenger_min_instances: 1
+  server_passenger_pre_start: true
+  server_passenger_ruby: 
+  server_httpd_service: httpd
+  server_external_nodes: /etc/puppetlabs/puppet/node.rb
+  server_cipher_suites:
+  - TLS_RSA_WITH_AES_256_CBC_SHA256
+  - TLS_RSA_WITH_AES_256_CBC_SHA
+  - TLS_RSA_WITH_AES_128_CBC_SHA256
+  - TLS_RSA_WITH_AES_128_CBC_SHA
+  server_config_version: 
+  server_connect_timeout: 120000
+  server_git_repo: false
+  server_dynamic_environments: false
+  server_directory_environments: true
+  server_default_manifest: false
+  server_default_manifest_path: /etc/puppet/manifests/default_manifest.pp
+  server_default_manifest_content: ''
+  server_environments:
+  - development
+  - production
+  server_environments_owner: apache
+  server_environments_group: 
+  server_environments_mode: '0755'
+  server_envs_dir: /etc/puppetlabs/code/environments
+  server_envs_target: 
+  server_common_modules_path:
+  - /etc/puppetlabs/code/environments/common
+  - /etc/puppetlabs/code/modules
+  - /opt/puppetlabs/puppet/modules
+  - /usr/share/puppet/modules
+  server_git_repo_mode: '0755'
+  server_git_repo_path: /opt/puppetlabs/puppet/cache/puppet.git
+  server_git_repo_group: puppet
+  server_git_repo_user: puppet
+  server_git_branch_map: {}
+  server_idle_timeout: 1200000
+  server_post_hook_content: puppet/server/post-receive.erb
+  server_post_hook_name: post-receive
+  server_storeconfigs_backend: 
+  server_app_root: /etc/puppetlabs/puppet/rack
+  server_ruby_load_paths:
+  - /opt/puppetlabs/puppet/lib/ruby/vendor_ruby
+  server_ssl_dir: /etc/puppetlabs/puppet/ssl
+  server_ssl_dir_manage: true
+  server_ssl_key_manage: true
+  server_ssl_protocols:
+  - TLSv1.2
+  server_ssl_chain_filepath: /etc/puppetlabs/puppet/ssl/ca/ca_crt.pem
+  server_package: 
+  server_version: 
+  server_certname: sat6.labbuilder.ca
+  server_enc_api: v2
+  server_report_api: v2
+  server_request_timeout: 60
+  server_ca_proxy: 
+  server_strict_variables: false
+  server_additional_settings: {}
+  server_rack_arguments: []
+  server_foreman: true
+  server_foreman_url: https://sat6.labbuilder.ca
+  server_foreman_ssl_ca: /etc/pki/katello/puppet/puppet_client_ca.crt
+  server_foreman_ssl_cert: /etc/pki/katello/puppet/puppet_client.crt
+  server_foreman_ssl_key: /etc/pki/katello/puppet/puppet_client.key
+  server_foreman_facts: true
+  server_puppet_basedir: /opt/puppetlabs/puppet/lib/ruby/vendor_ruby/puppet
+  server_puppetdb_host: 
+  server_puppetdb_port: 8081
+  server_puppetdb_swf: false
+  server_parser: current
+  server_environment_timeout: 
+  server_jvm_java_bin: /usr/bin/java
+  server_jvm_config: /etc/sysconfig/puppetserver
+  server_jvm_min_heap_size: 2G
+  server_jvm_max_heap_size: 2G
+  server_jvm_extra_args: -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger
+  server_jvm_cli_args: 
+  server_jruby_gem_home: /opt/puppetlabs/server/data/puppetserver/jruby-gems
+  server_max_active_instances: 2
+  server_max_requests_per_instance: 0
+  server_max_queued_requests: 0
+  server_max_retry_delay: 1800
+  server_use_legacy_auth_conf: false
+  server_check_for_updates: true
+  server_environment_class_cache_enabled: false
+  server_allow_header_cert_info: false
+  server_web_idle_timeout: 30000
+  server_puppetserver_jruby9k: false
+  server_puppetserver_metrics: true
+  server_metrics_jmx_enable: true
+  server_metrics_graphite_enable: false
+  server_metrics_graphite_host: 127.0.0.1
+  server_metrics_graphite_port: 2003
+  server_metrics_server_id: sat6.labbuilder.ca
+  server_metrics_graphite_interval: 5
+  server_metrics_allowed: 
+  server_puppetserver_experimental: true
+  server_puppetserver_trusted_agents: []
+  server_compile_mode: 
+
