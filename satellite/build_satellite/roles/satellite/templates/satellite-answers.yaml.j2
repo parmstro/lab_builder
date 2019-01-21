@@ -204,7 +204,7 @@ foreman_proxy:
   manage_sudoersd: true
   use_sudoersd: true
   use_sudoers: true
-  puppetca: false
+  puppetca: "{{ foreman_puppet_ca }}"
   puppetca_listen_on: https
   ssldir: /etc/puppetlabs/puppet/ssl
   puppetdir: /etc/puppetlabs/puppet
@@ -212,7 +212,7 @@ foreman_proxy:
   puppet_group: puppet
   autosignfile: /etc/puppetlabs/puppet/autosign.conf
   manage_puppet_group: true
-  puppet: false
+  puppet: "{{ foreman_puppet }}"
   puppet_listen_on: https
   puppetrun_cmd: /opt/puppetlabs/bin/puppet kick
   puppetrun_provider: 
@@ -255,7 +255,7 @@ foreman_proxy:
   - /var/lib/tftpboot/boot
   - /var/lib/tftpboot/ztp.cfg
   - /var/lib/tftpboot/poap.cfg
-  tftp_servername: 
+  tftp_servername: "{{ foreman_proxy_tftp_servername }}"
   tftp_replace_grub2_cfg: false
   dhcp: "{{ foreman_proxy_dhcp }}"
   dhcp_listen_on: https
@@ -272,7 +272,7 @@ foreman_proxy:
   dhcp_pxefilename: pxelinux.0
   dhcp_network: "{{ foreman_proxy_dhcp_network }}"
   dhcp_netmask: "{{ foreman_proxy_dhcp_netmask }}"
-  dhcp_nameservers: default
+  dhcp_nameservers: "{{ foreman_proxy_dhcp_nameservers }}"
   dhcp_server: 127.0.0.1
   dhcp_config: /etc/dhcp/dhcpd.conf
   dhcp_leases: /var/lib/dhcpd/dhcpd.leases
@@ -289,18 +289,18 @@ foreman_proxy:
   dhcp_load_split: 255
   dhcp_load_balance: 3
   dhcp_manage_acls: true
-  dns: false
+  dns: "{{ foreman_proxy_dns }}"
   dns_listen_on: https
   dns_managed: true
   dns_provider: nsupdate
-  dns_interface: eth0
-  dns_zone: labbuilder.ca
-  dns_reverse: 
+  dns_interface: "{{ foreman_proxy_dns_interface }}"
+  dns_zone: "{{ foreman_proxy_dns_zone }}"
+  dns_reverse: "{{ foreman_proxy_dns_reverse }}"
   dns_server: 127.0.0.1
   dns_ttl: 86400
-  dns_tsig_keytab: /etc/foreman-proxy/dns.keytab
-  dns_tsig_principal: foremanproxy/sat6.labbuilder.ca@LABBUILDER.CA
-  dns_forwarders: []
+  dns_tsig_keytab: ""
+  dns_tsig_principal: ""
+  dns_forwarders: "[{{ foreman_proxy_dns_forwarders }}]"
   libvirt_network: default
   libvirt_connection: qemu:///system
   bmc: false
@@ -358,7 +358,7 @@ foreman_proxy_content:
   enable_ostree: true
   enable_yum: true
   enable_file: true
-  enable_puppet: "{{ puppet_enable_puppet_server }}"
+  enable_puppet: true
   enable_docker: true
   enable_deb: false
   manage_broker: true
@@ -399,7 +399,7 @@ foreman_proxy::plugin::remote_execution::ssh:
   enabled: true
   listen_on: https
   generate_keys: true
-  install_key: true
+  install_key: false
   ssh_identity_dir: /var/lib/foreman-proxy/ssh
   ssh_identity_file: id_rsa_foreman_proxy
   ssh_keygen: /usr/bin/ssh-keygen

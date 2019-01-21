@@ -67,13 +67,19 @@ foreman_compute_ovirt: "true"
 foreman_compute_rackspace: "true"
 foreman_compute_vmware: "true"
 
+foreman_puppet_ca: "true"
+foreman_puppet: "true"
+
+foreman_proxy_tftp: "true"
+foreman_proxy_tftp_servername: "{{ ansible_fqdn }}"
+
 foreman_proxy_dns: "true"
 foreman_proxy_dns_interface: "{{ bootstrap_adapter }}"
 foreman_proxy_dns_zone: "{{ bootstrap_domain }}"
 foreman_proxy_dns_forwarders: "192.168.252.10"
 foreman_proxy_dns_reverse: "192.168.in-addr.arpa"
 
-foreman_proxy_dhcp: "true"
+foreman_proxy_dhcp: "false"
 foreman_proxy_dhcp_interface: "{{ bootstrap_adapter }}"
 foreman_proxy_dhcp_range: "192.168.254.172 192.168.254.204" 
 foreman_proxy_dhcp_gateway: "192.168.252.1"
@@ -82,9 +88,6 @@ foreman_proxy_dhcp_option_domain: ["{{ bootstrap_domain }}"]
 foreman_proxy_dhcp_pxeserver: "{{ ansible_fqdn }}"
 foreman_proxy_dhcp_network: ""
 foreman_proxy_dhcp_netmask: "255.255.252.0"
-
-foreman_proxy_tftp: "true"
-foreman_proxy_tftp_servername: "{{ ansible_fqdn }}"
 
 foreman_proxy_realm: "false"
 foreman_proxy_realm_provider: "freeipa"
