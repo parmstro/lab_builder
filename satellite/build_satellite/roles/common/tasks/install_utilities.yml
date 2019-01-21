@@ -5,7 +5,7 @@
 # Provide the utilities packages as a list in the satellite-servers group_vars file
 # I am putting in bind-utils and screen
 
-- command: Install needed utilities.
+- name: Install needed utilities.
   yum:
     name: "{{ bootstrap_add_utils }}"
     state: latest
