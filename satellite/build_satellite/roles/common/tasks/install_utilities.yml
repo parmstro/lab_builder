@@ -1,0 +1,13 @@
+---
+# This play gives you the opportunity to install any additional tools that you might want
+# It is really here because I forgot stuff in the iso :-) so, handy...
+#
+# Provide the utilities packages as a list in the satellite-servers group_vars file
+# I am putting in bind-utils and screen
+
+- command: Install needed utilities.
+  yum:
+    name: "{{ bootstrap_add_utils }}"
+    state: latest
+  when: "{{ bootstrap_add_utils | length }} > 0"
+

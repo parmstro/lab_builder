@@ -7,6 +7,9 @@ bootstrap_prefix: "22"
 bootstrap_gateway: "192.168.252.1"
 bootstrap_dns: "192.168.252.10"
 bootstrap_adapter: "enp0s25"
+bootstrap_add_utils:
+  - bind-utils
+  - screen
 
 # used for preparing the Satellite Server
 sat_firewalld_zone: "public"
