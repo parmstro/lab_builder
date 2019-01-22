@@ -61,7 +61,7 @@
       - { name: postgresql-apb, upstream_name: openshift3/postgresql-apb }
 
     - rhn_username: parmstro@redhat.com
-    - rhn_password: \#CamelRomeoIndigo
+    - rhn_password: supersecret
 
   tasks:
 
