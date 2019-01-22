@@ -30,6 +30,8 @@
 - debug:
     msg: "Can reach the internet continuing..."
 
+# TODO: ensure that we refresh the system to get the new hostname
+
 - debug:
     msg: "Building system {{ ansible_fqdn }}"
    
