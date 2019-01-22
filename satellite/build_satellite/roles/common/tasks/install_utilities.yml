@@ -9,5 +9,5 @@
   yum:
     name: "{{ bootstrap_add_utils }}"
     state: latest
-  when: "{{ bootstrap_add_utils | length }} > 0"
+  when: "(bootstrap_add_utils | length)  > 0"
 
