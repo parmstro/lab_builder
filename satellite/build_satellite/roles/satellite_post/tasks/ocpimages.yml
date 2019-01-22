@@ -2,77 +2,15 @@
 # This play will generate the required repositories for the OpenShift Container Platform Images product
 #
 
-- name: Add OCP Images repositories
-  hosts: sat6.parmstrong.ca
-  vars:
-    - organization: RedHatCanada
-    - product_name: ocp_images
-    - product_label: ocp_images
-    - product_description: Red Hat OpenShift Container Platform Images
-    - repository_content_type: docker
-    - repository_name:
-      - { name: ose-ansible, upstream_name: openshift3/ose-ansible }
-      - { name: ose-web-console, upstream_name: openshift3/ose-web-console }
-      - { name: ose-cluster-capacity, upstream_name: openshift3/ose-cluster-capacity }
-      - { name: ose-deployer, upstream_name: openshift3/ose-deployer }
-      - { name: ose-docker-builder, upstream_name: openshift3/ose-docker-builder }
-      - { name: oauth-proxy, upstream_name: openshift3/oauth-proxy }
-      - { name: ose-docker-registry, upstream_name: openshift3/ose-docker-registry }
-      - { name: ose-egress-http-proxy, upstream_name: openshift3/ose-egress-http-proxy }
-      - { name: ose-egress-router, upstream_name: openshift3/ose-egress-router }
-      - { name: ose-f5-router, upstream_name: openshift3/ose-f5-router }
-      - { name: ose-haproxy-router, upstream_name: openshift3/ose-haproxy-router }
-      - { name: ose-keepalived-ipfailover, upstream_name: openshift3/ose-keepalived-ipfailover }
-      - { name: ose-pod, upstream_name: openshift3/ose-pod }
-      - { name: ose-sti-builder, upstream_name: openshift3/ose-sti-builder }
-      - { name: ose, upstream_name: openshift3/ose }
-      - { name: container-engine, upstream_name: openshift3/container-engine }
-      - { name: node, upstream_name: openshift3/node }
-      - { name: openvswitch, upstream_name: openshift3/openvswitch }
-      - { name: etcd, upstream_name: rhel7/etcd }
-      - { name: ose-recycler, upstream_name: openshift3/ose-recycler }
-      - { name: logging-auth-proxy, upstream_name: openshift3/logging-auth-proxy }
-      - { name: logging-curator, upstream_name: openshift3/logging-curator }
-      - { name: logging-elasticsearch, upstream_name: openshift3/logging-elasticsearch }
-      - { name: logging-fluentd, upstream_name: openshift3/logging-fluentd }
-      - { name: logging-kibana, upstream_name: openshift3/logging-kibana }
-      - { name: metrics-cassandra, upstream_name: openshift3/metrics-cassandra }
-      - { name: metrics-hawkular-metrics, upstream_name: openshift3/metrics-hawkular-metrics }
-      - { name: metrics-hawkular-openshift-agent, upstream_name: openshift3/metrics-hawkular-openshift-agent }
-      - { name: metrics-heapster, upstream_name: openshift3/metrics-heapster }
-      - { name: prometheus, upstream_name: openshift3/prometheus }
-      - { name: prometheus-alert-buffer, upstream_name: openshift3/prometheus-alert-buffer }
-      - { name: prometheus-alertmanager, upstream_name: openshift3/prometheus-alertmanager }
-      - { name: prometheus-node-exporter, upstream_name: openshift3/prometheus-node-exporter }
-      - { name: cfme-openshift-postgresql, upstream_name: cloudforms46/cfme-openshift-postgresql }
-      - { name: cfme-openshift-memcached, upstream_name: cloudforms46/cfme-openshift-memcached }
-      - { name: cfme-openshift-app-ui, upstream_name: cloudforms46/cfme-openshift-app-ui }
-      - { name: cfme-openshift-app, upstream_name: cloudforms46/cfme-openshift-app }
-      - { name: cfme-openshift-embedded-ansible, upstream_name: cloudforms46/cfme-openshift-embedded-ansible }
-      - { name: cfme-openshift-httpd, upstream_name: cloudforms46/cfme-openshift-httpd }
-      - { name: cfme-httpd-configmap-generator, upstream_name: cloudforms46/cfme-httpd-configmap-generator }
-      - { name: rhgs-server-rhel7, upstream_name: rhgs3/rhgs-server-rhel7 }
-      - { name: rhgs-volmanager-rhel7, upstream_name: rhgs3/rhgs-volmanager-rhel7 }
-      - { name: rhgs-gluster-block-prov-rhel7, upstream_name: rhgs3/rhgs-gluster-block-prov-rhel7 }
-      - { name: rhgs-s3-server-rhel7, upstream_name: rhgs3/rhgs-s3-server-rhel7 }
-      - { name: ose-service-catalog, upstream_name: openshift3/ose-service-catalog }
-      - { name: ose-ansible-service-broker, upstream_name: openshift3/ose-ansible-service-broker }
-      - { name: mediawiki-apb, upstream_name: openshift3/mediawiki-apb }
-      - { name: postgresql-apb, upstream_name: openshift3/postgresql-apb }
 
-    - rhn_username: parmstro@redhat.com
-    - rhn_password: supersecret
-
-  tasks:
-
-#    - name: Create the Product
-#      command: hammer product create --name={{ product_name }} --label={{ product_label }} --organization={{ organization }} --description='{{ product_description }}'
+    - name: Create the Product
+      command: "hammer product create --name={{ product_name }} --label={{ product_label }} --organization={{ organization }} --description='{{ product_description }}"
 
     - name: Create the Repositories for the required images
-      command: hammer repository create --name={{ item.name }} --label={{ item.name }} --organization={{ organization }} --product={{ product_name }} --content-type=docker --docker-upstream-name={{ item.upstream_name }} --url="https://registry.redhat.io" --upstream-username={{ rhn_username }} --upstream-password={{ rhn_password }} --verify-ssl-on-sync=true
-      with_items: "{{ repository_name }}"
+      command: "hammer repository create --name={{ item.name }} --label={{ item.name }} --organization={{ organization }} --product={{ product_name }} --content-type=docker --docker-upstream-name={{ item.upstream_name }} --url='https://registry.redhat.io' --upstream-username={{ rhn_username }} --upstream-password={{ rhn_password }} --verify-ssl-on-sync=true"
+      loop: "{{ repository_name }}"
 
     - name: Syncronize the Repositories asynchronously - we will queue them all.
       command: hammer repository synchronize --name={{ item.name }} --product={{ product_name }} --organization={{ organization }} --async
-      with_items: "{{ repository_name }}"
+      loop: "{{ repository_name }}"
 
