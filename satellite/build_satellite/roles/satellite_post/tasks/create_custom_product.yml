@@ -14,5 +14,6 @@
 - name: Create the Repositories for the required container images
   include_task: add_custom_product_repo.yml
   loop: "{{ cp.repository_name }}"
-    loop_control: cpr
+  loop_control: 
+    loop_var: cpr
 
