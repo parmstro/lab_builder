@@ -12,7 +12,7 @@
   when: "cp_exists.stdout == ''"
 
 - name: Create the Repositories for the required container images
-  include_tasks: add_custom_product_repo.yml
+  include_tasks: add_custom_product_repos.yml
   loop: "{{ cp.repository_name }}"
   loop_control: 
     loop_var: cpr
