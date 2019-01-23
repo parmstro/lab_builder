@@ -10,11 +10,11 @@
 - block:
   - name: Create the Repositories for the required container images
     command: "hammer repository create --name={{ cpr.name }} --label={{ cpr.name }} --organization='{{ cp.org }}' --product={{ cp.name }} --content-type={{ cpr.repository_content_type }} --docker-upstream-name={{ cpr.upstream_name }} --url={{ cpr.url }} --upstream-username={{ cpr.username }} --upstream-password={{ cpr.password }} --verify-ssl-on-sync=true"
-    when: "cpr.repository_content_type == docker"
+    when: "cpr.repository_content_type == 'docker'"
 
   - name: Create the Repositories for the required file or yum content
     command: "hammer repository create --name={{ cpr.name }} --label={{ cpr.name }} --organization='{{ organization }}' --product={{ product_name }} --content-type={{ cpr.repository_content_type }} --url={{ cpr.url }} --upstream-username={{ cpr.username }} --upstream-password={{ cpr.password }} --verify-ssl-on-sync=true"
-    when: "cpr.repository_content_type == yum OR cpr.repository_content_type == file"
+    when: "cpr.repository_content_type == 'yum' OR cpr.repository_content_type == 'file'"
 
   - name: Syncronize the Repositories immediately.
     command: "hammer repository synchronize --name={{ cpr.name }} --product={{ cp.name }} --organization='{{ cp.org }}'"
