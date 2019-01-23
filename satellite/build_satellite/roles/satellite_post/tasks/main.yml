@@ -8,15 +8,16 @@
 # Next we need to specify repositories to synch (for our lab)
 
 # Prepare Content for builds
-- import_tasks: upload_manifest.yml 
-- import_tasks: configure_mandatory_repositories.yml 
-- import_tasks: configure_optional_repositories.yml
-- import_tasks: start_synchronization.yml 
-- import_tasks: configure_lifecycle_environments.yml
-- import_tasks: configure_mandatory_cvs.yml
-- import_tasks: configure_optional_cvs.yml
-- import_tasks: configure_mandatory_ccvs.yml
-- import_tasks: configure_optional_ccvs.yml
+#- import_tasks: upload_manifest.yml 
+#- import_tasks: configure_mandatory_repositories.yml 
+#- import_tasks: configure_optional_repositories.yml
+#- import_tasks: start_synchronization.yml 
+#- import_tasks: configure_lifecycle_environments.yml
+#- import_tasks: configure_mandatory_cvs.yml
+#- import_tasks: configure_optional_cvs.yml
+#- import_tasks: configure_mandatory_ccvs.yml
+#- import_tasks: configure_optional_ccvs.yml
+- import_tasks: configure_custom_products.yml
 
 # Discover Infrastructure
 # - import_tasks: configure_discovery.yml
