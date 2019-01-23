@@ -441,7 +441,7 @@ ccvs_optional:
 setup_custom_products: true
 custom_products:
   - name: ocp_images
-    desc: "'Our OpenShift Container Platform container images'"
+    desc: "Our OpenShift Container Platform container images"
     org: "Default Organization"
     label: ocp_images
     repository_name:
