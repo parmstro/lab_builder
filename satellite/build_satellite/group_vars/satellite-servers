@@ -83,7 +83,7 @@ foreman_proxy_dns_zone: "{{ bootstrap_domain }}"
 foreman_proxy_dns_forwarders: "192.168.252.10"
 foreman_proxy_dns_reverse: "192.168.in-addr.arpa"
 
-foreman_proxy_dhcp: "false"
+foreman_proxy_dhcp: "true"
 foreman_proxy_dhcp_interface: "{{ bootstrap_adapter }}"
 foreman_proxy_dhcp_range: "192.168.254.172 192.168.254.204" 
 foreman_proxy_dhcp_gateway: "192.168.252.1"
