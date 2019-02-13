@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<!DOCTYPE PRJ SYSTEM "lab_builder.dtd">
+<PRJ>
+  <Project_Information>
+    <Use_Relative_Dir>1</Use_Relative_Dir>
+    <Relative_to_Project_File>1</Relative_to_Project_File>
+    <Include_Sub_Dir>1</Include_Sub_Dir>
+    <Create_Tagfile>0</Create_Tagfile>
+    <Filter>*.retry</Filter>
+    <CTags_Support>0</CTags_Support>
+    <Word_File/>
+    <Project_Directory>/home/parmstro/Projects/ansible/lab_builder</Project_Directory>
+    <Tag_File/>
+  </Project_Information>
+  <Project_ID>
+    <Signature>UE Proj: v.1</Signature>
+  </Project_ID>
+  <Files>
+    <File>/home/parmstro/Projects/ansible/lab_builder/idm/</File>
+    <File>LICENSE</File>
+    <File>/home/parmstro/Projects/ansible/lab_builder/cfme/</File>
+    <File>/home/parmstro/Projects/ansible/lab_builder/tower/</File>
+    <File>/home/parmstro/Projects/ansible/lab_builder/satellite-demo/</File>
+    <File>/home/parmstro/Projects/ansible/lab_builder/.git/</File>
+    <File>/home/parmstro/Projects/ansible/lab_builder/windows/</File>
+    <File>/home/parmstro/Projects/ansible/lab_builder/openshift/</File>
+    <File>/home/parmstro/Projects/ansible/lab_builder/satellite/</File>
+    <File>README.md</File>
+    <File>/home/parmstro/Projects/ansible/lab_builder/gluster/</File>
+  </Files>
+  <Group_Filter>
+    <OF Name="/home/parmstro/Projects/ansible/lab_builder/idm/">*.*</OF>
+    <OF Name="/home/parmstro/Projects/ansible/lab_builder/cfme/">*.*</OF>
+    <OF Name="/home/parmstro/Projects/ansible/lab_builder/tower/">*.*</OF>
+    <OF Name="/home/parmstro/Projects/ansible/lab_builder/satellite-demo/">*.*</OF>
+    <OF Name="/home/parmstro/Projects/ansible/lab_builder/.git/">*.*</OF>
+    <OF Name="/home/parmstro/Projects/ansible/lab_builder/windows/">*.*</OF>
+    <OF Name="/home/parmstro/Projects/ansible/lab_builder/openshift/">*.*</OF>
+    <OF Name="/home/parmstro/Projects/ansible/lab_builder/satellite/">*.*</OF>
+    <OF Name="/home/parmstro/Projects/ansible/lab_builder/gluster/">*.*</OF>
+  </Group_Filter>
+</PRJ>

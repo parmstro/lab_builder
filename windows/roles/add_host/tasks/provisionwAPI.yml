@@ -1,0 +1,54 @@
+---
+# This set of tasks will provision a VM from a template using
+# ansible to connect to the VMware API directly.
+#
+# Currently this will only be Windows VMs, but shouldn't matter
+#
+
+## We need to debug the customization spec today. 
+# This is preventing the maching from coming up in a state
+# that allows automation to continue
+#
+- name: "Provision Windows Server {{ vmware_vm_name }} in {{ vmware_vcenter_datacenter }} "
+  vmware_guest:
+    validate_certs: "{{ vmware_validate_certs }}"
+    hostname: "{{ vmware_vcenter_host }}"
+    username: "{{ vmware_vcenter_username }}"
+    password: "{{ vmware_vcenter_password }}"
+    datacenter: "{{ vmware_vcenter_datacenter }}"
+    name: "{{ vmware_vm_name }}"
+    folder: "{{ vmware_vm_folder }}"
+    template: "{{ vmware_vm_template }}"
+    customization:
+      dns_servers: "{{ windows_dns_servers }}"
+      domain: "{{ window_dns_domain }}"
+      domainadmin: "{{ windows_domain_admin }}"
+      domainadminpassword: "{{ windows_domain_admin_password }}"
+      joindomain: "{{ windows_join_domain }}"
+      orgname: "{{ windows_org_name }}"
+      password: "{{ vmware_vm_password }}"
+      runonce: "{{ windows_runonce_command_list }}"
+      timezone: "{{ windows_lab_timezone }}"
+    customization_spec: "{{ vmware_vm_customization_spec }}"
+    state: "{{ vmware_vm_state }}"
+    cluster: "{{ vmware_vm_cluster }}"
+    hardware:
+      num_cpus: "{{ vmware_vm_vcpu_count }}"
+      memory_mb: "{{ vmware_vm_memory_mb }}"
+    disk:
+      - size_gb: "{{ vmware_vm_disk_gb }}"
+        type: thin
+        datastore: "{{ vmware_vm_datastore }}"
+  delegate_to: localhost
+
+- name: Wait for VMware tools to become available
+  vmware_guest_tools_wait:
+    validate_certs: "{{ vmware_validate_certs }}"
+    hostname: "{{ vmware_vcenter_host }}"
+    username: "{{ vmware_vcenter_username }}"
+    password: "{{ vmware_vcenter_password }}"
+    name: "{{ vmware_vm_name }}"
+    folder: "{{ vmware_vm_folder }}"
+  delegate_to: localhost
+
+

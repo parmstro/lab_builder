@@ -1,0 +1,2 @@
+export win_domain_admin_password=??Legend2013;
+ansible-playbook -i winrm_inventory -e win_domain_admin_password=$win_domain_admin_password testwin.yml

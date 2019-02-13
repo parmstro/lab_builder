@@ -1,0 +1,57 @@
+- building the Satellite
+
+- content view creation complete
+
+TODO:
+  Provisioning:
+    Create media: rhel7
+    Create media: rhvh
+    Create parttable: cpgpc
+    Create parttable: rhvh
+    Create architecture: x86_64
+    Create architecture: aarch64
+    Create buildspecificparams: rhvh_image
+    ImageFileCopy
+    CreateCustomProvisioningTemplates
+  Infrastructure:
+    Create Domains
+    Create Subnets
+    Configure Discovery
+End of Satellite Post 
+End of Phase 1
+
+Start of Phase 2
+DetermineMinRHVH
+Build Hypervisors RHVH
+Deploy RHHI on Hypervisors
+End of Phase 2
+
+Start of Phase 3
+3a - CertGenerationAndSigning
+Deploy IdM Master
+Deploy IdM Master-Replicas
+End of Phase 3
+
+Start of Phase 4
+Configure Satellite for IdM Integration
+  Foreman-proxy prepare realm
+  foreman-proxy keytab
+  satellite idm signed certs
+  http-keytab
+  Create Realm Entry
+Configure virt-who
+Create RHV Compute Resource
+Create RHV Compute Profiles
+Create any Satellite based Ansible Roles (e.g. oscap)
+Create Host Groups
+TestProvisioning
+BuildCycle
+  ProvisionOpenShiftCluster
+  ProvisionRPiBlinkers
+  BuildBlinkerServicePods
+  BuildBlinkerAPIPods
+  BuildTestScreenBlinkerApp
+LoopTillCapacity
+Repeat
+End of Phase 4
+

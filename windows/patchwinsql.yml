@@ -1,0 +1,293 @@
+---
+
+# This play is a sample playbook to test windows module functionality
+# against a sample target windows host. This play is for testing
+# purposes only and should not be used with production systems.
+#
+- name: Test Ansible against a Windows Host
+  hosts: win
+  gather_facts: true
+  vars:
+  - win_domain: "win.parmstrong.ca"
+  - win_domain_admin_user: "Administrator"
+  - win_domain_ou_path: "OU=Windows,OU=Servers,DC=win,DC=parmstrong,DC=ca"
+
+
+  tasks:
+# Ping the host
+
+  - name: Using ansible ping to check the host
+    win_ping:
+      data: "Yes, I am here. May I help you?"
+    register: result
+
+  - name: Display the return value
+    debug:
+      msg: "{{ result }}"
+
+
+# Ensure that the system is part of the WIN domain
+#
+  - name: Ensure that we can talk to the {{ win_domain }} domain
+    win_domain_membership:
+      dns_domain_name: "{{ win_domain }}"
+      hostname: "{{ ansible_hostname }}" 
+      domain_admin_user: "{{ win_domain_admin_user }}"
+      domain_admin_password: "{{ win_domain_admin_password }}"
+      domain_ou_path: "{{ win_domain_ou_path }}"
+      state: domain
+    register: result
+
+  - debug:
+      msg: "{{ ansible_fqdn }} is part of domain {{ win_domain }}"
+    when: "result.failed == false" 
+
+
+  - name: Add an entry to the system log that ansible has logged into the system
+    win_eventlog_entry:
+      log: System
+      source: WinRM
+      event_id: 42
+      message: "Ansible has logged into the system"
+      entry_type: "Information"
+      category: 5
+      raw_data: 42
+
+  - name:  Ensure that the firewall is on for Domain, Private and Public Profiles
+    win_firewall:
+      state: enabled
+      profiles: 
+      - Domain
+      - Private
+      - Public
+    register: result
+
+  - name: Display the result
+    debug:
+      msg: "{{ result }}"
+
+  - name: add the rule to allow port 80 for inbound HTTP, if it doesn't exist
+    win_firewall_rule:
+      name: HTTP
+      localport: 80
+      action: allow
+      direction: in
+      protocol: tcp
+      state: present
+      enabled: yes
+    register: result
+
+  - name: Display the result
+    debug:
+      msg: "{{ result }}"
+
+  - name: Determine which Critical and Security updates are available for install
+    win_updates:
+      category_name:
+        - SecurityUpdates
+        - CriticalUpdates
+      state: searched
+    register: result
+    when: "'SQL' in system_tag"
+
+  - name: Display the result
+    debug:
+      msg: "{{ result.updates }}"
+    when: "'SQL' in system_tag"
+
+  - name: Do any of these updates require a reboot.
+    debug:
+      msg: "System requires a reboot is: {{ result.reboot_required }}"
+    when: "'SQL' in system_tag"
+
+  - name: Get only the SQL Patches 
+    set_fact: 
+      patchList: "{{ result.updates['97ed2c12-7f2e-4649-8eae-e25cb0b014c5'] }}"
+    when: "'SQL' in system_tag"
+
+  - name: Stop the IIS Services on {{ ansible_hostname}}
+    win_service:
+      name: W3SVC
+      state: stopped
+      start_mode: disabled
+      force_dependent_services: yes
+    when: "'IIS' in system_tag"
+    register: result
+
+  - name: Display the result
+    debug:
+      msg: "{{ result }}"
+
+  - name: Stop the SQL Server Service on {{ ansible_hostname }}
+    win_service:
+      name: mssqlserver
+      state: stopped
+      start_mode: disabled
+      force_dependent_services: yes
+    when: "'SQL' in system_tag"
+    register: result
+
+  - name: Display the result
+    debug:
+      msg: "{{ result }}"
+    when: "'SQL' in system_tag"
+
+
+  - name: Installing Patches for SQL Server.
+    debug:
+      msg: "{{ patchList }}"
+    when: "'SQL' in system_tag"
+
+#  - debug:
+#      msg: "KB{{ result.updates['97ed2c12-7f2e-4649-8eae-e25cb0b014c5'].kb[0] }}"
+
+
+#  - name: Generate a snapshot of the systems (for demo purposes)
+#    include_tasks: generatesnap.yml
+#    loop: "{{ play_hosts }}"
+
+  - name: "Starting Patch install... this may take a very long time."
+    debug:
+      msg: "Updates started at {{ ansible_date_time.iso8601 }}"
+    when: "'SQL' in system_tag"
+
+  - name: Add an entry to the system log that ansible has started patching
+    win_eventlog_entry:
+      log: System
+      source: WinRM
+      event_id: 42
+      message: "Ansible has started a patching process. From tower, this could be a job id. :-)"
+      entry_type: "Information"
+      category: 5
+      raw_data: 42
+    when: "'SQL' in system_tag"
+
+  - name: Apply the Patches
+    win_updates:
+      category_name:
+        - SecurityUpdates
+        - Criticalupdates
+      state: installed
+      whitelist:
+        - "KB{{ patchList.kb[0] }}"
+    register: result
+    when: "'SQL' in system_tag"
+
+  - name: Display the result
+    debug:
+      msg: "{{ result }}"
+    when: "'SQL' in system_tag"
+
+  - name: Get latest system information
+    setup:
+
+  - debug:
+      msg: "Patch applied at: {{ ansible_date_time.iso8601 }}"
+    when: "'SQL' in system_tag"
+
+  - name: Reboot the servers - to prove that we can do it and continue after the reboot
+    win_reboot:
+      post_reboot_delay: 10
+    when: "'SQL' in system_tag"
+
+  - name: Add an entry to the system log that ansible has completed the reboot
+    win_eventlog_entry:
+      log: System
+      source: WinRM
+      event_id: 42
+      message: "Ansible has completed a reboot after a patching process. From tower, this could be the same job id for correlation. Or contain it in raw_data :-)"
+      entry_type: "Information"
+      category: 5
+      raw_data: 42
+    when: "'SQL' in system_tag"
+
+
+  - name: Add an entry to the system log that ansible has completed patching
+    win_eventlog_entry:
+      log: System
+      source: WinRM
+      event_id: 42
+      message: "Ansible has completed a patching process. From tower, this could be the same job id for correlation. :-)"
+      entry_type: "Information"
+      category: 5
+      raw_data: 42
+    when: "'SQL' in system_tag"
+
+  - name: Notice that the patch applied is no longer in the list
+    win_updates:
+      category_name:
+        - SecurityUpdates
+        - Criticalupdates
+      state: searched
+    register: result 
+    when: "'SQL' in system_tag"
+
+  - name: Display the result
+    debug:
+      msg: "{{ result }}"
+    when: "'SQL' in system_tag"
+
+
+  - name: Re-enable and start the SQL Server Service
+    win_service:
+      name: mssqlserver
+      state: started
+      start_mode: auto
+      force_dependent_services: yes
+    when: "'SQL' in system_tag"
+    register: result
+
+  - name: Display the result
+    debug:
+      msg: "{{ result }}"
+    when: "'SQL' in system_tag"
+
+  - name: Re-enable and start the IIS Services on {{ ansible_hostname}}
+    win_service:
+      name: W3SVC
+      state: started
+      start_mode: auto
+      force_dependent_services: yes
+    when: "'IIS' in system_tag"
+    register: result
+
+  - name: Display the result
+    debug:
+      msg: "{{ result }}"
+    when: "'IIS' in system_tag"
+
+  - name: Wait for IIS
+    win_wait_for:
+      host: "{{ ansible_fqdn }}"
+      port: 80
+      delay: 10
+    when: "'IIS' in system_tag"
+
+  - name: Add an entry to the system log that ansible has completed the patching cycle
+    win_eventlog_entry:
+      log: System
+      source: WinRM
+      event_id: 42
+      message: "Ansible has completed a the patching process."
+      entry_type: "Information"
+      category: 5
+      raw_data: 42
+
+
+
+# WinRM
+# IIS
+#
+
+# win_iis_virtual_directory
+# configure a virtual directory for AdventureWorks2008
+#
+# win_iis_webapplication
+# depoy the AdventureWorks2008 web app? 
+#
+# win_iis_webbinding
+# binding a Website 
+#
+# win_iis_website
+# configure an IIS website
+
