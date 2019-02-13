@@ -1,19 +1,31 @@
 ---
-# Set then fqdn, ip address, netmask on the bootstrap adapter
+# Set then fqdn, ip address, netmask on the sat_bootstrap adapter
 #
 
-- name: "Set the fqdn for this host: {{ bootstrap_fqdn }}"
-  command: "hostnamectl set-hostname {{ bootstrap_fqdn }}"
+- name: "Set the fqdn for this host: {{ sat_bootstrap_fqdn }}"
+  command: "hostnamectl set-hostname {{ sat_bootstrap_fqdn }}"
 
-- name: "Clean up any existing bootstrap network connections for: {{ bootstrap_con_name }}"
-  command: "nmcli con delete {{ bootstrap_con_name }}"
+- name: "Clean up any existing sat_bootstrap network connections for: {{ sat_bootstrap_con_name }}"
+  command: "nmcli con delete {{ sat_bootstrap_con_name }}"
   ignore_errors: true
 
-- name: "Reset the network configuration for: {{ bootstrap_con_name }}"
-  command: "nmcli con add save yes con-name {{ bootstrap_con_name }} ifname {{ bootstrap_adapter }}  type ethernet ip4  {{ bootstrap_ip4 }}/{{ bootstrap_prefix }} gw4 {{ bootstrap_gateway }} ipv4.dns '{{ bootstrap_dns }} 8.8.8.8'"
+- name: "Reset the network configuration for: {{ sat_bootstrap_con_name }}"
+  command: "nmcli con add save yes con-name {{ sat_bootstrap_con_name }} ifname {{ sat_bootstrap_adapter }}  type ethernet ip4  {{ sat_bootstrap_ip4 }}/{{ sat_bootstrap_prefix }} gw4 {{ sat_bootstrap_gateway }} ipv4.dns '{{ sat_bootstrap_dns }} 8.8.8.8'"
 
-- name: "Bring the connection {{ bootstrap_con_name }} online"
-  command: "nmcli con up {{ bootstrap_con_name }}"
+- name: "Bring the connection {{ sat_bootstrap_con_name }} online"
+  command: "nmcli con up {{ sat_bootstrap_con_name }}"
+
+- name: "Ensure that we refresh the system facts"
+  setup:
+
+- name: "Test connectivity to our FQDN"
+  wait_for:
+    host: "{{ sat_bootstrap_fqdn }}"
+    port: 22
+    timeout: 10
+
+- debug:
+    msg: "Can connect to {{ sat_bootstrap_fqdn }} continuing..."
 
 - name: "Test Connectivity to Google"
   wait_for:
@@ -21,17 +33,8 @@
     port: 53
     timeout: 10
 
-- name: "Test connectivity to our FQDN"
-  wait_for:
-    host: "{{ bootstrap_fqdn }}"
-    port: 22
-    timeout: 10
-
 - debug:
     msg: "Can reach the internet continuing..."
-
-- name: Ensure that we refresh the system facts
-  setup:
 
 - debug:
     msg: "Building system {{ ansible_fqdn }}"
