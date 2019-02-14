@@ -1,0 +1,33 @@
+---
+# This is the lab_builder entry point
+# This play will start the build_master and the foreman
+# The builder definitions and phase definitions you provide
+# will determine what is built.
+# 
+
+
+- name: "Starting lab_builder" 
+  hosts: localhost
+  gather_facts: true
+  become: yes
+  become_method: sudo
+
+  tasks:
+  
+  - name: "Starting lab_builder for localhost in role {{ bootstrap_role }} using Phase Definition File - {{ phase_definition_file }}"
+    import_vars: "{{ phase_definition_file }}"
+
+  - name: "Including specified password generation file {{ password_file }}"
+    import_vars: "{{ password_file }}"
+
+  - debug: 
+      msg: "Build thyself"
+
+  - include_role:
+      - build_master
+    when: "bootstrap_role == 'egg' OR bootstrap_role == 'build_master'"
+
+  - include_role:
+      - foreman
+    when: "bootstrap_role == 'chicken' OR bootstrap_role == 'foreman'"
+
