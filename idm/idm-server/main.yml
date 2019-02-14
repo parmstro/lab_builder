@@ -1,0 +1,10 @@
+---
+# This play creates a single master at this time.
+# support for replicas will be added.
+#
+- hosts: idm-servers
+  gather_facts: true
+
+  roles:
+    - idm-server
+

@@ -1,4 +1,7 @@
 ---
+- include_tasks: init_system.yml
+  when: "init_system ==true"
+
 - name: uninstall the idm server if it exists
   command: ipa-server-install --uninstall
   ignore_errors: yes
@@ -6,9 +9,6 @@
 - name: uninstall idm client if it exists, should be uninstalled with the server
   command: ipa-client-install --uninstall
   ignore_errors: yes
-
-- name: set the hostname to the defined hostname
-  command: hostnamectl set-hostname "{{ hostname }}"
 
 - name: enable the RHEL Server repo required for IdM
   command: subscription-manager repos --enable=rhel-7-server-rpms
