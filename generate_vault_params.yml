@@ -14,7 +14,16 @@
   gather_facts: false
   become: yes
   become_method: sudo
+  vars_prompt:
+    - name: root_password
+      prompt: "Enter the new root password:"
+      private: yes
+    - name: root_password_verify
+      prompt: "Verify the new root password:"
+      private: yes
+
   vars:
+    match: false
     password_file: ~/.vault/lab_builder/builder.pwd
     output_file: ./vars/encrypted_password.yml
     variable_list:
@@ -43,6 +52,15 @@
         minlength: 64
 
   tasks:
+  - name: "Verifying..."
+    set_fact:
+      match: true
+    when: "root_password == root_password_verify"
+
+  - debug:
+      msg: "Passwords are not the same!"
+    failed_when: "match == false"
+
   - name: create the output file
     file: 
       name: "{{ output_file }}"
