@@ -57,9 +57,15 @@
       match: true
     when: "root_password == root_password_verify"
 
-  - debug:
-      msg: "Passwords are not the same!"
+  - name: "Verification complete."
+    debug:
+      msg: "Password Verification!: {{ match }}"
     failed_when: "match == false"
+
+  - name: "Install utilities"
+    yum:
+      name: expect
+      state: latest
 
   - name: create the output file
     file: 
