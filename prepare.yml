@@ -13,37 +13,37 @@
       prompt: "Enter the bootstrap role for this host. [build_master | foreman]"
       default: "build_master"
     - name: local_bootstrap_ip
-      prompt: "Enter the bootstrap ipv4 address for the local host."
+      prompt: "Enter the bootstrap ipv4 address for the local host"
       default: "192.168.222.10"
     - name: local_bootstrap_netmask
-      prompt: "Enter the bootstrap network mask for the local host."
+      prompt: "Enter the bootstrap network mask for the local host"
       default: "255.255.252.0"
     - name: local_bootstrap_gateway
-      prompt: "Enter the bootstrap gateway for the local host."
+      prompt: "Enter the bootstrap gateway for the local host"
       default: "192.168.222.1"
-    - name: remote_bootstrap_ip4
-      prompt: "Enter the bootstrap ipv4 address for the remote host."
+    - name: remote_bootstrap_ip
+      prompt: "Enter the bootstrap ipv4 address for the remote host"
       default: "192.168.222.12"
     - name: remote_bootstrap_netmask
-      prompt: "Enter the bootstrap network mask for the remote host."
+      prompt: "Enter the bootstrap network mask for the remote host"
       default: "255.255.252.0"
     - name: remote_bootstrap_gateway
-      prompt: "Enter the bootstrap gateway for the remote host."
+      prompt: "Enter the bootstrap gateway for the remote host"
       default: "192.168.222.1"
     - name: root_password
-      prompt: "Enter the new root password:"
+      prompt: "Enter the new root password"
       private: yes
-#      encrypt: "sha512_crypt"
-#      confirm: yes
-#      salt_size: 7
+      encrypt: "sha512_crypt"
+      confirm: yes
+      salt_size: 7
 
   vars:
 
   tasks:
 
   - name: "Building local system with the following parameters."
-    debug:
-      msg: |
+    set_fact:
+      message: |
         "Bootstrap Role: {{ bootstrap_role }}"
         "Local IP:       {{ local_bootstrap_ip }}"
         "Local Netmask:  {{ local_bootstrap_netmask }}"
@@ -53,5 +53,6 @@
         "Remote Gateway: {{ remote_bootstrap_gateway }}"
         "root password:  {{ root_password }}"
 
-
+  - debug:
+      msg: "{{ message }}"
 

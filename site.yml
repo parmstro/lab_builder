@@ -5,12 +5,46 @@
 # will determine what is built.
 # 
 
-
 - name: "Starting lab_builder" 
   hosts: localhost
   gather_facts: true
   become: yes
   become_method: sudo
+
+  vars_prompt:
+    - name: bootstrap_role
+      prompt: "Enter the bootstrap role for this host. [build_master | foreman]"
+      default: "build_master"
+    - name: local_bootstrap_fqdn
+      prompt: "Enter the bootstrap fqdn for the local host - sets domain and realm. Remote must match."
+      default: "buildmaster.labbuilder.com"
+    - name: local_bootstrap_ip
+      prompt: "Enter the bootstrap ipv4 address for the local host"
+      default: "192.168.222.10"
+    - name: local_bootstrap_netmask
+      prompt: "Enter the bootstrap network mask for the local host"
+      default: "255.255.252.0"
+    - name: local_bootstrap_gateway
+      prompt: "Enter the bootstrap gateway for the local host"
+      default: "192.168.222.1"
+    - name: remote_bootstrap_fqdn
+      prompt: "Enter the remote bootstrap fqdn - sets domain and realm. Remote must match."
+      default: "foreman.labbuilder.com"
+    - name: remote_bootstrap_ip
+      prompt: "Enter the bootstrap ipv4 address for the remote host"
+      default: "192.168.222.12"
+    - name: remote_bootstrap_netmask
+      prompt: "Enter the bootstrap network mask for the remote host"
+      default: "255.255.252.0"
+    - name: remote_bootstrap_gateway
+      prompt: "Enter the bootstrap gateway for the remote host"
+      default: "192.168.222.1"
+    - name: root_password
+      prompt: "Enter the new root password"
+      private: yes
+      encrypt: "sha512_crypt"
+      confirm: yes
+      salt_size: 7
 
   tasks:
   
@@ -20,8 +54,17 @@
   - name: "Including specified password generation file {{ password_file }}"
     import_vars: "{{ password_file }}"
 
-  - debug: 
-      msg: "Build thyself"
+  - name: "Connecting Network"
+    include_tasks: connect_network.yml
+
+  - name: "Generate passwords"
+    include_tasks: generate_passwords.yml
+
+  - name: "In role: {{ bootstrap_role }}.  Waiting for remote system on {{ remote_bootstrap_ip }}"
+    wait_for:
+      host: "{{ remote_bootstrap_ip }}"
+      port: 22
+      sleep: 5
 
   - include_role:
       - build_master
