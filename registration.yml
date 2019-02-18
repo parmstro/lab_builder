@@ -4,6 +4,13 @@
 # rhsm.conf file settings should cause a reregistration if registered to 
 # a Satellite server.
 
+- name: Registering using the following parameters"
+  debug:
+    msg: |
+      "Organization:      {{ redhat_org }}"
+      "Activation Key:    {{ activation_key }}"
+      "Subscription Pool: {{ subscription_pool }}"
+
 - name: Register the server to the Red Hat Network using an activation key
   redhat_subscription:
     state: present
