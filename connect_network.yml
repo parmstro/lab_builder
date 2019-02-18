@@ -1,3 +1,7 @@
+---
+# These tasks configure a bootstrap host with a network.
+# as we are bootstrapping, we will always apply to localhost.
+#
 - name: "Generating a connection"
   set_fact:
     bootstrap_con_name: "bootstrap"

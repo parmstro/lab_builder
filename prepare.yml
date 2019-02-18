@@ -56,3 +56,7 @@
   - debug:
       msg: "{{ message }}"
 
+  - name: Configuring local network.
+    include_tasks: connect_network.yml
+
+
