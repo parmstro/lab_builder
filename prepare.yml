@@ -51,7 +51,7 @@
   vars:
       satellite_pool: "Red Hat Satellite Infrastructure Subscription$"
       idm_pool: ""
-      cdn_proxy_address: ""
+      cdn_proxy_hostname: ""
       cdn_proxy_port: ""
       cdn_proxy_username: ""
       cdn_proxy_password: ""
