@@ -5,31 +5,34 @@
 
 - name: Preparing for lab_builder
   hosts: localhost
-  gather_facts: false
+  gather_facts: true
   become: yes
   become_method: sudo
   vars_prompt:
     - name: bootstrap_role
       prompt: "Enter the bootstrap role for this host. [build_master | foreman]"
       default: "build_master"
-    - name: local_bootstrap_ip
+      private: no
+    - name: bootstrap_fqdn
+      prompt: "Enter the bootstrap FQDN for the local host"
+      default: "buildmaster.labbuilder.ca"
+      private: no
+    - name: bootstrap_ip
       prompt: "Enter the bootstrap ipv4 address for the local host"
       default: "192.168.222.10"
-    - name: local_bootstrap_netmask
+      private: no
+    - name: bootstrap_netmask
       prompt: "Enter the bootstrap network mask for the local host"
       default: "255.255.252.0"
-    - name: local_bootstrap_gateway
+      private: no
+    - name: bootstrap_gateway
       prompt: "Enter the bootstrap gateway for the local host"
       default: "192.168.222.1"
+      private: no
     - name: remote_bootstrap_ip
-      prompt: "Enter the bootstrap ipv4 address for the remote host"
+      prompt: "Enter the bootstrap ipv4 address for the REMOTE host"
       default: "192.168.222.12"
-    - name: remote_bootstrap_netmask
-      prompt: "Enter the bootstrap network mask for the remote host"
-      default: "255.255.252.0"
-    - name: remote_bootstrap_gateway
-      prompt: "Enter the bootstrap gateway for the remote host"
-      default: "192.168.222.1"
+      private: no
     - name: root_password
       prompt: "Enter the new root password"
       private: yes
@@ -45,12 +48,11 @@
     set_fact:
       message: |
         "Bootstrap Role: {{ bootstrap_role }}"
-        "Local IP:       {{ local_bootstrap_ip }}"
-        "Local Netmask:  {{ local_bootstrap_netmask }}"
-        "Local Gateway:  {{ local_bootstrap_gateway }}"
+        "Bootstrap FQDN: {{ bootstrap_fqdn }}"
+        "Local IP:       {{ bootstrap_ip }}"
+        "Local Netmask:  {{ bootstrap_netmask }}"
+        "Local Gateway:  {{ bootstrap_gateway }}"
         "Remote IP:      {{ remote_bootstrap_ip }}"
-        "Remote Netmask: {{ remote_bootstrap_netmask }}"
-        "Remote Gateway: {{ remote_bootstrap_gateway }}"
         "root password:  {{ root_password }}"
 
   - debug:

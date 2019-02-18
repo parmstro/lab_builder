@@ -8,19 +8,27 @@
 
 - name: "Prepare the configuration data"
   set_fact:
-    bootstrap_mask: "{{ local_bootstrap_ip }}/{{ local_bootstrap_netmask }}"
+    bootstrap_mask: "{{ bootstrap_ip }}/{{ bootstrap_netmask }}"
 
 - set_fact:
     bootstrap_prefix: "{{ bootstrap_mask | ipaddr('prefix') }}"
 
 - set_fact:
-    bootstrap_address: "{{ local_bootstrap_ip }}/{{ bootstrap_prefix }}"
+    bootstrap_address: "{{ bootstrap_ip }}/{{ bootstrap_prefix }}"
 
 - set_fact:
-    bootstrap_adapter: "{{ ansible_interfaces | select('match', '^(e)+') | list | first }}"
+    bootstrap_adapter: "{{ ansible_facts.interfaces | select('match', '^(e)+') | list | first }}"
 
-- name: "Set the fqdn for this host: {{ local_bootstrap_fqdn }}"
-  command: "hostnamectl set-hostname {{ local_bootstrap_fqdn }}"
+- set_fact:
+    bootstrap_dns: "{{ bootstrap_ip }}"
+  when: "bootstrap_role ==  'build_master'"
+
+- set_fact:
+    bootstrap_dns: "{{ remote_bootstrap_ip }}"
+  when: "bootstrap_role ==  'foreman'"
+
+- name: "Set the fqdn for this host: {{ bootstrap_fqdn }}"
+  command: "hostnamectl set-hostname {{ bootstrap_fqdn }}"
 
 - name: "Clean up any existing bootstrap network connections for: {{ bootstrap_con_name }}"
   command: "nmcli con delete {{ bootstrap_con_name }}"
