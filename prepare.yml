@@ -86,4 +86,12 @@
   - name: Register the local system to the CDN
     include_tasks: registration.yml
 
-  
+  - name: Update the system.
+    yum:
+      name: "*"
+      state: latest
+
+  - debug: 
+      msg: "Reboot the system the system to continue."
+
+
