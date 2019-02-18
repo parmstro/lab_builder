@@ -21,7 +21,6 @@
 
 - set_fact:
     bootstrap_dns: "{{ bootstrap_ip }}"
-  when: "bootstrap_role ==  'build_master'"
 
 - set_fact:
     bootstrap_dns: "{{ remote_bootstrap_ip }}"
