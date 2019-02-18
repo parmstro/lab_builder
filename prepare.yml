@@ -33,6 +33,14 @@
       prompt: "Enter the bootstrap ipv4 address for the REMOTE host"
       default: "192.168.222.12"
       private: no
+    - name: redhat_org
+      prompt: "Enter the Red Hat CDN organization"
+      default: ""
+      private: no
+    - name: activation_key
+      prompt: "Enter the Red Hat Activation Key for {{ bootstrap_role }}"
+      default: "build_master"
+      private: no
     - name: root_password
       prompt: "Enter the new root password"
       private: yes
@@ -41,6 +49,12 @@
       salt_size: 7
 
   vars:
+      satellite_pool: "Red Hat Satellite Infrastructure Subscription$"
+      idm_pool: ""
+      cdn_proxy_address: ""
+      cdn_proxy_port: ""
+      cdn_proxy_username: ""
+      cdn_proxy_password: ""
 
   tasks:
 
@@ -61,4 +75,7 @@
   - name: Configuring local network.
     include_tasks: connect_network.yml
 
+  - name: Register the local system to the CDN
+    include_tasks: registration.yml
 
+  
