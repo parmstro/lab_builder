@@ -29,6 +29,10 @@
       prompt: "Enter the bootstrap gateway for the local host"
       default: "192.168.222.1"
       private: no
+    - name: remote_bootstrap_fqdn
+      prompt: "Enter the bootstrap FQDN for the REMOTE host"
+      default: "foreman.labbuilder.ca"
+      private: no
     - name: remote_bootstrap_ip
       prompt: "Enter the bootstrap ipv4 address for the REMOTE host"
       default: "192.168.222.12"
@@ -90,6 +94,14 @@
     yum:
       name: "*"
       state: latest
+
+  - name: Write out hosts file
+    blockinfile:
+      path: "/etc/hosts"
+      block: | 
+        "{{ bootstrap_ip }}      {{ bootstrap_fqdn }}"
+        "{{ remote_bootstrap_ip }}      {{ remote_bootstrap_fqdn }}"
+      marker: "# {mark} ANSIBLE MANAGED BLOCK"
 
   - debug: 
       msg: "Reboot the system the system to continue."
