@@ -38,7 +38,7 @@
       default: ""
       private: no
     - name: activation_key
-      prompt: "Enter the Red Hat Activation Key for {{ bootstrap_role }}"
+      prompt: "Enter the Red Hat Activation Key for selected role"
       default: "build_master"
       private: no
     - name: root_password
