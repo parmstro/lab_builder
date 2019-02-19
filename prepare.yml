@@ -99,9 +99,34 @@
     blockinfile:
       path: "/etc/hosts"
       block: | 
-        "{{ bootstrap_ip }}      {{ bootstrap_fqdn }}"
-        "{{ remote_bootstrap_ip }}      {{ remote_bootstrap_fqdn }}"
+        {{ bootstrap_ip }}      {{ bootstrap_fqdn }}
+        {{ remote_bootstrap_ip }}      {{ remote_bootstrap_fqdn }}
       marker: "# {mark} ANSIBLE MANAGED BLOCK"
+  
+  - name: Create inventory file
+    file:
+      path: ./inventory
+      state: present
+
+  - name: Write inventory
+    blockinfile:
+      path: ./inventory
+      block: |
+        [build_master]
+        {{ bootstrap_fqdn }}
+        [foreman]
+        {{ remote_bootstrap_fqdn }}
+     when: "bootstrap_role == 'build_master'"
+
+  - name: Write inventory
+    blockinfile:
+      path: ./inventory
+      block: |
+        [build_master]
+        {{ remote_bootstrap_fqdn }}
+        [foreman]
+        {{ bootstrap_fqdn }}
+     when: "bootstrap_role == 'foreman'"
 
   - debug: 
       msg: "Reboot the system the system to continue."
