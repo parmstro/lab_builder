@@ -1,0 +1,57 @@
+---
+# Master Preparation
+
+  # setup some user names and passwords...
+  - name: ensure ocpdeploy directory exists
+    file:
+      path: /etc/ocpdeploy
+      state: directory     
+  
+  - name: determine if the htpasswd file is present
+    stat: 
+      path: /etc/ocpdeploy/htpasswd
+    register: st
+
+  - debug:
+      msg: "/etc/ocpdeploy/htpasswd exists. Not updating."
+    when: st.stat.islnk is defined
+
+  - name: initialize password for a default user if an htpasswd file does not exist
+    command: htpasswd -bc /etc/ocpdeploy/htpasswd.ocpdeploy admin openshift
+    when: st.stat.islnk is not defined
+
+  # generate an unattended installation file.
+  - name: generate openshift ansible unattended installation file
+    template:
+      src: ocpunattended.j2
+      dest: /etc/ocpdeploy/hosts
+      owner: root
+      group: root
+      mode: 0744
+
+  # If we are installing multiple masters, insert the external DNS records for wildcard for app sub domain
+  #
+  - name: create application subdomain record in DNS for each master (round-robin)
+    nsupdate:
+      server: "{{ ocpdeploy_dnsupdate_server }}"
+      zone: "{{ ocpdeploy_dnsupdate_zone }}"
+      record: "{{ ocpdeploy_master_default_subdomain
+
+    when: ocpdeploy_app_subdomain_lb_method = 'round-robin'
+
+  # If we are installing a native loadbalancer, insert the DNS records for loadbalancer master names
+
+  - name: install the openshift-ansible package
+    yum:
+      name: openshift-ansible
+      state: latest
+
+  - name: pull the ose-deployer image
+    command: "docker pull registry.access.redhat.com/openshift3/ose-deployer:latest"
+    when: ocpdeploy_pull_installer_images == true
+
+  - name: pull the ose-haproxy-router image
+    command: "docker pull registry.access.redhat.com/openshift3/ose-haproxy-router:latest"
+    when: ocpdeploy_pull_installer_images == true
+
+

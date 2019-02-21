@@ -1,0 +1,122 @@
+[OSEv3:children]
+masters
+nodes
+etcd
+lb
+
+[OSEv3:vars]
+
+ansible_ssh_user='{{ ocpdeploy_ssh_user }}'
+openshift_master_default_subdomain='{{ ocpdeploy_master_default_subdomain }}'
+deployment_type='{{ ocpdeploy_deployment_type }}'
+
+# Define the authentication method we will install
+{% if ocpdeploy_auth_method == "htpasswd" %}
+
+# htpasswd auth
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/ocpdeploy/htpasswd'}]
+
+{% elif ocpdeploy_auth_method == "ldap" %}
+
+# LDAP auth
+openshift_master_identity_providers=[{'name': '{{ ocpdeploy_ldap_provider_name }}', 'challenge': 'true', 'login': 'true', 'kind': 'LDAPPasswordIdentityProvider', 'attributes': {'id': ['dn'], 'email': ['mail'], 'name': ['cn'], 'preferredUsername': ['uid']}, 'bindDN': '{{ ocpdeploy_bind_dn }}', 'bindPassword': '{{ ocpdeploy_bind_password }}', 'ca': '{{ ocpdeploy_ca_crt_path }}', 'insecure': 'false', 'url': '{{ ocpdeploy_ldap_url }}'}]
+
+# Configuring the ldap ca certificate
+openshift_master_ldap_ca_file=/etc/ipa/ca.crt
+
+{% else %}
+
+# We will then default to the installer default
+
+{% endif %}
+
+os_firewall_use_firewalld=True
+
+openshift_hosted_metrics_deploy=true
+openshift_hosted_metrics_storage_kind=nfs
+openshift_hosted_metrics_storage_access_modes=['ReadWriteOnce']
+openshift_hosted_metrics_storage_host='{{ nfs_server_hostname }}'
+openshift_hosted_metrics_storage_nfs_directory='{{ nfs_server_directory }}'
+openshift_hosted_metrics_storage_volume_name='{{ nfs_server_metrics_volume }}'
+openshift_hosted_metrics_storage_volume_size=10Gi
+
+openshift_hosted_logging_deploy=true
+openshift_hosted_logging_storage_kind=nfs
+openshift_hosted_logging_storage_access_modes=['ReadWriteOnce']
+openshift_hosted_logging_storage_host='{{ nfs_server_hostname }}'
+openshift_hosted_logging_storage_nfs_directory='{{ nfs_server_directory }}'
+openshift_hosted_logging_storage_volume_name='{{ nfs_server_logging_volume }}'
+openshift_hosted_logging_storage_volume_size=10Gi
+
+openshift_enable_service_catalog='{{ ocpdeploy_enable_service_catalog }}'
+openshift_enable_olm=true
+
+{% if ocpdeploy_master_cluster_method != "" %}
+openshift_master_cluster_method='{{ ocpdeploy_master_cluster_method }}'
+openshift_master_cluster_hostname='{{ ocpdeploy_master_cluster_hostname }}' #openshift-internal.parmstrong.ca
+openshift_master_cluster_public_hostname='{{ ocpdeploy_master_cluster_public_hostname }}' #openshift-cluster.parmstrong.ca
+{% endif %}
+
+oreg_url={{ ocpdeploy_oreg_url }}
+oreg_auth_user={{ ocpdeploy_oreg_auth_user }}
+oreg_auth_password={{ ocpdeploy_oreg_auth_password }}
+oreg_test_login=false
+
+openshift_disable_check=disk_availability,memory_availability,package_availability,docker_image_availability,docker_storage,package_version
+
+{% if ocpdeploy_http_proxy != "" %}
+openshift_http_proxy='{{ ocpdeploy_http_proxy }}'
+{% endif %}
+{% if ocpdeploy_https_proxy != "" %} 
+openshift_https_proxy='{{ ocpdeploy_https_proxy }}'
+{% endif %}
+{% if ocpdeploy_no_proxy != "" %}
+openshift_no_proxy='{{ ocpdeploy_no_proxy }}'
+{% endif %}
+
+{% if ocpdeploy_builddefaults_http_proxy != "" %}
+openshift_builddefaults_http_proxy='{{ ocpdeploy_builddefaults_http_proxy }}'
+{% endif %} 
+{% if ocpdeploy_builddefaults_https_proxy != "" %}
+openshift_builddefaults_https_proxy='{{ ocpdeploy_builddefaults_https_proxy }}'
+{% endif %}
+{% if ocpdeploy_builddefaults_no_proxy != "" %}
+openshift_builddefaults_no_proxy='{{ ocpdeploy_builddefaults_no_proxy }}'
+{% endif %}
+
+{% if ocpdeploy_git_http_proxy != "" %}
+openshift_builddefaults_git_http_proxy='{{ ocpdeploy_git_http_proxy }}'
+{% endif %}
+{% if ocpdeploy_git_https_proxy != "" %}
+openshift_builddefaults_git_https_proxy='{{ ocpdeploy_git_https_proxy }}'
+{% endif %}
+{% if ocpdeploy_git_no_proxy != "" %}
+openshift_builddefaults_git_no_proxy='{{ ocpdeploy_git_no_proxy }}'
+{% endif %}
+
+
+[masters]
+
+{% for host in groups['openshift_masters'] %}
+{{host}}
+{% endfor %}
+
+
+[etcd]
+
+{% for host in groups['openshift_etcd'] %}
+{{host}}
+{% endfor %}
+
+[lb]
+{% for host in groups['openshift_lb'] %}
+{{host}}
+{% endfor %}
+
+[nodes]
+
+{% for host in groups['openshift_nodes'] %}
+{{host}} openshift_node_group_name="{{ hostvars[host]['node_group_name'] }}" openshift_schedulable={{ hostvars[host]['schedulable'] }}
+{% endfor %}
+
+

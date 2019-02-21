@@ -1,0 +1,7 @@
+---
+- hosts: satellite-servers
+
+  tasks:
+
+  - include_tasks: /root/projects/lab_builder/satellite/build_satellite/roles/satellite/tasks/compilecmdln.yml
+

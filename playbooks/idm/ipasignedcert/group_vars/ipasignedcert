@@ -1,0 +1,26 @@
+---
+# All the variables needed to create our signed certificate
+
+privatekey_path: "/etc/ipa/private/{{ ansible_hostname }}.private.pem"
+publickey_path: "/etc/ipa/private/{{ ansible_hostname }}.public.pem"
+csr_path: "/etc/ipa/private/{{ ansible_hostname }}.csr"
+cert_path: "/etc/ipa/private/{{ ansible_hostname }}.crt"
+keytab_path: "/etc/krb5.keytab"
+ipa_server: idm.parmstrong.ca
+service: HTTP
+principal: "{{ service }}/{{ ansible_hostname }}"
+passphrase: ??Legend2013
+cipher: aes256
+size: 4096
+format: PEM
+organizationName: "Red Hat Canada"
+organizationalUnitName: "Lab"
+countryName: "CA"
+stateOrProvinceName: "Ontario" 
+localityName: "Hespeler"
+emailAddress: "ipaadmin@parmstrong.ca"
+digest: sha256
+ansible_keytab: "/etc/ansible.keytab"
+san_DNS_1: "{{ ansible_hostname }}"
+san_DNS_2: ""
+san_DNS_3: ""

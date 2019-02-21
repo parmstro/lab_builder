@@ -1,0 +1,14 @@
+Generating IdM Certificates for systems.
+Create a play
+  Specify run on build_master
+  /etc/ipa/private directory
+  pass in variables
+    hostname: fqdn
+    cert type: HOST|HTTP|?
+    local_certificate_dir:
+    run create ipa cert on buildmaster
+    cp file from buildmaster to local_certificate_dir
+
+
+Duplicate this play for getting keytab
+

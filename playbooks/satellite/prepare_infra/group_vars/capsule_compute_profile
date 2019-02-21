@@ -1,0 +1,31 @@
+capsule_compute_profile:
+  ocp:
+    computeresourcename: VMware
+    cpus: 2
+    cpuspersocket: 1
+    memorymb: 16384
+    cluster: Lab
+    resourcepool: Resources
+    folder: "VM Folder"
+    guestos: "Red Hat Enterprise Linux 7 (64-bit)"
+    scsicontroller: "VMware Paravirtual"
+    virthwver: Default
+    memhotadd: true
+    cpuhotadd: true
+    networkif:
+      nictype: E1000
+      network: "VM Network"
+    storage: 
+      vdisk:
+        datastore: "DiskStationSCSI1"
+        name: root
+        sizegb: 64
+        thin: true
+        eager: false
+      vdisk:
+        datastore: "DiskStationSCSI1"
+        name: gluster
+        sizegb: 50
+        thin: true
+        eager: false
+

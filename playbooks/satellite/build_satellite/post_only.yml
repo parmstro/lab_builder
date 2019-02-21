@@ -1,0 +1,8 @@
+---
+- hosts: satellite-servers
+  become: yes
+  gather_facts: no
+
+  roles:
+    - satellite_post
+

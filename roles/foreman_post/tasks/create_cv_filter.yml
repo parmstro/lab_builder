@@ -1,0 +1,31 @@
+---
+# This play creates the Content View Filters for a Content View
+#
+
+- name: Determine if the Content View Filter already exists
+  command: "hammer content-view filter info --content-view={{ cv.name }} --name={{ cvf.name }} --organization='{{ cv.org }}'"
+  register: cvf_exists
+  ignore_errors: true
+
+- set_fact:
+    hammer_command: "hammer content-view filter create --type={{ cvf.type }} --name={{ cvf.name }} --description={{ cvf.desc }} --inclusion={{ cvf.inclusion }} --organization='{{ cv.org }}' --content-view={{ cv.name }} --original-packages={{ cvf.originalpackages }}"
+  when: "cvf.type == 'rpm'"
+
+- set_fact:
+    hammer_command: "hammer content-view filter create --type={{ cvf.type }} --name={{ cvf.name }} --description={{ cvf.desc }} --inclusion={{ cvf.inclusion }} --organization='{{ cv.org }}' --content-view={{ cv.name }}"
+  when: "cvf.type != 'rpm'"
+
+- debug:
+    msg: "{{ hammer_command }}"
+
+- name: Creating Content View Filter {{ cvf.name }}
+  command: "{{ hammer_command }}"
+  when: "cvf_exists.stdout == ''"
+
+
+- name: Configure Content View Filter Rules
+  include_tasks: create_cvf_rules.yml
+  loop: "{{ cvf.rules }}"
+  loop_control:
+    loop_var: cvfr
+  when: "cvf.rules is defined"

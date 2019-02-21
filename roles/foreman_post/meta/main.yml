@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Paul Armstrong
+  description: Post-deployment Configuration of Foreman (Satellite) for Lab Builder
+  company: Red Hat, Inc.
+  license: Apache License, Version 2.0
+  min_ansible_version: 2.7
+  platforms:
+  - name: EL
+    versions:
+    - 7
+  categories:
+  - cloud
+dependencies:
+  - foreman_pre
+  - foreman

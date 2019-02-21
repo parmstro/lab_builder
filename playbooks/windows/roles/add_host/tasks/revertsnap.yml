@@ -1,0 +1,32 @@
+---
+# This playbook reverts a snapshot for a VM managed by a vcenter server
+- name: Revert VMware Snapshot
+  hosts: localhost
+  vars:
+    # pass these in the environment or through Tower
+    vcenter_server: your_vsphere_fqdn
+    datacenter_name: your_vms_datacenter
+    snap_name: snapshot_to_revert
+    inventory_name: your_inv_host_or_group
+  
+  tasks:  
+  - name: Revert to a snapshot
+    vmware_guest_snapshot:
+      state: revert
+      # Weird how Tower requires the quotes and ansible does not...
+      datacenter: '{{ datacenter_name }}'
+      folder: '{{ snapshot_folder_name }}'
+      hostname: '{{ vcenter_server }}'
+      name: '{{ item }}'
+      snapshot_name: '{{ snap_name }}'
+    with_items:
+    - '{{ snapshot_hosts }}'
+
+  - name: Power the hosts back on
+    vmware_guest:
+      datacenter: '{{ datacenter_name }}'
+      hostname: '{{ vcenter_server }}'
+      state: poweredon
+      name: '{{ item }}'
+    with_items:
+    - '{{ snapshot_hosts }}'

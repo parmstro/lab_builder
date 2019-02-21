@@ -1,0 +1,21 @@
+---
+# This task sets up hammer on the satellite server so we can execute
+# additional setup commands 
+#
+
+#- name: Create a directory for the hammer config for the root user
+#  file:
+#    dest: /root/.hammer
+#    state: directory
+
+#- name: Create the configuration file
+#  template:
+#    src: cli_config.j2
+#    dest: /root/.hammer/cli_config.yml
+
+- name: Check hammer
+  command: "foreman-maintain health check --label hammer-ping"
+  register: output
+
+- fail:
+  when: "'[OK]' not in output.stdout"

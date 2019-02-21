@@ -1,0 +1,129 @@
+---
+# This is the lab_builder entry point
+# This play will start the build_master and the foreman
+# The builder definitions and phase definitions you provide
+# will determine what is built.
+# 
+
+- name: "Starting lab_builder" 
+  hosts: 
+  gather_facts: true
+  become: yes
+  become_method: sudo
+
+  vars_prompt:
+    - name: "cdn_username_prompt"
+      prompt: "Enter the username to log into the Red Hat CDN for container images (will be encrypted)"
+      default: ""
+      private: yes
+    - name: "cdn_password_prompt"
+      prompt: "Enter the password to log into the Red Hat CDN for container images (will be encrypted)"
+      default: ""
+      private: yes
+
+
+  vars:
+    idm_variable_file: "{{ playbook_dir }}/vars/idm_vars.yml"
+    sat_variable_file: "{{ playbook_dir }}//vars/sat_vars.yml"
+    phase_definition_file: "{{ playbook_dir }}//vars/phase_definition.yml"
+    password_config_file: "{{ playbook_dir }}//vars/password_vars.yml"
+    encrypted_passwords_file: "{{ playbook_dir }}//vars/encrypted_password.yml"
+    locks_dir: "{{ playbook_dir }}/locks"
+    bootstrap_role: "none"
+
+  tasks:
+
+  - name: "Ensuring lock dir"
+    file:
+      path: "{{ locks_dir }}"
+      state: directory
+
+  - name: "Checking build_master"
+    stat:
+      path: "./build_master"
+    register: bm
+
+  - set_fact:
+      bootstrap_role: "build_master"
+    when: "bm.stat.exists == true"
+
+  - name: "Checking foreman"
+    stat:
+      path: "./foreman"
+    register: fm
+
+  - set_fact:
+      bootstrap_role: "foreman"
+    when: "fm.stat.exists == true"
+     
+  - fail:
+      msg: "Bootstrap role not set. Please run ansible-playbook prepare.yml and reboot before running site.yml"
+    when: "bootstrap_role == 'none'"
+
+  - name: "Determine bootstrap partner"
+    block:
+    - set_fact:
+        bootstrap_partner_hostname: "{{ groups['foreman'].1 }}"
+    - set_fact:
+        bootstrap_partner_role: "foreman"
+    when: "bootstrap_role == 'build_master'"
+
+  - name: "Determine bootstrap partner"
+    block:
+    - set_fact:
+        bootstrap_partner_hostname: "{{ groups['build_master'].1 }}"
+    - set_fact:
+        bootstrap_partner_role: "build_master"
+    when: "bootstrap_role == 'foreman'"
+
+  - name: "Starting lab_builder for localhost in role {{ bootstrap_role }} using Phase Definition File - {{ phase_definition_file }}"
+    include_vars: 
+      file: "{{ phase_definition_file }}"
+    
+  - name: "Including specified password generation file {{ password_config_file }}"
+    include_vars: 
+      file: "{{ password_config_file }}"
+
+  - name: "Generate passwords"
+    include_tasks: site_generate_passwords.yml
+
+  - name: "Include encrypted passords"
+    include_vars:
+      file: "{{ encrypted_passwords_file }}"
+
+  - name: "BEGIN PHASE 1 - bootstrap begin"
+    file:
+      path: "{{ locks_dir }}/bootstrap_begin"
+      state: touch
+
+  - block:
+    - include_vars:
+        file: "{{ idm_variable_file }}"
+        name: build_master
+    - include_role:
+      - build_master
+    when: "bootstrap_role == 'build_master'"
+
+  - block:
+    - include_vars:
+        file: "{{ sat_variable_file }}"
+        name: foreman
+    - include_role:
+      - foreman_pre
+      - foreman
+      - foreman_post
+    when: "bootstrap_role == 'foreman'"
+
+  - name: "Wait for build_master"
+    wait_for:
+      path: "{{ locks_dir }}/build_master_complete"
+
+  - name: "Wait for foreman"
+    wait_for:
+      path: "{{ locks_dir }}/foreman_complete"
+
+  - name: "END PHASE 1 - bootstrap complete"
+    file:
+      path: "{{ locks_dir }}/bootstrap_complete"
+      state: touch
+

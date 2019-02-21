@@ -1,0 +1,17 @@
+# This playbook prepares the nodes  for the 
+# deployment of openshift on the hosts
+# defined in the specified inventory  
+
+ - name: apply common configuration to all nodes
+   hosts: all
+   become: yes
+
+   roles:
+   - common
+
+ - name: apply the install configuration to the deployment master
+   hosts: openshift_deployment_master
+   become: yes
+
+   roles:
+   - deployment_master

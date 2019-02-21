@@ -1,0 +1,70 @@
+# used for preparing the Satellite Server
+sat_firewalld_zone: "public"
+install_idm_client: false
+ipa_domain: "newlab.local"
+ipa_realm: "NEWLAB.LOCAL"
+ipa_server: "sat6.newlab.local"
+ipa_admin_password: "pass_as_environment"
+ipa_generate_certs: false
+ipa_server_certs_dir: "/etc/ipa/private/"
+ipa_server_prv_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.pem"
+ipa_server_crt_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.crt"
+ipa_server_key_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.key"
+ipa_server_csr_file: "{{ server_certs_dir }}{{ ansible_fqdn }}.csr"
+ipa_server_ca_file: "/etc/ipa/ca.crt"
+
+# used for installing the Satellite Server
+# See template file in ../roles/satellite/templates/satellite-answers.yml
+redhat_org: "6856506"
+activation_key: "satbootstrap"
+satellite_server_url: "https://{{ ansible_fqdn }}"
+scenario: "satellite"
+foreman_initial_location: "lab"
+foreman_initial_organization: "NewLab"
+foreman_admin_email: "admin@{{ ipa_domain }}"
+foreman_admin_firstname: "admin"
+foreman_admin_lastname: "istrator"
+foreman_admin_username: "admin"
+foreman_compute_ec2: "true"
+foreman_compute_gce: "true"
+foreman_compute_libvirt: "true"
+foreman_compute_openstack: "true"
+foreman_compute_ovirt: "true"
+foreman_compute_rackspace: "true"
+foreman_compute_vmware: "true"
+enable_puppet_server: "false"
+certs_cname: "{{ ansible_fqdn }}"
+certs_node: "{{ ansible_fqdn }}"
+foreman_ipa_authentication: "false"
+foreman_proxy_realm: "false"
+foreman_proxy_keytab: "/etc/foreman-proxy/freeipa.keytab"
+foreman_proxy_realm_principal: "realm-capsule"
+foreman_proxy_realm_provider: "freeipa"
+foreman_proxy_tftp: "true"
+foreman_proxy_puppet: "false"
+
+# used in post installation configuration
+upload_manifest: "true"
+manifest_source: "./files/bootstrap_manifest.zip"
+setup_hammer: true
+setup_virtwho: false
+setup_discovery: true
+setup_infrastructure: false
+compute_resources:
+  compute_resource_1:
+    name: "VMware"
+    type: "esx"
+    controller_hostname: "your_vcentre_server_here"
+    controller_username: "service_admin_name"
+    controller_password: "service_password"   #Provide this as a variable in a private file - will be encryped.
+    virtwho_username: "readonly_admin_name"
+    virtwho_password: "virtwho_password"    #Provide this as a variable in a private file - will be encrypted.
+  compute_resource_2:
+    name: "RHV"
+    type: ovirt
+    controller_hostname: "your_rhvm_server_here"
+    controller_username: "service_admin_name"
+    controller_password: "service_password"   #Provide this as a variable in a private file
+    virtwho_username: "readonly_admin_name"
+    virtwho_password: "virtwho_password"    #Provide this as a variable in a private file - will be encrypted.
+

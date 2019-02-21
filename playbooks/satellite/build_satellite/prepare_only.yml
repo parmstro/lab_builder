@@ -1,0 +1,6 @@
+---
+- hosts: satellite-servers
+
+  roles:
+    - common
+

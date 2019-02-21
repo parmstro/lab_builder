@@ -1,0 +1,129 @@
+---
+# This play gathers the necessary facts to refresh our 
+# core playbook information and contact our bootstrap partner
+#
+
+- name: Preparing for lab_builder
+  hosts: localhost
+  gather_facts: true
+  become: yes
+  become_method: sudo
+  vars_prompt:
+    - name: bootstrap_role
+      prompt: "Enter the bootstrap role for this host. [build_master | foreman]"
+      default: "build_master"
+      private: no
+    - name: bootstrap_fqdn
+      prompt: "Enter the bootstrap FQDN for the local host"
+      default: "buildmaster.labbuilder.ca"
+      private: no
+    - name: bootstrap_ip
+      prompt: "Enter the bootstrap ipv4 address for the local host"
+      default: "192.168.222.10"
+      private: no
+    - name: bootstrap_netmask
+      prompt: "Enter the bootstrap network mask for the local host"
+      default: "255.255.252.0"
+      private: no
+    - name: bootstrap_gateway
+      prompt: "Enter the bootstrap gateway for the local host"
+      default: "192.168.222.1"
+      private: no
+    - name: remote_bootstrap_fqdn
+      prompt: "Enter the bootstrap FQDN for the REMOTE host"
+      default: "foreman.labbuilder.ca"
+      private: no
+    - name: remote_bootstrap_ip
+      prompt: "Enter the bootstrap ipv4 address for the REMOTE host"
+      default: "192.168.222.12"
+      private: no
+    - name: redhat_org
+      prompt: "Enter the Red Hat CDN organization"
+      default: ""
+      private: no
+    - name: activation_key
+      prompt: "Enter the Red Hat Activation Key for selected role"
+      default: "build_master"
+      private: no
+    - name: root_password
+      prompt: "Enter the new root password"
+      private: yes
+      encrypt: "sha512_crypt"
+      confirm: yes
+      salt_size: 7
+
+  vars:
+      satellite_pool: "Red Hat Satellite Infrastructure Subscription$"
+      idm_pool: ""
+      cdn_proxy_hostname: ""
+      cdn_proxy_port: ""
+      cdn_proxy_username: ""
+      cdn_proxy_password: ""
+      bootstrap_inventory_file: ../inventory/boostrap_inventory
+
+  tasks:
+
+  - name: "Configuring local network."
+    include_tasks: prepare_connect_network.yml
+
+  - set_fact:
+      subscription_pool: "{{ idm_pool }}" 
+    when: "bootstrap_role == 'build_master'"
+
+  - set_fact:
+      subscription_pool: "{{ satellite_pool }}"
+    when: "bootstrap_role == 'foreman'"
+
+  - name: "Register the local system to the CDN"
+    include_tasks: prepare_registration.yml
+
+  - name: "Update the system"
+    yum:
+      name: "*"
+      state: latest
+
+  - name: "Write out hosts file"
+    blockinfile:
+      path: "/etc/hosts"
+      block: | 
+        {{ bootstrap_ip }}      {{ bootstrap_fqdn }}
+        {{ remote_bootstrap_ip }}      {{ remote_bootstrap_fqdn }}
+      marker: "# {mark} ANSIBLE MANAGED BLOCK"
+  
+  - name: "Create bootstrap inventory file"
+    file:
+      path: "{{ bootstrap_inventory_file }}"
+      state: present
+
+  - name: "Write boostrap inventory for build_master"
+    blockinfile:
+      path: "{{ bootstrap_inventory_file }}"
+      block: |
+        [build_master]
+        {{ bootstrap_fqdn }}
+        [foreman]
+        {{ remote_bootstrap_fqdn }}
+     when: "bootstrap_role == 'build_master'"
+
+  - name: "Write boostrap inventory for foreman"
+    blockinfile:
+      path: "{{ bootstrap_inventory_file }}"
+      block: |
+        [build_master]
+        {{ remote_bootstrap_fqdn }}
+        [foreman]
+        {{ bootstrap_fqdn }}
+     when: "bootstrap_role == 'foreman'"
+
+  - name: Write the bootstrap_config file.
+    file:
+      path: "./{{ bootstrap_role }}"
+      state: touch
+      owner: root
+      group: root
+      mode: 400
+
+  - debug: 
+      msg: "Reboot the system the system to continue."
+
+

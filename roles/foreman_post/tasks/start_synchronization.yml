@@ -1,0 +1,22 @@
+---
+# Get the unique list of products from our variable file
+# Ensure all repos in the product synchronize -- async
+# These may take a long time.
+#
+
+- name: Get the unique list of mandatory products
+  set_fact:
+    products_to_sync: "{{ repos_mandatory | map(attribute='product') | list | unique }}"
+
+- name: Sync the mandatory products with the CDN
+  command: "hammer product synchronize --organization='{{ foreman_initial_organization }}' --name={{ item }}"
+  with_items: "{{ products_to_sync }}"
+
+- name: Get the unique list of optional products
+  set_fact:
+    products_to_sync: "{{ repos_optional | map(attribute='product') | list | unique }}"
+
+- name: Sync the optional products with the CDN
+  command: "hammer product synchronize --organization='{{ foreman_initial_organization }}' --name={{ item }}"
+  with_items: "{{ products_to_sync }}"
+

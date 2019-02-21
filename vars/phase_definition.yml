@@ -1,0 +1,84 @@
+# The bootstrap phase is where we create our master builder and our foreman
+# A master builder manages this file. 
+# see the instructions for configuration
+# set your global configurations in this file
+bootstrap:
+  phase_lock_dir: /tmp/labbuilder/bootstrap/
+  domain_name: labbuilder.ca
+  realm_name: LABBUILDER.CA
+  lab_gateway: 192.168.252.1
+  lab_netmask: 255.255.252.0
+  lab_primary_dns: 192.168.254.110
+  lab_secondary_dns: 192.168.254.111
+  lab_foreman_server: 192.168.254.112
+  lab_dhcp_ip_start: 192.168.254.128
+  lab_dhcp_ip_end: 192.168.254.254
+  lab_storage_ip_start: 192.168.124.1
+  lab_storage_ip_end: 192.168.124.254
+  lab_provision_ip_start: 192.168.24.1
+  lab_provision_ip_end: 192.168.24.254
+  builds:
+    build_master:
+      hostname: buildmaster1.labbuilder.ca
+      ip_address: "{{ lab_primary_dns }}"
+      netmask: "{{ lab_netmask }}"
+      install_dns: yes
+      install_ca: yes
+      use_keymaster: no
+      builder_dir: "./idm/idm-server/"
+      roles: [idm-servers]
+    foreman:
+      hostname: foreman1.labbuilder.ca
+      ip_address: "{{ lab_foreman_server }}"
+      netmask: "{{ lab_netmask }}"
+      builder_dir: "./satellite/build_satellite/"
+      roles: [common,satellite,satellite-post]
+
+
+# Start of Phase 2
+# Create any additional bootstrap infrastructure here
+# e.g. IdM Replicas, Capsules, etc..
+# at least 1 IdM replica is recommended
+# subdomains are possible but will be added later.
+# subdomains go in userdata phase
+# these can start using builder strategy with satellite
+bootstrap2:
+  builds:
+    - name: ipa-replica
+      hostname: buildmaster2.labbuilder.ca
+      ip_address: "{{ lab_secondary_dns }}"
+      netmask: "{{ lab_netmask }}"
+      install_dns: yes
+      install_ca: yes
+      builder_dir: "./idm/idm-server/"
+      roles: [ipa-replica]
+      provision: satellite
+      compute_resource: baremetal
+      hostgroup: idm-masters
+      
+
+# Start of Phase 3
+# Here is where we build the houses and sky scrapers
+infrastructure:
+  hypervisor_platform:
+    - name: rhv
+      type: rhhi
+      node_count: 4
+      builder_dir:
+  openshift:
+    - name: prod
+      type: prod
+      lb: yes
+      lb_mode: native
+      master_count: 3
+      master_metal: no
+      infra_count: 2
+      infra_metal: no
+      node_count: 4
+      node_metal: yes
+      builder_dir:
+
+# Start of Phase 4
+# We are Open for Business and now it is time to add tenants.
+userdata:
+

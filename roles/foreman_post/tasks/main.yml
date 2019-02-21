@@ -1,0 +1,25 @@
+---
+# This role will perform the post installer tasks to get our Satellite running
+#
+# This role expects the manifest file on ansible control host where you are running 
+# this script: override using the src_manifest_location variable
+#
+# First we need a manifest uploaded
+# Next we need to specify repositories to synch (for our lab)
+
+# Prepare Content for builds
+- import_tasks: setup_hammer.yaml
+- import_tasks: upload_manifest.yml 
+- import_tasks: configure_mandatory_repositories.yml 
+- import_tasks: configure_optional_repositories.yml
+- import_tasks: start_synchronization.yml 
+- import_tasks: configure_lifecycle_environments.yml
+- import_tasks: configure_mandatory_cvs.yml
+- import_tasks: configure_optional_cvs.yml
+- import_tasks: configure_mandatory_ccvs.yml
+- import_tasks: configure_optional_ccvs.yml
+- import_tasks: configure_custom_products.yml
+
+# Discover Infrastructure
+# - import_tasks: configure_discovery.yml
+

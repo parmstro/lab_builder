@@ -1,0 +1,74 @@
+---
+- hosts: windows-servers
+  gather_facts: false
+  connection: local
+
+  tasks:
+  - name: "Provision Windows Server system on VMware"
+    vmware_guest:
+      validate_certs: "{{ vmware_validate_certs }}"
+      hostname: "{{ vmware_vcenter_host }}"
+      username: "{{ vmware_vcenter_username }}"
+      password: "{{ vmware_vcenter_password }}"
+      datacenter: "{{ vmware_vcenter_datacenter }}"
+      name: "{{ vmware_vm_name }}"
+      folder: "{{ vmware_vm_folder }}"
+      template: "{{ vmware_vm_template }}"
+      customization_spec: "{{ vmware_vm_customization_spec }}"
+      state: "{{ vmware_vm_state }}"
+      cluster: "{{ vmware_vm_cluster }}"
+      hardware:
+        num_cpus: "{{ vmware_vm_vcpu_count }}"
+        memory_mb: "{{ vmware_vm_memory_mb }}"
+      disk:
+        - size_gb: "{{ vmware_vm_disk_gb }}"
+          type: thin
+          datastore: "{{ vmware_vm_datastore }}"
+    register: new_vm
+
+  - name: Wait for VMware tools to become available
+    vmware_guest_tools_wait:
+      validate_certs: "{{ vmware_validate_certs }}"
+      hostname: "{{ vmware_vcenter_host }}"
+      username: "{{ vmware_vcenter_username }}"
+      password: "{{ vmware_vcenter_password }}"
+      name: "{{ vmware_vm_name }}"
+      folder: "{{ vmware_vm_folder }}"
+
+  - name: Change IP Address for Windows Machine
+    vmware_vm_shell:
+      validate_certs: "{{ vmware_validate_certs }}"
+      hostname: "{{ vmware_vcenter_host }}"
+      username: "{{ vmware_vcenter_username }}"
+      password: "{{ vmware_vcenter_password }}"
+      datacenter: "{{ vmware_vcenter_datacenter }}"
+      folder: "{{ vmware_vm_folder }}"
+      vm_id: "{{ vmware_vm_name }}"
+      vm_username: "{{ vmware_vm_username }}"
+      vm_password: "{{ vmware_vm_password }}"
+      vm_shell: netsh.exe
+      vm_shell_args: ' interface ip set address name="{{ vmware_vm_conn_name  }}" {{ vmware_vm_conn_type }} {{ vmware_vm_conn_ipv4_address }} {{ vmware_vm_conn_gateway }}'
+      vm_shell_cwd: "{{ vmware_vm_shell_cwd }}"
+
+  - name: Change DNS for Windows Machine
+    vmware_vm_shell:
+      validate_certs: "{{ vmware_validate_certs }}"
+      hostname: "{{ vmware_vcenter_host }}"
+      username: "{{ vmware_vcenter_username }}"
+      password: "{{ vmware_vcenter_password }}"
+      datacenter: "{{ vmware_vcenter_datacenter }}"
+      folder: "{{ vmware_vm_folder }}"
+      vm_id: "{{ vmware_vm_name }}"
+      vm_username: "{{ vmware_vm_username }}"
+      vm_password: "{{ vmware_vm_password }}"
+      vm_shell       : netsh.exe
+      vm_shell_args  : ' interface ip set dns name="{{ vmware_vm_conn_name  }}" {{ vmware_vm_conn_type }} {{ vmware_vm_conn_dns1 }}'
+      vm_shell_cwd: "{{ vmware_vm_shell_cwd }}"
+
+  - name: Wait until the ipaddress of machine is ready
+    wait_for:
+      port: 5986
+      delay: 20
+      state: started
+      host: "{{ vmware_vm_conn_ipv4_address }}"
+
