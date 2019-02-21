@@ -80,7 +80,7 @@
     include_tasks: connect_network.yml
 
   - set_fact:
-      subscription_pool: "{{ idm_pool }}" 
+      subscription_pool: "{{ idm_pool }}"
     when: "bootstrap_role == 'build_master'"
 
   - set_fact:
@@ -106,7 +106,7 @@
   - name: Create inventory file
     file:
       path: ./inventory
-      state: present
+      state: touch 
 
   - name: Write inventory
     blockinfile:
@@ -116,7 +116,7 @@
         {{ bootstrap_fqdn }}
         [foreman]
         {{ remote_bootstrap_fqdn }}
-     when: "bootstrap_role == 'build_master'"
+    when: "bootstrap_role == 'build_master'"
 
   - name: Write inventory
     blockinfile:
@@ -126,7 +126,7 @@
         {{ remote_bootstrap_fqdn }}
         [foreman]
         {{ bootstrap_fqdn }}
-     when: "bootstrap_role == 'foreman'"
+    when: "bootstrap_role == 'foreman'"
 
   - debug: 
       msg: "Reboot the system the system to continue."
