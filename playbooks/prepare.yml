@@ -103,7 +103,7 @@
         {{ bootstrap_fqdn }}
         [foreman]
         {{ remote_bootstrap_fqdn }}
-     when: "bootstrap_role == 'build_master'"
+    when: "bootstrap_role == 'build_master'"
 
   - name: "Write boostrap inventory for foreman"
     blockinfile:
@@ -113,11 +113,11 @@
         {{ remote_bootstrap_fqdn }}
         [foreman]
         {{ bootstrap_fqdn }}
-     when: "bootstrap_role == 'foreman'"
+    when: "bootstrap_role == 'foreman'"
 
   - name: Write the bootstrap_config file.
     file:
-      path: "./{{ bootstrap_role }}"
+      path: "{{ playbook_dir }}/{{ bootstrap_role }}"
       state: touch
       owner: root
       group: root
