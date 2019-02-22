@@ -6,7 +6,7 @@
 # 
 
 - name: "Starting lab_builder" 
-  hosts: 
+  hosts: localhost
   gather_facts: true
   become: yes
   become_method: sudo
