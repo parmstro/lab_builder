@@ -1,8 +1,0 @@
----
-- name: Begin Satellite Build
-  hosts: satellite-servers
-
-  roles:
-    - common
-    - satellite
-    - satellite_post
