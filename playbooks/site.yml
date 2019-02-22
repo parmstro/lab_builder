@@ -96,17 +96,19 @@
       path: "{{ locks_dir }}/bootstrap_begin"
       state: touch
 
-  - block:
-    - include_vars:
-        file: "{{ idm_variable_file }}"
-    - include_role:
+  - include_vars:
+      file: "{{ idm_variable_file }}"
+    when: "bootstrap_role == 'build_master'"
+
+  - include_role:
       - build_master
     when: "bootstrap_role == 'build_master'"
 
-  - block:
-    - include_vars:
-        file: "{{ sat_variable_file }}"
-    - include_role:
+  - include_vars:
+      file: "{{ sat_variable_file }}"
+    when: "bootstrap_role == 'foreman'"
+
+  - include_role:
       - foreman_pre
       - foreman
       - foreman_post
