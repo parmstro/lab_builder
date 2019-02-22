@@ -59,7 +59,7 @@
       cdn_proxy_port: ""
       cdn_proxy_username: ""
       cdn_proxy_password: ""
-      bootstrap_inventory_file: ../inventory/boostrap_inventory
+      bootstrap_inventory_file: "{{ playbook_dir }}/inventory"
 
   tasks:
 
@@ -93,7 +93,7 @@
   - name: "Create bootstrap inventory file"
     file:
       path: "{{ bootstrap_inventory_file }}"
-      state: present
+      state: touch 
 
   - name: "Write boostrap inventory for build_master"
     blockinfile:
