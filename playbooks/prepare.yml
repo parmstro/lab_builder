@@ -63,6 +63,14 @@
 
   tasks:
 
+  - name: "Write out hosts file for bootstrap"
+    blockinfile:
+      path: "/etc/hosts"
+      block: |
+        {{ bootstrap_ip }}      {{ bootstrap_fqdn }}
+        {{ remote_bootstrap_ip }}      {{ remote_bootstrap_fqdn }}
+      marker: "# {mark} ANSIBLE MANAGED BLOCK"
+
   - name: "Configuring local network."
     include_tasks: prepare_connect_network.yml
 
@@ -82,14 +90,6 @@
       name: "*"
       state: latest
 
-  - name: "Write out hosts file"
-    blockinfile:
-      path: "/etc/hosts"
-      block: | 
-        {{ bootstrap_ip }}      {{ bootstrap_fqdn }}
-        {{ remote_bootstrap_ip }}      {{ remote_bootstrap_fqdn }}
-      marker: "# {mark} ANSIBLE MANAGED BLOCK"
-  
   - name: "Create bootstrap inventory file"
     file:
       path: "{{ bootstrap_inventory_file }}"
