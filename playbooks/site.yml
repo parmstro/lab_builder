@@ -99,7 +99,6 @@
   - block:
     - include_vars:
         file: "{{ idm_variable_file }}"
-        name: build_master
     - include_role:
       - build_master
     when: "bootstrap_role == 'build_master'"
@@ -107,7 +106,6 @@
   - block:
     - include_vars:
         file: "{{ sat_variable_file }}"
-        name: foreman
     - include_role:
       - foreman_pre
       - foreman
