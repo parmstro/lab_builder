@@ -63,6 +63,16 @@
 
   tasks:
 
+  - name: "Setting remote bootstrap role"
+    set_fact:
+      remote_bootstrap_role: "foreman"
+    when: "bootstrap_role == 'build_master'"
+
+  - name: "Setting remote bootstrap role"
+    set_fact:
+      remote_bootstrap_role: "build_master"
+    when: "bootstrap_role == 'foreman'"
+
   - name: "Write out hosts file for bootstrap"
     blockinfile:
       path: "/etc/hosts"
@@ -90,6 +100,16 @@
       name: "*"
       state: latest
 
+# TODO:Pull the latest lab_builder here  
+#
+  - name: "Update site.yml"
+    blockinfile:
+      path: "{{ playbook_dir }}/site.yml"
+      marker: "# {mark} ANSIBLE MANAGED BLOCK - run prepare.yml"
+      insertafter: "#!hosts"
+      block: |
+        hosts: {{ bootstrap_role }}
+
   - name: "Create bootstrap inventory file"
     file:
       path: "{{ bootstrap_inventory_file }}"
@@ -105,7 +125,7 @@
         {{ remote_bootstrap_fqdn }}
     when: "bootstrap_role == 'build_master'"
 
-  - name: "Write boostrap inventory for foreman"
+  - name: "Write bootstrap inventory for foreman"
     blockinfile:
       path: "{{ bootstrap_inventory_file }}"
       block: |
@@ -115,15 +135,33 @@
         {{ bootstrap_fqdn }}
     when: "bootstrap_role == 'foreman'"
 
-  - name: Write the bootstrap_config file.
+  - name: "Create bootstrap_config file"
     file:
-      path: "{{ playbook_dir }}/{{ bootstrap_role }}"
+      path: "{{ playbook_dir }}/bootstrap_config"
       state: touch
       owner: root
       group: root
       mode: 400
 
+  - name: "Write bootstrap_config file"
+    blockinfile:
+      path: "{{ playbook_dir }}/bootstrap_config"
+      block: |
+        bootstrap_role: "{{ bootstrap_role }}"
+        bootstrap_fqdn: "{{ bootstrap_fqdn }}"
+        bootstrap_ip: "{{ bootstrap_ip }}"
+        bootstrap_netmask: "{{ bootstrap_netmask }}"
+        bootstrap_gateway: "{{ bootstrap_gateway }}"
+        remote_bootstrap_role: "{{ remote_bootstrap_role }}"
+        remote_bootstrap_fqdn: "{{ remote_bootstrap_fqdn }}"
+        remote_bootstrap_ip: "{{ remote_bootstrap_ip }}"
+        redhat_org: "{{ redhat_org }}"
+        activation_key: "{{ activation_key }}"
+
   - debug: 
-      msg: "Reboot the system the system to continue."
+      msg: |
+        "Reboot the system the system to continue."
+        "Run ansible-playbook -i inventory site.yml after reboot."
+
 
 
