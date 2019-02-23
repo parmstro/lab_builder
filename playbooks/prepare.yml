@@ -159,10 +159,7 @@
         redhat_org: "{{ redhat_org }}"
         activation_key: "{{ activation_key }}"
 
-  - debug: 
-      msg: |
-        "Reboot the system the system to continue."
-        "Run ansible-playbook -i inventory site.yml after reboot."
-
-
+  - name: "Run ansible-playbook -i inventory site.yml after reboot."
+    debug: 
+      msg: "Reboot the system the system to continue."
 

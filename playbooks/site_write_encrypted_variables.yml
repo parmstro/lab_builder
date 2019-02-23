@@ -14,12 +14,12 @@
   when: "var.value is defined"
 
 - name: encrypt it
-  shell: "echo {{ encrypt_this }} | ansible-vault encrypt_string --vault-id {{ pass_config.password_file }}  --stdin-name {{ var.name }}"
+  shell: "echo {{ encrypt_this }} | ansible-vault encrypt_string --vault-id {{ password_file }}  --stdin-name {{ var.name }}"
   register: output
 
 - name: write the variable to the file
   blockinfile: 
-    path: "{{ pass_config.output_file }}"
+    path: "{{ output_file }}"
     marker: "# {mark}  {{ var.name }}  ANSIBLE MANAGED BLOCK"
     block: "{{ output.stdout }}"
 

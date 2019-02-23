@@ -7,7 +7,7 @@
 #
 
 - name: "Starting lab_builder" 
-#!hosts   added by prepare.yml will be either hosts: build_master OR host: foreman
+  hosts: build_master 
   gather_facts: true
   become: yes
   become_method: sudo
@@ -21,7 +21,10 @@
       prompt: "Enter the password to log into the Red Hat CDN for container images (will be encrypted)"
       default: ""
       private: yes
-
+    - name: "root_password"
+      prompt: "Enter the desired administrative password for the lab (will be encrypted)"
+      default: "#M@k31t5omeThing[0mpl3x"
+      private: yes
 
   vars:
     idm_variable_file: "{{ playbook_dir }}/vars/idm_vars.yml"
@@ -56,45 +59,50 @@
     include_vars: 
       file: "{{ phase_definition_file }}"
     
-  - block:
+  - name: "Including specified password generation file {{ password_config_file }}"
+    include_vars: 
+      file: "{{ password_config_file }}"
 
-    - name: "Including specified password generation file {{ password_config_file }}"
-      include_vars: 
-        file: "{{ password_config_file }}"
+  - set_fact:
+      encrypted_password_file: "{{ output_file }}"
 
-    - name: "Generate passwords"
-      include_tasks: site_generate_passwords.yml
+  - name: "Generate passwords"
+    include_tasks: site_generate_passwords.yml
 
-    - name: "Include encrypted passwords"
-      include_vars:
-        file: "{{ encrypted_passwords_file }}"
+  - name: "Include encrypted passwords"
+    include_vars:
+      file: "{{ encrypted_passwords_file }}"
 
-    when: "bootstrap_role == 'build_master'"
+# TODO: Put sanity_check code here, steal it from openshift
+# TODO: Lock variable files exclusively, these are very long processes
+#       where it would easily be possible for these to change 
+#       underneath us. We don't want that.
 
-  - name: "BEGIN PHASE 1 - bootstrap begin"
+  - name: "PHASE 1 - BEGIN bootstrap build_master"
     file:
       path: "{{ locks_dir }}/bootstrap_begin"
       state: touch
 
-  - block:
-    - include_vars:
-        file: "{{ idm_variable_file }}"
+  - include_vars:
+      file: "{{ idm_variable_file }}"
 
-    - include_role:
-         name: build_master
-    when: "bootstrap_role == 'build_master'"
+  - include_role:
+       name: build_master
 
-  - block:
-    - include_vars:
-        file: "{{ sat_variable_file }}"
+- name: "PHASE 1 - BEGIN bootstrap foreman"
+  hosts: foreman
 
-    - include_role:
-        name: foreman_pre
-    - include_role:
-        name: foreman
-    - include_role:
-        name: foreman_post
-    when: "bootstrap_role == 'foreman'"
+  tasks:
+  
+  - include_vars:
+      file: "{{ sat_variable_file }}"
+
+  - include_role:
+      name: foreman_pre
+  - include_role:
+      name: foreman
+  - include_role:
+      name: foreman_post
 
   - name: "Wait for build_master"
     wait_for:
