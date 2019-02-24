@@ -63,15 +63,12 @@
     include_vars: 
       file: "{{ password_config_file }}"
 
-  - set_fact:
-      encrypted_password_file: "{{ output_file }}"
-
   - name: "Generate passwords"
     include_tasks: site_generate_passwords.yml
 
   - name: "Include encrypted passwords"
     include_vars:
-      file: "{{ encrypted_passwords_file }}"
+      file: "{{ output_file }}"
 
 # TODO: Put sanity_check code here, steal it from openshift
 # TODO: Lock variable files exclusively, these are very long processes
