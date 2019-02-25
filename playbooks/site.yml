@@ -26,81 +26,41 @@
       default: "#M@k31t5omeThing[0mpl3x"
       private: yes
 
-  vars:
-    idm_variable_file: "{{ playbook_dir }}/vars/idm_vars.yml"
-    sat_variable_file: "{{ playbook_dir }}/vars/sat_vars.yml"
-    phase_definition_file: "{{ playbook_dir }}/vars/phase_definition.yml"
-    password_config_file: "{{ playbook_dir }}/vars/password_vars.yml"
-    encrypted_passwords_file: "{{ playbook_dir }}/vars/encrypted_password.yml"
-    locks_dir: "{{ playbook_dir }}/locks"
-    bootstrap_role: "none"
 
   tasks:
 
-  - name: "Ensuring lock dir"
-    file:
-      path: "{{ locks_dir }}"
-      state: directory
 
-  - name: "Has prepare been run"
-    stat:
-      path: "{{ playbook_dir }}/bootstrap_config"
-    register: bc
-
-  - fail:
-      msg: "Bootstrap configuration note found. Please run ansible-playbook prepare.yml and reboot before running site.yml"
-    when: "bc.stat.exists == false"
-
-  - name: "Reading bootstrap configuration"
-    include_vars:
-      file: "{{ playbook_dir }}/bootstrap_config"
-
-  - name: "Starting lab_builder for localhost {{ bootstrap_fqdn }} in role {{ bootstrap_role }}"
-    include_vars: 
-      file: "{{ phase_definition_file }}"
-    
-  - name: "Including specified password generation file {{ password_config_file }}"
-    include_vars: 
-      file: "{{ password_config_file }}"
-
-  - name: "Generate passwords"
-    include_tasks: site_generate_passwords.yml
-
-  - name: "Include encrypted passwords"
-    include_vars:
-      file: "{{ output_file }}"
+  - include_tasks: play_init.yml
 
 # TODO: Put sanity_check code here, steal it from openshift
 # Basic variable confirmation:
   - name: "Basic Variable Confirmation"
-- name: Print some debug information 
-  vars: 
-    msg: |
-        Module Variables ("vars"):
-        --------------------------------
-        {{ vars | to_nice_json }} 
+    vars: 
+      msg: |
+          Module Variables ("vars"):
+          --------------------------------
+          {{ vars | to_nice_json }} 
  
-        Environment Variables ("environment"):
-        --------------------------------
-        {{ environment | to_nice_json }} 
+          Environment Variables ("environment"):
+          --------------------------------
+          {{ environment | to_nice_json }} 
  
-        GROUP NAMES Variables ("group_names"):
-        --------------------------------
-        {{ group_names | to_nice_json }}
+          GROUP NAMES Variables ("group_names"):
+          --------------------------------
+          {{ group_names | to_nice_json }}
  
-        GROUPS Variables ("groups"):
-        --------------------------------
-        {{ groups | to_nice_json }}
+          GROUPS Variables ("groups"):
+          --------------------------------
+          {{ groups | to_nice_json }}
  
-        HOST Variables ("hostvars"):
-        --------------------------------
-        {{ hostvars | to_nice_json }} 
+          HOST Variables ("hostvars"):
+          --------------------------------
+          {{ hostvars | to_nice_json }} 
  
-  debug: 
-    msg: "{{ msg.split('\n') }}"       
-  tags: debug_info
+    debug: 
+      msg: "{{ msg.split('\n') }}"       
+    tags: debug_info
 
-- fail:
 
 # TODO: Lock variable files exclusively, these are very long processes
 #       where it would easily be possible for these to change 
@@ -111,9 +71,6 @@
       path: "{{ locks_dir }}/bootstrap_begin"
       state: touch
 
-  - include_vars:
-      file: "{{ idm_variable_file }}"
-
   - include_role:
        name: build_master
 
@@ -122,8 +79,7 @@
 
   tasks:
   
-  - include_vars:
-      file: "{{ sat_variable_file }}"
+  - include_tasks: play_init.yml
 
   - include_role:
       name: foreman_pre
