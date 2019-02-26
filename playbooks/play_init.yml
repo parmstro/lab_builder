@@ -46,9 +46,10 @@
 - name: "Set Variable files to read only"
   file:
     dest: "{{ vars_dir }}"
+    state: directory
     owner: root
     group: root
-    mode: 744
+    mode: 0744
     recurse: yes
 
 - name: "Has prepare been run"

@@ -30,7 +30,7 @@
     name: "{{ item.name }}"
     description: "{{ item.desc }}"
     state: present
-    ipa_host: "{{ anisble_fqdn }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
     ipa_pass: "{{ idm_admin }}"
   with_items:

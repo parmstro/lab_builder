@@ -7,9 +7,9 @@
     name: admin_allow_all
     description: "Realm Admin accesses all hosts"
     state: present
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
     hostcategory: all
     servicecategory: all
     usergroup: 
@@ -21,9 +21,9 @@
     name: ocp-poc-users
     description: "Restrict access to ocpmasters"
     state: present
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
     hostgroup:
     - ocp-masters
     - util-servers
@@ -37,9 +37,9 @@
     name: ocp-admins
     description: "OCP Admins can access to ocp masters, nodes, routers, load balancers and utility servers"
     state: present
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
     hostgroup:
     - ocp-masters
     - ocp-servers
@@ -54,9 +54,9 @@
     name: sat-operators
     description: "Satellite Operators can access the Satellite and Capsule Servers"
     state: present
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
     hostgroup:
     - sat-servers
     servicecategory: all
@@ -68,9 +68,9 @@
     name: cfme-operators
     description: "Satellite Operators can access the Satellite and Capsule Servers"
     state: present
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
     hostgroup:
     - cfme-servers
     servicecategory: all
@@ -84,9 +84,9 @@
     name: cfme-operators
     description: "Satellite Operators can access the Satellite and Capsule Servers"
     state: present
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
     hostgroup:
     - awx-servers
     servicecategory: all
@@ -98,7 +98,7 @@
   ipa_hbacrule:
     name: allow_all
     state: disabled
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
 

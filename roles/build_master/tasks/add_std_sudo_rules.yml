@@ -9,9 +9,9 @@
     name: "realm-admin"
     description: "Control sudo access on all servers for admins"
     state: present
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
     cmdcategory: all
     hostcategory: all
     usergroup:
@@ -23,9 +23,9 @@
     name: "sat-admin"
     description: "Control sudo access on Satellite Servers and Capsules"
     state: present
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
     cmdcategory: all
     hostgroup:
     - sat-servers
@@ -41,9 +41,9 @@
     name: "ocp-admin"
     description: "Control sudo access on OCP Servers"
     state: present
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
     cmdcategory: all
     hostgroup:
     - ocp-servers
@@ -57,9 +57,9 @@
     name: "cfme-admin"
     description: "Control sudo access on CloudForms Servers"
     state: present
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
     cmdcategory: all
     hostgroup:
     - cfme-servers
@@ -73,9 +73,9 @@
     name: "awx-admin"
     description: "Control sudo access on Ansible Tower Servers"
     state: present
-    ipa_host: "{{ hostname }}"
+    ipa_host: "{{ ansible_fqdn }}"
     ipa_user: "admin"
-    ipa_pass: "{{ idm_admin_password }}"
+    ipa_pass: "{{ idm_admin }}"
     cmdcategory: all
     hostgroup:
     - awx-servers
