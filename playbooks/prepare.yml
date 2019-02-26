@@ -15,7 +15,7 @@
       private: no
     - name: bootstrap_fqdn
       prompt: "Enter the bootstrap FQDN for the local host"
-      default: "buildmaster.labbuilder.ca"
+      default: "buildmaster.labbuilder.lab"
       private: no
     - name: bootstrap_ip
       prompt: "Enter the bootstrap ipv4 address for the local host"
@@ -45,12 +45,6 @@
       prompt: "Enter the Red Hat Activation Key for selected role"
       default: "build_master"
       private: no
-    - name: root_password
-      prompt: "Enter the new root password"
-      private: yes
-      encrypt: "sha512_crypt"
-      confirm: yes
-      salt_size: 7
 
   vars:
       satellite_pool: "Red Hat Satellite Infrastructure Subscription$"
@@ -159,7 +153,7 @@
         redhat_org: "{{ redhat_org }}"
         activation_key: "{{ activation_key }}"
 
-  - name: "Run ansible-playbook -i inventory site.yml after reboot."
+  - name: "NOTICE: Run ansible-playbook -i inventory site.yml on the 'build_master' after reboot."
     debug: 
       msg: "Reboot the system the system to continue."
 

@@ -29,8 +29,17 @@
 
   tasks:
 
+# TODO: Lock variable files exclusively, these are very long processes
+#       where it would easily be possible for these to change 
+#       underneath us. We don't want that.
 
-  - include_tasks: play_init.yml
+  - name: "PHASE 1 - BEGIN bootstrap build_master"
+    file:
+      path: "{{ locks_dir }}/bootstrap_begin"
+      state: touch
+
+  - name: "Phase initialization - build_master"
+    include_tasks: play_init.yml
 
 # TODO: Put sanity_check code here, steal it from openshift
 # Basic variable confirmation:
@@ -61,17 +70,8 @@
       msg: "{{ msg.split('\n') }}"       
     tags: debug_info
 
-
-# TODO: Lock variable files exclusively, these are very long processes
-#       where it would easily be possible for these to change 
-#       underneath us. We don't want that.
-
-  - name: "PHASE 1 - BEGIN bootstrap build_master"
-    file:
-      path: "{{ locks_dir }}/bootstrap_begin"
-      state: touch
-
-  - include_role:
+  - name: "Apply role of build_master to {{ ansible_fqdn }}"
+    include_role:
        name: build_master
 
 - name: "PHASE 1 - BEGIN bootstrap foreman"
@@ -79,13 +79,19 @@
 
   tasks:
   
-  - include_tasks: play_init.yml
+  - name: "Phase initialization - build_master"
+    include_tasks: play_init.yml
 
-  - include_role:
+  - name: "Apply role of foreman_pre to {{ ansible_fqdn }}"
+    include_role:
       name: foreman_pre
-  - include_role:
+
+  - name: "Apply role of foreman to {{ ansible_fqdn }}"
+    include_role:
       name: foreman
-  - include_role:
+  
+  - name: "Apply role of foreman_post to {{ ansible_fqdn }}"
+    include_role:
       name: foreman_post
 
   - name: "Wait for build_master"
@@ -101,3 +107,15 @@
       path: "{{ locks_dir }}/bootstrap_complete"
       state: touch
 
+## PHASE 2 - bootstrap 2 CONDITIONAL
+# AUTO
+#   PROCEED
+# MANUAL
+#   UNLOCK VAR FILES
+#   TERMINATE
+## PHASE 2 - bootstrap 2 CONDITIONAL 
+
+
+## PHASE 2 - bootstrap 2
+#
+#
