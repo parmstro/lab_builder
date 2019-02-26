@@ -2,26 +2,28 @@
 # This file is used to load the global environment for each play. 
 # The example configuration requires these includes, add or remove 
 # what is needed to suit your purposes.
-    
+- set_fact: 
+    vars_dir: "{{ playbook_dir }}/vars"
+
 - name: "Configure Red Hat IdM prerequisites"
   set_fact:
-    idm_variable_file: "{{ playbook_dir }}/vars/idm_vars.yml"
+    idm_variable_file: "{{ vars_dir }}/idm_vars.yml"
 
 - name: "Configure Red Hat Satellite prerequisites"
   set_fact:
-    sat_variable_file: "{{ playbook_dir }}/vars/sat_vars.yml"
+    sat_variable_file: "{{ vars_dir }}/sat_vars.yml"
 
 - name: "Configure Lab Builder Phase Definition file"
   set_fact:
-    phase_definition_file: "{{ playbook_dir }}/vars/phase_definition.yml"
+    phase_definition_file: "{{ vars_dir }}/phase_definition.yml"
 
 - name: "Set Base Configuration Password Randomization"
   set_fact:
-    password_config_file: "{{ playbook_dir }}/vars/password_vars.yml"
+    password_config_file: "{{ vars_dir }}/password_vars.yml"
 
 - name: "Configure Encrypted Password Target File"
   set_fact:
-    encrypted_passwords_file: "{{ playbook_dir }}/vars/encrypted_password.yml"
+    encrypted_passwords_file: "{{ vars_dir }}/encrypted_password.yml"
 
 - name: "Configure Phase Lock directory"
   set_fact:
@@ -35,6 +37,19 @@
   file:
     path: "{{ locks_dir }}"
     state: directory
+
+- name: "Write phase lock file"
+  file:
+    path: "{{ locks_dir }}/{{ phase_name }}_begin"
+    state: touch
+
+- name: "Set Variable files to read only"
+  file:
+    dest: "{{ vars_dir }}"
+    owner: root
+    group: root
+    mode: 744
+    recurse: yes
 
 - name: "Has prepare been run"
   stat:

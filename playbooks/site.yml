@@ -15,8 +15,8 @@
   vars_prompt:
     - name: "cdn_username_prompt"
       prompt: "Enter the username to log into the Red Hat CDN for container images (will be encrypted)"
-      default: ""
-      private: yes
+      default: "parmstro@redhat.com"
+      private: no
     - name: "cdn_password_prompt"
       prompt: "Enter the password to log into the Red Hat CDN for container images (will be encrypted)"
       default: ""
@@ -27,6 +27,9 @@
       private: yes
 
 
+  vars:
+    phase_name: "bootstrap_build_master"
+
   tasks:
 
 # TODO: Lock variable files exclusively, these are very long processes
@@ -34,11 +37,6 @@
 #       underneath us. We don't want that.
 
   - name: "PHASE 1 - BEGIN bootstrap build_master"
-    file:
-      path: "{{ locks_dir }}/bootstrap_begin"
-      state: touch
-
-  - name: "Phase initialization - build_master"
     include_tasks: play_init.yml
 
 # TODO: Put sanity_check code here, steal it from openshift
@@ -76,6 +74,8 @@
 
 - name: "PHASE 1 - BEGIN bootstrap foreman"
   hosts: foreman
+  vars:
+    phase_name: "bootstrap_foreman"
 
   tasks:
   
@@ -119,3 +119,8 @@
 ## PHASE 2 - bootstrap 2
 #
 #
+# BEGIN ANSIBLE MANAGED BLOCK
+# BEGIN needed to indent - prepare.yml
+  hosts: build_master
+# END needed to indent - prepare.yml
+# END ANSIBLE MANAGED BLOCK
