@@ -2,6 +2,7 @@
 # This file is used to load the global environment for each play. 
 # The example configuration requires these includes, add or remove 
 # what is needed to suit your purposes.
+
 - set_fact: 
     vars_dir: "{{ playbook_dir }}/vars"
 
@@ -43,15 +44,6 @@
     path: "{{ locks_dir }}/{{ phase_name }}_begin"
     state: touch
 
-- name: "Set Variable files to read only"
-  file:
-    dest: "{{ vars_dir }}"
-    state: directory
-    owner: root
-    group: root
-    mode: 0744
-    recurse: yes
-
 - name: "Has prepare been run"
   stat:
     path: "{{ playbook_dir }}/bootstrap_config"
@@ -85,5 +77,22 @@
 - name: "Include encrypted passwords"
   include_vars:
     file: "{{ output_file }}"
+
+- name: "Include IdM Related Global Configuration"
+  include_vars:
+    file: "{{ idm_variable_file }}"
+
+- name: "Include Satellite Related Global Configuration"
+  include_vars:
+    file: "{{ sat_variable_file }}"
+
+- name: "Set Variable files to read only"
+  file:
+    dest: "{{ vars_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0744
+    recurse: yes
 
 
