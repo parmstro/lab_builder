@@ -72,14 +72,25 @@
     include_role:
        name: build_master
 
+
+
 - name: "PHASE 1 - BEGIN bootstrap foreman"
   hosts: foreman
+  gather_facts: yes
   vars:
     phase_name: "bootstrap_foreman"
 
   tasks:
   
-  - name: "Phase initialization - build_master"
+  - name: "Who is the Foreman?"
+    debug:
+      msg: "{{ play_hosts }}"
+
+  - name: "Ping the foreman host"
+    ping:
+      hosts: "{{ ansible_fqdn }}"
+
+  - name: "Phase initialization - {{ ansible_fqdn }} "
     include_tasks: play_init.yml
 
   - name: "Apply role of foreman_pre to {{ ansible_fqdn }}"
