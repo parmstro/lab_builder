@@ -35,7 +35,7 @@
       private: no
     - name: remote_bootstrap_ip
       prompt: "Enter the bootstrap ipv4 address for the REMOTE host"
-      default: "192.168.252.222"
+      default: "192.168.254.222"
       private: no
     - name: redhat_org
       prompt: "Enter the Red Hat CDN organization"
