@@ -68,8 +68,12 @@
       msg: "{{ msg.split('\n') }}"       
     when: "'foreman' in group_names"
 
-  - name: BAILBAILBAIL
-    fail:
+  - name: "Seems sane enough to talk to ... B-)"
+    debug:
+      msg: "OK Let's begin at the not quite the beginning..."
+
+  - pause:
+      seconds: 5
 
 - name: "Starting lab_builder" 
   hosts: build_master 
