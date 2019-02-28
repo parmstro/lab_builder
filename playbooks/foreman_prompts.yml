@@ -33,12 +33,10 @@ vars_prompt:
     default: "foreman"
     private: no
 
-
-
-- name: "Preparing host in role 'foreman' with the following configuration:"
+- name: "Preparing host in role foreman with the following configuration"
   vars:
     msg: |
-      *** bootstrap configuration ***
+      ##bootstrap configuration
       fqdn:  {{ bootstrap_fqdn }}
       ipv4:  {{ bootstrap_ip }}
       netm:  {{ bootstrap_netmask }}
