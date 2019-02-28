@@ -94,8 +94,6 @@
   debug:
     msg: "{{ msg.split('\n') }}"
 
-  - fail:
-
   - name: "Write out hosts file for bootstrap"
     blockinfile:
       path: "/etc/hosts"
