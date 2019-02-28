@@ -33,3 +33,21 @@ vars_prompt:
     default: "foreman"
     private: no
 
+
+
+- name: "Preparing host in role 'foreman' with the following configuration:"
+  vars:
+    msg: |
+      *** bootstrap configuration ***
+      fqdn:  {{ bootstrap_fqdn }}
+      ipv4:  {{ bootstrap_ip }}
+      netm:  {{ bootstrap_netmask }}
+      gate:  {{ bootstrap_netmask }}
+      prdn:  {{ remote_bootstrap_fqdn }}
+      prip:  {{ remote_bootstrap_ip }}
+      rhog:  {{ redhat_org }}
+      actk:  {{ activation_key }}
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+
