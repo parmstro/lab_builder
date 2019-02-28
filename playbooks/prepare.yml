@@ -13,6 +13,7 @@
       prompt: "Enter the bootstrap role for this host. [build_master | foreman]"
       default: "build_master"
       private: no
+<<<<<<< HEAD
 #
 #      EXPERIMENT: moving these below to customize prompts
 #
@@ -48,6 +49,40 @@
 #      prompt: "Enter the Red Hat Activation Key for selected role"
 #      default: "build_master"
 #      private: no
+=======
+    - name: bootstrap_fqdn
+      prompt: "Enter the bootstrap FQDN for the local host"
+      default: "buildmaster.labbuilder.lab"
+      private: no
+    - name: bootstrap_ip
+      prompt: "Enter the bootstrap ipv4 address for the local host"
+      default: "192.168.248.10"
+      private: no
+    - name: bootstrap_netmask
+      prompt: "Enter the bootstrap network mask for the local host"
+      default: "255.255.252.0"
+      private: no
+    - name: bootstrap_gateway
+      prompt: "Enter the bootstrap gateway for the local host"
+      default: "192.168.248.1"
+      private: no
+    - name: remote_bootstrap_fqdn
+      prompt: "Enter the bootstrap FQDN for the REMOTE host"
+      default: "foreman.labbuilder.lab"
+      private: no
+    - name: remote_bootstrap_ip
+      prompt: "Enter the bootstrap ipv4 address for the REMOTE host"
+      default: "192.168.248.12"
+      private: no
+    - name: redhat_org
+      prompt: "Enter the Red Hat CDN organization"
+      default: ""
+      private: no
+    - name: activation_key
+      prompt: "Enter the Red Hat Activation Key for selected role"
+      default: "build_master"
+      private: no
+>>>>>>> d304147a3fee28dba4a6036b4724931ff48721bd
 
   vars:
       satellite_pool: "Red Hat Satellite Infrastructure Subscription$"
