@@ -19,7 +19,7 @@
       private: no
     - name: bootstrap_ip
       prompt: "Enter the bootstrap ipv4 address for the local host"
-      default: "192.168.254.221"
+      default: "192.168.248.10"
       private: no
     - name: bootstrap_netmask
       prompt: "Enter the bootstrap network mask for the local host"
@@ -27,7 +27,7 @@
       private: no
     - name: bootstrap_gateway
       prompt: "Enter the bootstrap gateway for the local host"
-      default: "192.168.252.1"
+      default: "192.168.248.1"
       private: no
     - name: remote_bootstrap_fqdn
       prompt: "Enter the bootstrap FQDN for the REMOTE host"
@@ -35,7 +35,7 @@
       private: no
     - name: remote_bootstrap_ip
       prompt: "Enter the bootstrap ipv4 address for the REMOTE host"
-      default: "192.168.254.222"
+      default: "192.168.248.12"
       private: no
     - name: redhat_org
       prompt: "Enter the Red Hat CDN organization"
