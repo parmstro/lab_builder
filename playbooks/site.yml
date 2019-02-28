@@ -7,9 +7,8 @@
 #
 - name: "Sanity Check..."
   hosts: all
+  remote_user: root
   gather_facts: true
-  become: yes
-  become_method: sudo
 
   tasks:
 
@@ -57,9 +56,8 @@
 
 - name: "Starting lab_builder" 
   hosts: build_master 
+  remote_user: root
   gather_facts: true
-  become: yes
-  become_method: sudo
 
   vars_prompt:
     - name: "cdn_username_prompt"
@@ -122,12 +120,26 @@
        name: build_master
 
 
+#######################################################
+
+- name: "Sanity Check..."
+  hosts: all
+  remote_user: root
+
+  tasks:
+
+  - name: "Ping them just for me..."
+    ping:
+
+  - pause:
+      seconds: 5
+
+#######################################################
+
 
 - name: "PHASE 1 - BEGIN bootstrap foreman"
   hosts: foreman
   remote_user: root
-#  become: yes
-#  become_method: sudo
   gather_facts: yes
   vars:
     phase_name: "bootstrap_foreman"
@@ -140,6 +152,9 @@
 
   - name: "Ping the foreman host"
     ping:
+
+  - pause:
+      seconds: 30
 
   - name: "Phase initialization - {{ ansible_fqdn }} "
     include_tasks: play_init.yml
