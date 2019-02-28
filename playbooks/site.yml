@@ -6,6 +6,71 @@
 # note, this playbook requires that you run prepare.yml first
 #
 
+- name: "Sanity Check..."
+  hosts: all
+  gather_facts: true
+  become: yes
+  become_method: sudo
+
+  tasks:
+
+  - name: "Debug output for host in the role of build_master"
+    vars: 
+      msg: |
+          Module Variables ("vars"):
+          --------------------------------
+          {{ vars | to_nice_json }} 
+ 
+          Environment Variables ("environment"):
+          --------------------------------
+          {{ environment | to_nice_json }} 
+ 
+          GROUP NAMES Variables ("group_names"):
+          --------------------------------
+          {{ group_names | to_nice_json }}
+ 
+          GROUPS Variables ("groups"):
+          --------------------------------
+          {{ groups | to_nice_json }}
+ 
+          HOST Variables ("hostvars"):
+          --------------------------------
+          {{ hostvars | to_nice_json }} 
+ 
+    debug: 
+      msg: "{{ msg.split('\n') }}"       
+    when: "'build_master' in group_names"
+
+  - name: "Debug output for host in the role of foreman"
+    vars: 
+      msg: |
+          Module Variables ("vars"):
+          --------------------------------
+          {{ vars | to_nice_json }} 
+ 
+          Environment Variables ("environment"):
+          --------------------------------
+          {{ environment | to_nice_json }} 
+ 
+          GROUP NAMES Variables ("group_names"):
+          --------------------------------
+          {{ group_names | to_nice_json }}
+ 
+          GROUPS Variables ("groups"):
+          --------------------------------
+          {{ groups | to_nice_json }}
+ 
+          HOST Variables ("hostvars"):
+          --------------------------------
+          {{ hostvars | to_nice_json }} 
+ 
+    debug: 
+      msg: "{{ msg.split('\n') }}"       
+    when: "'foreman' in group_names"
+
+  - name: BAILBAILBAIL
+    fail:
+
 - name: "Starting lab_builder" 
   hosts: build_master 
   gather_facts: true
@@ -32,15 +97,12 @@
 
   tasks:
 
-# TODO: Lock variable files exclusively, these are very long processes
-#       where it would easily be possible for these to change 
-#       underneath us. We don't want that.
-
   - name: "PHASE 1 - BEGIN bootstrap build_master"
     include_tasks: play_init.yml
 
-# TODO: Put sanity_check code here, steal it from openshift
-# Basic variable confirmation:
+  # TODO: Put sanity_check code here, steal it from openshift
+
+  # Basic variable confirmation:
   - name: "Basic Variable Confirmation"
     vars: 
       msg: |
@@ -88,8 +150,7 @@
 
   - name: "Ping the foreman host"
     ping:
-      hosts: "{{ ansible_fqdn }}"
-
+      
   - name: "Phase initialization - {{ ansible_fqdn }} "
     include_tasks: play_init.yml
 
