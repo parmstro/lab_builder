@@ -96,15 +96,6 @@
 
 # TODO:Pull the latest lab_builder here  
 #
-  - name: "Update site.yml"
-    blockinfile:
-      path: "{{ playbook_dir }}/site.yml"
-      insertafter: "#!hosts"
-      block: |
-        # BEGIN needed to indent - prepare.yml
-          hosts: {{ bootstrap_role }}
-        # END needed to indent - prepare.yml
-
   - name: "Create bootstrap inventory file"
     file:
       path: "{{ bootstrap_inventory_file }}"
@@ -114,8 +105,13 @@
     blockinfile:
       path: "{{ bootstrap_inventory_file }}"
       block: |
+        # insert the buildmaster fqdn below
+        # there can be only one during phase 1
         [build_master]
         {{ bootstrap_fqdn }}
+
+        # insert the foreman fqdn below
+        # there can be only one during phase 1
         [foreman]
         {{ remote_bootstrap_fqdn }}
     when: "bootstrap_role == 'build_master'"
@@ -124,8 +120,13 @@
     blockinfile:
       path: "{{ bootstrap_inventory_file }}"
       block: |
+        # insert the buildmaster fqdn below
+        # there can be only one during phase 1
         [build_master]
         {{ remote_bootstrap_fqdn }}
+
+        # insert the foreman fqdn below
+        # there can be only one during phase 1
         [foreman]
         {{ bootstrap_fqdn }}
     when: "bootstrap_role == 'foreman'"
