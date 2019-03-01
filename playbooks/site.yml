@@ -141,8 +141,6 @@
   hosts: foreman
   remote_user: root
   gather_facts: yes
-  vars:
-    phase_name: "bootstrap_foreman"
 
   tasks:
   
@@ -155,6 +153,11 @@
 
   - pause:
       seconds: 30
+
+
+  - name: "DIE DIE DIE! "
+    fail:
+    when: "ansible_hostname not in play_hosts"
 
   - name: "Phase initialization - {{ ansible_fqdn }} "
     include_tasks: play_init.yml
