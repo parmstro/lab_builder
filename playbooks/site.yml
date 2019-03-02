@@ -12,45 +12,8 @@
 
   tasks:
 
-  - name: "Debug output for host in the role of build_master"
-    vars:
-      msg: |
-          Module Variables ("vars"):
-          --------------------------------
-          {{ vars | to_nice_json }}
-
-          GROUP NAMES Variables ("group_names"):
-          --------------------------------
-          {{ group_names | to_nice_json }}
-
-    debug:
-      msg: "{{ msg.split('\n') }}"
-    when: "'build_master' in group_names"
-
-  - name: "Debug output for host in the role of foreman"
-    vars:
-      msg: |
-          Module Variables ("vars"):
-          --------------------------------
-          {{ vars | to_nice_json }}
-
-          GROUP NAMES Variables ("group_names"):
-          --------------------------------
-          {{ group_names | to_nice_json }}
-
-    debug:
-      msg: "{{ msg.split('\n') }}"
-    when: "'foreman' in group_names"
-
-  - name: "Seems sane enough to talk to ... B-)"
-    debug:
-      msg: "OK Let's begin at the not quite the beginning..."
-
-  - name: "Ping them just for me..."
+  - name: "Just ping them for me..."
     ping:
-
-  - pause:
-      seconds: 5
 
 ##############################################
 
@@ -157,7 +120,7 @@
 
   - name: "DIE DIE DIE! "
     fail:
-    when: "ansible_hostname not in play_hosts"
+    when: "'foreman.labbuilder.lab' not in play_hosts"
 
   - name: "Phase initialization - {{ ansible_fqdn }} "
     include_tasks: play_init.yml

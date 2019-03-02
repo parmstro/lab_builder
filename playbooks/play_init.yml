@@ -50,14 +50,14 @@
   register: bc
 
 - fail:
-    msg: "Bootstrap configuration note found. Please run ansible-playbook prepare.yml and reboot before running site.yml"
+    msg: "Bootstrap configuration not found. Please run ansible-playbook prepare.yml and reboot before running site.yml"
   when: "bc.stat.exists == false"
 
 - name: "Reading bootstrap configuration"
   include_vars:
     file: "{{ playbook_dir }}/bootstrap_config"
 
-- name: "Starting lab_builder for localhost {{ bootstrap_fqdn }} in role {{ bootstrap_role }}"
+- name: "Starting lab_builder for {{ bootstrap_fqdn }} in role {{ bootstrap_role }}"
   include_vars: 
     file: "{{ phase_definition_file }}"
     
