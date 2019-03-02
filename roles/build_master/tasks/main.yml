@@ -5,6 +5,11 @@
 - name: "Enable the RHEL Server repo required for IdM"
   command: "subscription-manager repos --enable=rhel-7-server-rpms"
 
+# to handle bug see: https://access.redhat.com/solutions/3948781
+#
+- name: "Enable the optional repo temporarily"
+  command: "subscription-manager repos --enable=rhel-7-server-optional-rpms"
+
 - name: "Updating the system... this may take a while."
   yum:
     name: "*"
