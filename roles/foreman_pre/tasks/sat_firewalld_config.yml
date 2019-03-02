@@ -1,6 +1,10 @@
 ---
 # Configure firewalld for Satellite.
 # NOTE: other service ports may be opened when aspects of the configuration are changed
+# firewalld service port operations are additive unless configured otherwise
+# firewall ports below are defaulting to open for all Satellite features as 
+# this play is initially designed for a lab or POC environment.
+# This play can be adapted conditionals for more coordinated feature control.
 
 - name: Ensure that firewalld is installed
   yum:
