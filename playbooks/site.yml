@@ -164,6 +164,5 @@
 #
 # BEGIN ANSIBLE MANAGED BLOCK
 # BEGIN needed to indent - prepare.yml
-  hosts: build_master
 # END needed to indent - prepare.yml
 # END ANSIBLE MANAGED BLOCK
