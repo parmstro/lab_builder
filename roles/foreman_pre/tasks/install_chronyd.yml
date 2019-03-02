@@ -17,6 +17,9 @@
     state: started
     enabled: true
 
+## If you wish to override default time services, do it here
+#  otherwise, the IdM server will become the time server.
+
 - name: Install the SOS Report package while we are at it...
   yum:
     name: sos
