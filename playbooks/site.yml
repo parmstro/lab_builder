@@ -101,7 +101,7 @@
 
 
 - name: "PHASE 1 - BEGIN bootstrap foreman"
-  hosts: foreman
+  hosts: foreman.labbuilder.lab
   remote_user: root
   gather_facts: yes
 
