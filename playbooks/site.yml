@@ -101,27 +101,12 @@
 
 
 - name: "PHASE 1 - BEGIN bootstrap foreman"
-  hosts: foreman.labbuilder.lab
+  hosts: foreman
   remote_user: root
   gather_facts: yes
 
   tasks:
   
-  - name: "Who is the Foreman?"
-    debug:
-      msg: "{{ play_hosts }}"
-
-  - name: "Ping the foreman host"
-    ping:
-
-  - pause:
-      seconds: 30
-
-
-  - name: "DIE DIE DIE! "
-    fail:
-    when: "'foreman.labbuilder.lab' not in play_hosts"
-
   - name: "Phase initialization - {{ ansible_fqdn }} "
     include_tasks: play_init.yml
 
