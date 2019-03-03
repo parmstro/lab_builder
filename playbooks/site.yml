@@ -92,6 +92,7 @@
 
   vars:
     phase_name: "bootstrap_foreman"
+    epf_overwrite: true
 
   tasks:
   

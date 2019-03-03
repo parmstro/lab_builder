@@ -65,19 +65,8 @@
   include_vars: 
     file: "{{ password_config_file }}"
 
-- name: "Discover password config"
-  stat:
-    path: "{{ output_file }}"
-  register: of
-
-- name: "Encrypted password file exists!"
-  debug: 
-    msg: "Found {{ output_file }}"
-  when: "of.stat.exists == true"
-
-- name: "Password target does not exist. Generate passwords"
+- name: "Generate passwords"
   include_tasks: site_generate_passwords.yml
-  when: "of.stat.exists == false"
 
 - name: "Include encrypted passwords"
   include_vars:
