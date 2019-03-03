@@ -57,7 +57,7 @@
   include_vars:
     file: "{{ playbook_dir }}/bootstrap_config"
 
-- name: "Starting lab_builder for {{ bootstrap_fqdn }} in role {{ bootstrap_role }}"
+- name: "Starting lab_builder for {{ ansible_fqdn }} in {{ phase_name }}"
   include_vars: 
     file: "{{ phase_definition_file }}"
     
@@ -69,6 +69,11 @@
   stat:
     path: "{{ output_file }}"
   register: of
+
+- name: "Encrypted password file exists!"
+  debug: 
+    msg: "Found {{ output_file }}"
+  when: "of.stat.exists == true"
 
 - name: "Password target does not exist. Generate passwords"
   include_tasks: site_generate_passwords.yml
