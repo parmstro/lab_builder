@@ -20,7 +20,15 @@ ipa_server_crt_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.crt"
 ipa_server_key_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.key"
 ipa_server_csr_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.csr"
 ipa_server_ca_file: "/etc/ipa/ca.crt"
-
+# ipa_rsa_key_pass is defined in password_vars.yml for random password generation
+# configure password_vars.yml to set the password to a known value
+ipa_organization_name: "{{ ansible_domain | upper }}"
+ipa_ou_name: "Demo Lab"
+ipa_locality_name: "Hespeler"
+ipa_prov_name: "Ontario"
+ipa_country_name: "Canada"
+ipa_email_address: "admin@{{ ansible_domain }}"
+ipa_service_type: "HTTP"
 
 # used for installing the Satellite Server
 # See template file in ../roles/satellite/templates/satellite-answers.yml
