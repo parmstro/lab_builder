@@ -85,28 +85,13 @@
 
 #######################################################
 
-- name: "Sanity Check..."
-  hosts: all
-  remote_user: root
-
-  vars:
-    phase_name: "bootstrap_foreman"
-
-  tasks:
-
-  - name: "Ping them just for me..."
-    ping:
-
-  - pause:
-      seconds: 5
-
-#######################################################
-
-
 - name: "PHASE 1 - BEGIN bootstrap foreman"
   hosts: foreman
   remote_user: root
   gather_facts: yes
+
+ vars:
+    phase_name: "bootstrap_foreman"
 
   tasks:
   
