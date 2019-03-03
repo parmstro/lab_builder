@@ -39,6 +39,7 @@
 
   vars:
     phase_name: "bootstrap_build_master"
+    epf_overwrite: true
 
   tasks:
 
@@ -92,7 +93,7 @@
 
   vars:
     phase_name: "bootstrap_foreman"
-    epf_overwrite: true
+    epf_overwrite: false
 
   tasks:
   
