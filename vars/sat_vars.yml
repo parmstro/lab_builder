@@ -21,6 +21,7 @@ ipa_server_key_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.key"
 ipa_server_csr_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.csr"
 ipa_server_ca_file: "/etc/ipa/ca.crt"
 
+
 # used for installing the Satellite Server
 # See template file in ../roles/satellite/templates/satellite-answers.yml
 scenario: "satellite"

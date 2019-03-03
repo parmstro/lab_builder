@@ -13,21 +13,21 @@
 
 - name: Generate a private key
   openssl_privatekey:
-    path: "{{ server_prv_file }}"
-    passphrase: "{{ rsa_key_pass }}"
+    path: "{{ ipa_server_prv_file }}"
+    passphrase: "{{ ipa_rsa_key_pass }}"
     cipher: "DES3"
     force: yes
 
 - name: Remove any exising CSR
   file:
-    path: "{{ server_csr_file }}"
+    path: "{{ ipa_server_csr_file }}"
     state: absent
 
 - name: Generate the CSR with subjectAltNames set
   openssl_csr:
-    path: "{{ server_csr_file }}"
-    privatekey_path: "{{ server_prv_file }}"
-    privatekey_passphrase: "{{ rsa_key_pass }}"
+    path: "{{ ipa_server_csr_file }}"
+    privatekey_path: "{{ ipa_server_prv_file }}"
+    privatekey_passphrase: "{{ ipa_rsa_key_pass }}"
     state: present
     common_name: "{{ ansible_fqdn }}"
     subject_alt_name: "DNS:{{ ansible_fqdn }}"
@@ -36,21 +36,21 @@
     locality_name: "{{ ipa_locality_name }}"
     state_or_province_name: "{{ ipa_prov_name }}"
     country_name: "{{ ipa_country_name }}"
-    email_address: "admin@{{ ansible_domain }}"
+    email_address: "{{ ipa_email_address }}"
 
 - name: Determine if the service exists
-  command: "ipa service-show {{ service_type }}/{{ ansible_fqdn }}"
+  command: "ipa service-show {{ ipa_service_type }}/{{ ansible_fqdn }}"
   register: result
 
 - set_fact:
     service_exists: "{{ result.stdout_lines.1 | regex_search('service not found') }}"
 
 - name: Add the service to IdM/FreeIPA
-  command: "ipa service-add {{ service_type }}/{{ ansible_fqdn }}"
+  command: "ipa service-add {{ ipa_service_type }}/{{ ansible_fqdn }}"
   when: service_exists != ""
 
 - name: Request the certificate
-  command: "ipa cert-request --add --principal={{ service_type }}/{{ ansible_fqdn }} {{ server_csr_file }}"
+  command: "ipa cert-request --add --principal={{ ipa_service_type }}/{{ ansible_fqdn }} {{ ipa_server_csr_file }}"
   register: result
 
 - name: Get the certificate serial number
@@ -58,11 +58,11 @@
     serial_number: "{{ result.stdout_lines.7 | regex_replace('  Serial number: ', '') }}"
 
 - name: Retrieve the certificate
-  command: "ipa cert-show --out={{ server_crt_file }} {{ serial_number }}"
+  command: "ipa cert-show --out={{ ipa_server_crt_file }} {{ serial_number }}"
 
 - lineinfile:
-    path: "{{ server_certs_dir }}.passin.txt"
-    line: "{{ rsa_key_pass }}"
+    path: "{{ ipa_server_certs_dir }}.passin.txt"
+    line: "{{ ipa_rsa_key_pass }}"
     create: yes
     owner: root
     group: root
@@ -70,6 +70,6 @@
     state: present
     
 - name: Generate a key for the service
-  command: "openssl rsa -in {{ server_prv_file }} -out {{ server_key_file }} -passin file:{{ server_certs_dir }}.passin.txt"
+  command: "openssl rsa -in {{ ipa_server_prv_file }} -out {{ ipa_server_key_file }} -passin file:{{ ipa_server_certs_dir }}.passin.txt"
 
 

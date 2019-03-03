@@ -44,7 +44,7 @@ foreman:
   passenger_ruby_package: tfm-rubygem-passenger-native
   plugin_prefix: tfm-rubygem-foreman_
   use_vhost: true
-  servername: {{ foreman_servername }}
+  servername: "{{ foreman_servername }}"
   serveraliases:
   - foreman
   ssl: true
@@ -226,15 +226,15 @@ foreman_proxy:
   puppetssh_wait: false
   salt_puppetrun_cmd: puppet.run
   puppet_user: root
-  puppet_url: https://sat6.labbuilder.ca:8140
-  puppet_ssl_ca: /etc/puppetlabs/puppet/ssl/certs/ca.pem
-  puppet_ssl_cert: /etc/puppetlabs/puppet/ssl/certs/sat6.labbuilder.ca.pem
-  puppet_ssl_key: /etc/puppetlabs/puppet/ssl/private_keys/sat6.labbuilder.ca.pem
+  puppet_url: "https://{{ ansible_fqdn }}:8140"
+  puppet_ssl_ca: "/etc/puppetlabs/puppet/ssl/certs/ca.pem"
+  puppet_ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/{{ ansible_fqdn }}.pem"
+  puppet_ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/{{ ansible_fqdn }}.pem"
   puppet_use_environment_api: 
   puppet_api_timeout: 30
   templates: false
   templates_listen_on: both
-  template_url: http://sat6.labbuilder.ca:8000
+  template_url: "http://{{ ansible_fqdn }}:8000"
   logs: true
   logs_listen_on: https
   tftp: "{{ foreman_proxy_tftp }}"
@@ -281,7 +281,7 @@ foreman_proxy:
   dhcp_omapi_port: 7911
   dhcp_peer_address: 
   dhcp_node_type: standalone
-  dhcp_failover_address: 192.168.252.19
+  dhcp_failover_address: 192.168.248.1
   dhcp_failover_port: 519
   dhcp_max_response_delay: 30
   dhcp_max_unacked_updates: 10
@@ -390,7 +390,7 @@ foreman_proxy::plugin::pulp:
   pulpnode_enabled: false
   version: 
   group: 
-  pulp_url: https://sat6.labbuilder.ca/pulp
+  pulp_url: "https://{{ ansible_fqdn }}/pulp"
   pulp_dir: /var/lib/pulp
   pulp_content_dir: /var/lib/pulp/content
   puppet_content_dir: /etc/puppetlabs/code/environments
@@ -525,7 +525,7 @@ puppet:
   agent: true
   remove_lock: true
   report: true
-  client_certname: sat6.labbuilder.ca
+  client_certname: "{{ ansible_fqdn }}"
   puppetmaster: 
   systemd_unit_name: puppet-run
   service_name: puppet
@@ -534,7 +534,7 @@ puppet:
   server: true
   server_admin_api_whitelist:
   - localhost
-  - sat6.labbuilder.ca
+  - "{{ ansible_fqdn }}"
   server_manage_user: true
   server_user: puppet
   server_group: puppet
@@ -547,7 +547,7 @@ puppet:
   server_ca_auth_required: true
   server_ca_client_whitelist:
   - localhost
-  - sat6.labbuilder.ca
+  - "{{ ansible_fqdn }}"
   server_http: false
   server_http_port: 8139
   server_http_allow: []
@@ -611,7 +611,7 @@ puppet:
   server_ssl_chain_filepath: /etc/puppetlabs/puppet/ssl/ca/ca_crt.pem
   server_package: 
   server_version: 
-  server_certname: sat6.labbuilder.ca
+  server_certname: "{{ ansible_fqdn }}"
   server_enc_api: v2
   server_report_api: v2
   server_request_timeout: 60
@@ -620,7 +620,7 @@ puppet:
   server_additional_settings: {}
   server_rack_arguments: []
   server_foreman: true
-  server_foreman_url: https://sat6.labbuilder.ca
+  server_foreman_url: "https://{{ ansible_fqdn }}"
   server_foreman_ssl_ca: /etc/pki/katello/puppet/puppet_client_ca.crt
   server_foreman_ssl_cert: /etc/pki/katello/puppet/puppet_client.crt
   server_foreman_ssl_key: /etc/pki/katello/puppet/puppet_client.key
@@ -653,7 +653,7 @@ puppet:
   server_metrics_graphite_enable: false
   server_metrics_graphite_host: 127.0.0.1
   server_metrics_graphite_port: 2003
-  server_metrics_server_id: sat6.labbuilder.ca
+  server_metrics_server_id: "{{ ansible_fqdn }}"
   server_metrics_graphite_interval: 5
   server_metrics_allowed: 
   server_puppetserver_experimental: true
