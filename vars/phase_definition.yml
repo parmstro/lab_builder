@@ -3,36 +3,33 @@
 # see the instructions for configuration
 # set your global configurations in this file
 bootstrap:
-  phase_lock_dir: /tmp/labbuilder/bootstrap/
-  domain_name: labbuilder.ca
-  realm_name: LABBUILDER.CA
-  lab_gateway: 192.168.252.1
-  lab_netmask: 255.255.252.0
-  lab_primary_dns: 192.168.254.110
-  lab_secondary_dns: 192.168.254.111
-  lab_foreman_server: 192.168.254.112
-  lab_dhcp_ip_start: 192.168.254.128
-  lab_dhcp_ip_end: 192.168.254.254
-  lab_storage_ip_start: 192.168.124.1
-  lab_storage_ip_end: 192.168.124.254
-  lab_provision_ip_start: 192.168.24.1
-  lab_provision_ip_end: 192.168.24.254
+  lab_gateway: 192.168.248.1
+  lab_netmask: 255.255.248.0
+  lab_primary_dns: 192.168.248.10
+  lab_secondary_dns: 192.168.248.11
+  lab_foreman_server: 192.168.248.12
+  lab_dhcp_ip_start: 192.168.251.1
+  lab_dhcp_ip_end: 192.168.251.254
+  lab_storage_ip_start: 192.168.148.1
+  lab_storage_ip_end: 192.168.148.254
+  lab_provision_ip_start: 192.168.48.1
+  lab_provision_ip_end: 192.168.48.254
   builds:
-    build_master:
-      hostname: buildmaster1.labbuilder.ca
+    old_build_master:
+      hostname: buildmaster.labbuilder.lab
       ip_address: "{{ lab_primary_dns }}"
       netmask: "{{ lab_netmask }}"
       install_dns: yes
       install_ca: yes
       use_keymaster: no
-      builder_dir: "./idm/idm-server/"
-      roles: [idm-servers]
-    foreman:
-      hostname: foreman1.labbuilder.ca
+      builder_dir: "{{ playbook_dir }}"
+      roles: [build_master]
+    old_foreman:
+      hostname: foreman.labbuilder.lab
       ip_address: "{{ lab_foreman_server }}"
       netmask: "{{ lab_netmask }}"
-      builder_dir: "./satellite/build_satellite/"
-      roles: [common,satellite,satellite-post]
+      builder_dir: "{{ playbook_dir }}"
+      roles: [foreman_pre,foreman,foreman_post]
 
 
 # Start of Phase 2
@@ -50,7 +47,7 @@ bootstrap2:
       netmask: "{{ lab_netmask }}"
       install_dns: yes
       install_ca: yes
-      builder_dir: "./idm/idm-server/"
+      builder_dir: "{{ playbook_dir }}"
       roles: [ipa-replica]
       provision: satellite
       compute_resource: baremetal

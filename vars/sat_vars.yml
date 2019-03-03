@@ -13,7 +13,7 @@ sat_firewalld_zone: "public"
 # The IPA client can only be configured after the IPA Server is installed
 # We will ues these values after the Satellite and IPA serves are bootstrapped
 ipa_install_client: "true"
-ipa_generate_certs: "false"
+ipa_generate_certs: "true"
 ipa_server_certs_dir: "/etc/ipa/private/"
 ipa_server_prv_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.pem"
 ipa_server_crt_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.crt"
@@ -24,8 +24,10 @@ ipa_server_ca_file: "/etc/ipa/ca.crt"
 # used for installing the Satellite Server
 # See template file in ../roles/satellite/templates/satellite-answers.yml
 scenario: "satellite"
-redhat_org: "6856506"
-activation_key: "satbootstrap"
+# the following 2 keys are unused now that registration is managed in prepare
+# for bootstrap hosts
+# redhat_org: "6856506"
+# activation_key: "satbootstrap"
 cdn_proxy_hostname: ""
 cdn_proxy_port: ""
 cdn_proxy_username: ""
@@ -203,19 +205,19 @@ lifecycle_environments:
      label: "Dev"
      desc: "Our Development Servers"
      org: "Default Organization"
-     prior: "'Library'"
+     prior: "Library"
 
    - name: "QA"
      label: "QA"
      desc: "Our Quality Assurance Servers"
      org: "Default Organization"
-     prior: "'Dev'"
+     prior: "Dev"
 
    - name: "Prod"
      label: "Prod"
      desc: "Our Production Servers"
      org: "Default Organization"
-     prior: "'QA'"
+     prior: "QA"
 
    - name: "Retired"
      label: "Retired"
