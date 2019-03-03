@@ -89,6 +89,9 @@
   hosts: all
   remote_user: root
 
+  vars:
+    phase_name: "bootstrap_foreman"
+
   tasks:
 
   - name: "Ping them just for me..."
