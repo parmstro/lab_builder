@@ -1,0 +1,27 @@
+---
+# This play gathers the necessary facts to refresh our 
+# core playbook information and contact our bootstrap partner
+#
+
+- name: Preparing for local workstation for lab_builder
+  hosts: localhost
+  gather_facts: true
+  become: yes
+  become_method: sudo
+
+  vars:
+    bootstrap_fqdn: "buildmaster.labbuilder.lab"
+    bootstrap_ip: "192.168.248.10"
+    remote_bootstrap_fqdn: "foreman.labbuilder.lab"
+    remote_bootstrap_ip: "192.168.248.12"
+
+  tasks:
+  - name: "Write out hosts file for bootstrap"
+    blockinfile:
+      path: "/etc/hosts"
+      marker: "# {mark} ANSIBLE MANAGED BLOCK - prepare.yml"
+      block: |
+        {{ bootstrap_ip }}      {{ bootstrap_fqdn }}
+        {{ remote_bootstrap_ip }}      {{ remote_bootstrap_fqdn }}
+
+
