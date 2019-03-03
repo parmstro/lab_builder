@@ -90,7 +90,7 @@
   remote_user: root
   gather_facts: yes
 
- vars:
+  vars:
     phase_name: "bootstrap_foreman"
 
   tasks:
