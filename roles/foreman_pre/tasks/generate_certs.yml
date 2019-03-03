@@ -9,7 +9,7 @@
     path: /etc/ipa/private/
 
 - name: Initialize the admin user
-  command: "echo {{ ipa_admin_password }} | kinit admin"
+  command: "echo {{ idm_admin }} | kinit admin"
 
 - name: Generate a private key
   openssl_privatekey:
@@ -29,24 +29,24 @@
     privatekey_path: "{{ server_prv_file }}"
     privatekey_passphrase: "{{ rsa_key_pass }}"
     state: present
-    common_name: "{{ ansible_nodename }}"
-    subject_alt_name: "DNS:{{ ansible_nodename }}"
+    common_name: "{{ ansible_fqdn }}"
+    subject_alt_name: "DNS:{{ ansible_fqdn }}"
     organization_name: "{{ ipa_organization_name }}"
     organizational_unit_name: "{{ ipa_ou_name }}"
     locality_name: "{{ ipa_locality_name }}"
     state_or_province_name: "{{ ipa_prov_name }}"
     country_name: "{{ ipa_country_name }}"
-    email_address: "admin@{{ ipa_domain }}"
+    email_address: "admin@{{ ansible_domain }}"
 
 - name: Determine if the service exists
-  command: "ipa service-show {{ service_type }}/{{ ansible_nodename }}"
+  command: "ipa service-show {{ service_type }}/{{ ansible_fqdn }}"
   register: result
 
 - set_fact:
     service_exists: "{{ result.stdout_lines.1 | regex_search('service not found') }}"
 
 - name: Add the service to IdM/FreeIPA
-  command: "ipa service-add {{ service_type }}/{{ ansible_nodename }}"
+  command: "ipa service-add {{ service_type }}/{{ ansible_fqdn }}"
   when: service_exists != ""
 
 - name: Request the certificate
@@ -71,7 +71,5 @@
     
 - name: Generate a key for the service
   command: "openssl rsa -in {{ server_prv_file }} -out {{ server_key_file }} -passin file:{{ server_certs_dir }}.passin.txt"
-
-
 
 
