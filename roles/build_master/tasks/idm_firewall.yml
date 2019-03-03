@@ -68,4 +68,14 @@
     permanent: true
     state: enabled
     zone: public
-                   
+
+- name: Ensure firewall rules are reloaded
+  command: "firewall-cmd --reload"
+
+- name: Log the firewall rules
+  command: "firewall-cmd --list-all"
+  register: fc
+
+- debug:
+    msg: "{{ fc.stdout | to_nice_json }}"
+
