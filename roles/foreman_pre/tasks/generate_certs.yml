@@ -23,20 +23,31 @@
     path: "{{ ipa_server_csr_file }}"
     state: absent
 
+# Unfortunately, we need PyOpenSLL 0.15 or better
+# to generate CSRs with this module, which is 
+# not avaiable on base RHEL 7 and because it is
+# a distutils installed module in python it won't 
+# upgrade cleanly. SO ... we wait and work around
+#
+#- name: Generate the CSR with subjectAltNames set
+#  openssl_csr:
+#    path: "{{ ipa_server_csr_file }}"
+#    privatekey_path: "{{ ipa_server_prv_file }}"
+#    privatekey_passphrase: "{{ ipa_rsa_key_pass }}"
+#    state: present
+#    common_name: "{{ ansible_fqdn }}"
+#    subject_alt_name: "DNS:{{ ansible_fqdn }}"
+#    organization_name: "{{ ipa_organization_name }}"
+#    organizational_unit_name: "{{ ipa_ou_name }}"
+#    locality_name: "{{ ipa_locality_name }}"
+#    state_or_province_name: "{{ ipa_prov_name }}"
+#    country_name: "{{ ipa_country_name }}"
+#    email_address: "{{ ipa_email_address }}"
+
+# There are those time where we know why someone invented
+# Vice-Grips...
 - name: Generate the CSR with subjectAltNames set
-  openssl_csr:
-    path: "{{ ipa_server_csr_file }}"
-    privatekey_path: "{{ ipa_server_prv_file }}"
-    privatekey_passphrase: "{{ ipa_rsa_key_pass }}"
-    state: present
-    common_name: "{{ ansible_fqdn }}"
-    subject_alt_name: "DNS:{{ ansible_fqdn }}"
-    organization_name: "{{ ipa_organization_name }}"
-    organizational_unit_name: "{{ ipa_ou_name }}"
-    locality_name: "{{ ipa_locality_name }}"
-    state_or_province_name: "{{ ipa_prov_name }}"
-    country_name: "{{ ipa_country_name }}"
-    email_address: "{{ ipa_email_address }}"
+  command: "openssl req -new -key '{{ ipa_server_prv_file }}' -out '{{ ipa_server_csr_file }}' -subj '/C={{ ipa_country_name }}/ST={{ ipa_prov_name }}/L={{ ipa_locality_name }}/O={{ ipa_organization_name }}/OU={{ ipa_ou_name }}/CN={{ ansible_fqdn }}/subjectAltName={{ ansible_fqdn }}"
 
 - name: Determine if the service exists
   command: "ipa service-show {{ ipa_service_type }}/{{ ansible_fqdn }}"
