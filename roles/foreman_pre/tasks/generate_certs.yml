@@ -16,7 +16,7 @@
 
 - name: Generate a private key
   openssl_privatekey:
-    path: "{{ ipa_server_prv_file }}"
+    path: "{{ ipa_server_pem_file }}"
     passphrase: "{{ ipa_rsa_key_pass }}"
     cipher: "DES3"
     force: yes
@@ -42,11 +42,16 @@
 #    country_name: "{{ ipa_country_name }}"
 #    email_address: "{{ ipa_email_address }}"
 
-# There are those time where we know why someone invented
-# Vice-Grips...
+# 
+# WORKAROUND:
+
+- name: Get an external use key
+  command: "openssl rsa -in {{ ipa_server_pem_file }} -out {{ ipa_server_key_file }} -passin pass:{{ ipa_rsa_key_pass }}"
 
 - name: Generate the CSR with subjectAltNames set
-  command: "openssl req -new -passin pass:{{ ipa_rsa_key_pass }} -key '{{ ipa_server_prv_file }}' -out '{{ ipa_server_csr_file }}' -subj '/C={{ ipa_country_name }}/ST={{ ipa_prov_name }}/L={{ ipa_locality_name }}/O={{ ipa_organization_name }}/OU={{ ipa_ou_name }}/CN={{ ansible_fqdn }}/subjectAltName={{ ansible_fqdn }}'"
+  command: "openssl req -new -passin pass:{{ ipa_rsa_key_pass }} -key {{ ipa_server_key_file }} -out {{ ipa_server_csr_file }} -subj '/C={{ ipa_country_name }}/ST={{ ipa_prov_name }}/L={{ ipa_locality_name }}/O={{ ipa_organization_name }}/OU={{ ipa_ou_name }}/CN={{ ansible_fqdn }}/subjectAltName={{ ansible_fqdn }}'"
+
+# END WORKAROUND
 
 - name: Determine if the service exists
   command: "ipa service-show {{ ipa_service_type }}/{{ ansible_fqdn }}"

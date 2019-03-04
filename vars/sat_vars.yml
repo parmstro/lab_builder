@@ -15,7 +15,7 @@ sat_firewalld_zone: "public"
 ipa_install_client: true
 ipa_generate_certs: true
 ipa_server_certs_dir: "/etc/ipa/private/"
-ipa_server_prv_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.pem"
+ipa_server_pem_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.pem"
 ipa_server_crt_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.crt"
 ipa_server_key_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.key"
 ipa_server_csr_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.csr"
