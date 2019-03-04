@@ -45,7 +45,7 @@
 # There are those time where we know why someone invented
 # Vice-Grips...
 - name: Generate the CSR with subjectAltNames set
-  command: "openssl req -new -passin '{{ idm_admin }}' -key '{{ ipa_server_prv_file }}' -out '{{ ipa_server_csr_file }}' -subj '/C={{ ipa_country_name }}/ST={{ ipa_prov_name }}/L={{ ipa_locality_name }}/O={{ ipa_organization_name }}/OU={{ ipa_ou_name }}/CN={{ ansible_fqdn }}/subjectAltName={{ ansible_fqdn }}'"
+  command: "openssl req -new -passin '{{ ipa_rsa_key_pass }}' -key '{{ ipa_server_prv_file }}' -out '{{ ipa_server_csr_file }}' -subj '/C={{ ipa_country_name }}/ST={{ ipa_prov_name }}/L={{ ipa_locality_name }}/O={{ ipa_organization_name }}/OU={{ ipa_ou_name }}/CN={{ ansible_fqdn }}/subjectAltName={{ ansible_fqdn }}'"
 
 - name: Determine if the service exists
   command: "ipa service-show {{ ipa_service_type }}/{{ ansible_fqdn }}"
