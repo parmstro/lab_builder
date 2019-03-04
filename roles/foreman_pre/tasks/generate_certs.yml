@@ -49,7 +49,7 @@
   command: "openssl rsa -in {{ ipa_server_pem_file }} -out {{ ipa_server_key_file }} -passin pass:{{ ipa_rsa_key_pass }}"
 
 - name: Generate the CSR with subjectAltNames set
-  command: "openssl req -new -passin pass:{{ ipa_rsa_key_pass }} -key {{ ipa_server_key_file }} -out {{ ipa_server_csr_file }} -subj '/C={{ ipa_country_name }}/ST={{ ipa_prov_name }}/L={{ ipa_locality_name }}/O={{ ipa_organization_name }}/OU={{ ipa_ou_name }}/CN={{ ansible_fqdn }}/subjectAltName={{ ansible_fqdn }}'"
+  command: "openssl req -new -key {{ ipa_server_key_file }} -out {{ ipa_server_csr_file }} -subj '/C={{ ipa_country_name }}/ST={{ ipa_prov_name }}/L={{ ipa_locality_name }}/O={{ ipa_organization_name }}/OU={{ ipa_ou_name }}/CN={{ ansible_fqdn }}/subjectAltName={{ ansible_fqdn }}'"
 
 # END WORKAROUND
 
