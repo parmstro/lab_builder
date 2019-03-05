@@ -3,5 +3,5 @@
 #
 
 - name: Checking the certificates for Satellite
-  command: "katello-certs-check -c {{ ipa_server_crt_file }} -k {{ ipa_server_key_file }} -r {{ ipa_server_csr_file }} -b {{ ipa_server_ca_file }}"
+  command: "katello-certs-check -c {{ ipa_server_crt_file }} -k {{ ipa_server_key_file }} -b {{ ipa_server_ca_file }}"
 
