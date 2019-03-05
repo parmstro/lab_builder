@@ -18,7 +18,7 @@
 #   register: result
 
 - name: Launch Prepare Realm
-  shell: echo "{{ idm_admin }}" | "foreman-prepare-realm admin {{ foreman_proxy_realm_principal }}"
+  shell: echo "{{ idm_admin }}" | /usr/sbin/foreman-prepare-realm admin "{{ foreman_proxy_realm_principal }}"
   check_mode: no
 #  changed_when: "1 != 1"
 
