@@ -3,7 +3,7 @@
 # The host is required to be an IdM client first
 #
 - set_fact:
-    rsa_key_pass: "{{ ipa_rsa_key_pass }}"
+    rsa_key_pass: "RedHat2019"
 
 - debug:
     msg: "{{ rsa_key_pass }}"
