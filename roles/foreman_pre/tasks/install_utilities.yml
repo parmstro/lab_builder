@@ -5,6 +5,14 @@
 # Provide the utilities packages as a list in the satellite-servers group_vars file
 # I am putting in bind-utils and screen
 
+- name: Install Lab Builder utilities
+  yum:
+    name: "{{ utils }}"
+    state: latest
+  vars:
+    utils:
+      - pexpect
+
 - name: Install needed utilities.
   yum:
     name: "{{ bootstrap_add_utils }}"
