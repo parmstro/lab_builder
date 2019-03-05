@@ -12,8 +12,8 @@ certs:
   node_fqdn: "{{ certs_node_fqdn }}"
   cname: []
   generate: true
-  regenerate: false
-  regenerate_ca: false
+  regenerate: true
+  regenerate_ca: true
   deploy: true
   ca_common_name: "{{ certs_ca_common_name }}"
   country: CA
@@ -23,10 +23,10 @@ certs:
   org_unit: Lab
   expiration: '7300'
   ca_expiration: '36500'
-  server_cert: 
-  server_key: 
-  server_cert_req: 
-  server_ca_cert: 
+  server_cert: "{{ ipa_server_crt_file }}"
+  server_key: "{{ ipa_server_key_file }}"
+  server_cert_req: "{{ ipa_server_csr_file }}"
+  server_ca_cert: "/etc/ipa/ca.crt"
   pki_dir: /etc/pki/katello
   ssl_build_dir: /root/ssl-build
   user: root
