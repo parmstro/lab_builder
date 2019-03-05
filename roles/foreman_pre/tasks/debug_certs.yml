@@ -13,7 +13,9 @@
   command: "openssl req -new -key {{ ipa_server_key_file }} -out {{ ipa_server_csr_file }} -subj '/C={{ ipa_country_name }}/ST={{ ipa_prov_name }}/L={{ ipa_locality_name }}/O={{ ipa_organization_name }}/OU={{ ipa_ou_name }}/CN={{ ansible_fqdn }}/subjectAltName={{ ansible_fqdn }}'"
 
 - name: Initialize the admin user
-  command: "echo {{ idm_admin }} | kinit admin"
+  shell: echo "{{ idm_admin }}" | kinit admin
+  check_mode: no
+  changed_when: "1 != 1"
   register: results
 
 - debug:
@@ -25,9 +27,10 @@
 - name: Determine if the service exists
   command: "ipa service-show {{ ipa_service_type }}/{{ ansible_fqdn }}"
   register: result
+  ignore_errors: true
 
 - set_fact:
-    service_exists: "{{ result.stdout_lines.1 | regex_search('service not found') }}"
+    service_exists: "{{ result.stderr | regex_search('(service not found)') }}"
 
 - name: Add the service to IdM/FreeIPA
   command: "ipa service-add {{ ipa_service_type }}/{{ ansible_fqdn }}"
