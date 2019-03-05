@@ -10,7 +10,7 @@
 - name: Launch prepare realm
   expect: 
     command: "foreman-prepare-realm admin {{ foreman_proxy_realm_principal }}"
-    ^Password*: "{{ idm_admin }}"
+    Password for admin@{{ ansbile_domain | upper }}: "{{ idm_admin }}"
   register: result
 
 - debug: 
