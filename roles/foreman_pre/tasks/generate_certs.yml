@@ -63,6 +63,7 @@
 - name: Determine if the service exists
   command: "ipa service-show {{ ipa_service_type }}/{{ ansible_fqdn }}"
   register: result
+  ignore_errors: true
 
 - set_fact:
     service_exists: "{{ result.stderr | regex_search('(service not found)') }}"
