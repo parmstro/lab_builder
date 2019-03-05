@@ -6,13 +6,21 @@
 # foreman-prepare-realm admin realm-63-capsule
 # chown foreman-proxy:foreman-proxy /etc/foreman-proxy/freeipa.keytab
 # check the keytab by performing the following task kinit -kt /etc/foreman-proxy/freeipa.keytab realm-63-capsule
+#
+# expect requires pexpect >=3.3 
+# Not available without software collections
+#
+# - name: Launch prepare realm
+#   expect: 
+#     command: "foreman-prepare-realm admin {{ foreman_proxy_realm_principal }}"
+#     responses:
+#       'Password for admin@{{ ansbile_domain | upper }}:': "{{ idm_admin }}"
+#   register: result
 
-- name: Launch prepare realm
-  expect: 
-    command: "foreman-prepare-realm admin {{ foreman_proxy_realm_principal }}"
-    responses:
-      'Password for admin@{{ ansbile_domain | upper }}:': "{{ idm_admin }}"
-  register: result
+- name: Launch Prepare Realm
+  shell: echo "{{ idm_admin }}" | "foreman-prepare-realm admin {{ foreman_proxy_realm_principal }}"
+  check_mode: no
+#  changed_when: "1 != 1"
 
 - debug: 
     msg: "{{ result.stdout }}"
