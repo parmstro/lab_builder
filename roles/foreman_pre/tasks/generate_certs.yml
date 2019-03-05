@@ -80,5 +80,5 @@
     serial_number: "{{ result.stdout_lines.7 | regex_replace('^.*: ', '') }}"
 
 - name: Retrieve the certificate
-  command: "ipa cert-show --out={{ ipa_server_crt_file }} {{ serial_number }}"
+  command: "ipa cert-show --certificate-out={{ ipa_server_crt_file }} {{ serial_number }}"
 

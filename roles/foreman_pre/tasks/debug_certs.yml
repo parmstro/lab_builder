@@ -4,6 +4,7 @@
     path: "{{ ipa_server_pem_file }}"
     passphrase: "{{ ipa_rsa_key_pass }}"
     cipher: "DES3"
+    mode: 0744
     force: yes
 
 - name: Get an external use key
