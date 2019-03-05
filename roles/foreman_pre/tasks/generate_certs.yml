@@ -70,21 +70,8 @@
 
 - name: Get the certificate serial number
   set_fact: 
-    serial_number: "{{ result.stdout_lines.7 | regex_replace('  Serial number: ', '') }}"
+    serial_number: "{{ result.stdout_lines.7 | regex_replace('^.*: ', '') }}"
 
 - name: Retrieve the certificate
   command: "ipa cert-show --out={{ ipa_server_crt_file }} {{ serial_number }}"
-
-- lineinfile:
-    path: "{{ ipa_server_certs_dir }}.passin.txt"
-    line: "{{ ipa_rsa_key_pass }}"
-    create: yes
-    owner: root
-    group: root
-    mode: 0600
-    state: present
-    
-- name: Generate a key for the service
-  command: "openssl rsa -in {{ ipa_server_prv_file }} -out {{ ipa_server_key_file }} -passin file:{{ ipa_server_certs_dir }}.passin.txt"
-
 
