@@ -2,6 +2,11 @@
 # This set of tasks generates the IdM certs for the host using IdM
 # The host is required to be an IdM client first
 #
+- set_fact:
+    rsa_key_pass: "{{ ipa_rsa_key_pass }}"
+
+- debug:
+    msg: "{{ rsa_key_pass }}"
 
 - name: Create the directory to contain the certificates
   file:
@@ -14,7 +19,7 @@
 - name: Generate a private key
   openssl_privatekey:
     path: "{{ ipa_server_pem_file }}"
-    passphrase: "{{ ipa_rsa_key_pass }}"
+    passphrase: "{{ rsa_key_pass }}"
     cipher: "DES3"
     force: yes
 
@@ -43,7 +48,7 @@
 # WORKAROUND:
 
 - name: Get an external use key
-  command: "openssl rsa -in {{ ipa_server_pem_file }} -out {{ ipa_server_key_file }} -passin pass:{{ ipa_rsa_key_pass }}"
+  command: "openssl rsa -in {{ ipa_server_pem_file }} -out {{ ipa_server_key_file }} -passin pass:{{ rsa_key_pass }}"
 
 - name: Generate the CSR with subjectAltNames set
   command: "openssl req -new -key {{ ipa_server_key_file }} -out {{ ipa_server_csr_file }} -subj '/C={{ ipa_country_name }}/ST={{ ipa_prov_name }}/L={{ ipa_locality_name }}/O={{ ipa_organization_name }}/OU={{ ipa_ou_name }}/CN={{ ansible_fqdn }}/subjectAltName={{ ansible_fqdn }}'"
