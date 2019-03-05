@@ -50,15 +50,17 @@
 
 # END WORKAROUND
 
-- name: Initialize the kerberos ansible user
-  command: "echo {{ idm_admin }} | kinit admin"
+- name: Initialize the admin user
+  shell: echo "{{ idm_admin }}" | kinit admin
+  check_mode: no
+  changed_when: "1 != 1"
 
 - name: Determine if the service exists
   command: "ipa service-show {{ ipa_service_type }}/{{ ansible_fqdn }}"
   register: result
 
 - set_fact:
-    service_exists: "{{ result.stdout_lines.1 | regex_search('service not found') }}"
+    service_exists: "{{ result.stderr | regex_search('(service not found)') }}"
 
 - name: Add the service to IdM/FreeIPA
   command: "ipa service-add {{ ipa_service_type }}/{{ ansible_fqdn }}"
