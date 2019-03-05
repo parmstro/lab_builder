@@ -8,7 +8,13 @@
 # check the keytab by performing the following task kinit -kt /etc/foreman-proxy/freeipa.keytab realm-63-capsule
 
 - name: Launch prepare realm
-  command: "echo {{ idm_admin }} | foreman-prepare-realm admin {{ foreman_proxy_realm_principal }}"
+  expect: 
+    command: "foreman-prepare-realm admin {{ foreman_proxy_realm_principal }}"
+    ^Password*: "{{ idm_admin }}"
+  register: result
+
+- debug: 
+    msg: "{{ result.stdout }}"
 
 - name: Move the keytab to the foreman-proxy directory
   copy:
