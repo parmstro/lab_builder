@@ -13,6 +13,8 @@
 
 - name: Clean the yum metadata
   command: yum clean all
+  args:
+    warn: false
 
 - name: Update the system
   yum:
