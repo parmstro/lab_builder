@@ -26,7 +26,7 @@
 
 - name: kinit admin
   shell: echo "{{ idm_admin }}" | kinit admin
-  checkmode: no
+  check_mode: no
 
 - name: Launch Prepare Realm
   shell: echo "{{ idm_admin }}" | /usr/sbin/foreman-prepare-realm admin "{{ foreman_proxy_realm_principal }}"
