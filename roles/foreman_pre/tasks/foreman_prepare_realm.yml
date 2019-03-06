@@ -16,6 +16,13 @@
 #     responses:
 #       'Password for admin@{{ ansbile_domain | upper }}:': "{{ idm_admin }}"
 #   register: result
+- name: Clean up old keytabs
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/foreman-proxy/freeipa.keytab
+    - /root/freeipa.keytab
 
 - name: Launch Prepare Realm
   shell: echo "{{ idm_admin }}" | /usr/sbin/foreman-prepare-realm admin "{{ foreman_proxy_realm_principal }}"
@@ -24,6 +31,11 @@
 
 - debug: 
     msg: "{{ result.stdout }}"
+
+- name: Ensure the foreman-proxy directory exists
+  file:
+    path: /etc/foreman-proxy
+    state: directory
 
 - name: Move the keytab to the foreman-proxy directory
   copy:
