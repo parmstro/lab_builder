@@ -24,6 +24,10 @@
     - /etc/foreman-proxy/freeipa.keytab
     - /root/freeipa.keytab
 
+- name: kinit admin
+  shell: echo "{{ idm_admin }}" | kinit admin
+  checkmode: no
+
 - name: Launch Prepare Realm
   shell: echo "{{ idm_admin }}" | /usr/sbin/foreman-prepare-realm admin "{{ foreman_proxy_realm_principal }}"
   check_mode: no
@@ -33,6 +37,12 @@
 - debug: 
     msg: "{{ result.stdout }}"
 
+- name: Force retrieval of the keytab - intentional repeat
+  shell: echo "{{ idm_admin }}" | /usr/sbin/foreman-prepare-realm admin "{{ foreman_proxy_realm_principal }}"
+  check_mode: no
+#  changed_when: "1 != 1"
+  register: result
+ 
 - name: Wait for keytab generation and retrieval
   wait_for:
     path: /root/freeipa.keytab
