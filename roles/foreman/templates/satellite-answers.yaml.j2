@@ -208,7 +208,7 @@ foreman_proxy:
   puppet_group: puppet
   autosignfile: /etc/puppetlabs/puppet/autosign.conf
   manage_puppet_group: true
-  puppet: "{{ foreman_puppet }}"
+  puppet: false 
   puppet_listen_on: https
   puppetrun_cmd: /opt/puppetlabs/bin/puppet kick
   puppetrun_provider: 
@@ -222,10 +222,10 @@ foreman_proxy:
   puppetssh_wait: false
   salt_puppetrun_cmd: puppet.run
   puppet_user: root
-  puppet_url: "https://{{ ansible_fqdn }}:8140"
-  puppet_ssl_ca: "/etc/puppetlabs/puppet/ssl/certs/ca.pem"
-  puppet_ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/{{ ansible_fqdn }}.pem"
-  puppet_ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/{{ ansible_fqdn }}.pem"
+  puppet_url: ""
+  puppet_ssl_ca: ""
+  puppet_ssl_cert: ""
+  puppet_ssl_key: ""
   puppet_use_environment_api: 
   puppet_api_timeout: 30
   templates: false
