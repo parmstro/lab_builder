@@ -22,4 +22,4 @@
 
 - name: "Setup the IdM Client"
   command: "ipa-client-install --domain={{ ansible_domain }} --server={{ groups['build_master'] | first }} --realm={{ ansible_domain | upper }} --principal=admin --password={{ idm_admin }} --mkhomedir --ssh-trust-dns --enable-dns-updates --unattended"
-  when: "{{ ipa_install_client }} == true"
+  when: "ipa_install_client == true"
