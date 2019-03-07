@@ -11,7 +11,7 @@ galaxy_info:
     - 7
   categories:
   - cloud
-dependencies:
-  - { role: foreman_pre }
-  - { role: foreman }
+#dependencies:
+#  - { role: foreman_pre }
+#  - { role: foreman }
 
