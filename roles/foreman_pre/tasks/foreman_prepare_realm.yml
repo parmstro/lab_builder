@@ -29,8 +29,8 @@
   check_mode: no
 
 - name: Launch Prepare Realm
-  shell: echo "{{ idm_admin }}" | /usr/sbin/foreman-prepare-realm admin "{{ foreman_proxy_realm_principal }}"
-  check_mode: no
+  command: "echo '{{ idm_admin }}' | /usr/sbin/foreman-prepare-realm admin {{ foreman_proxy_realm_principal }}"
+#  check_mode: no
 #  changed_when: "1 != 1"
   register: result
 
@@ -42,6 +42,9 @@
   check_mode: no
 #  changed_when: "1 != 1"
   register: result
+
+- debug:
+    msg: "{{ result.stdout }}"
  
 - name: Wait for keytab generation and retrieval
   wait_for:
