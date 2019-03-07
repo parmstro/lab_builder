@@ -92,7 +92,7 @@ foreman_proxy_dhcp_netmask: "255.255.252.0"
 foreman_proxy_realm: "true"
 foreman_proxy_realm_provider: "freeipa"
 foreman_proxy_realm_keytab: "/etc/foreman-proxy/freeipa.keytab"
-foreman_proxy_realm_principal: "realm-capsule@{{ ansible_domain | upper }}"
+foreman_proxy_realm_principal: "realm-capsule"
 foreman_proxy_puppet: "false"
 puppet_enable_puppet_server: "false"
 

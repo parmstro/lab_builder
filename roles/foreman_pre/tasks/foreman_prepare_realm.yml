@@ -29,15 +29,6 @@
   check_mode: no
 
 - name: Launch Prepare Realm
-  command: "echo '{{ idm_admin }}' | /usr/sbin/foreman-prepare-realm admin {{ foreman_proxy_realm_principal }}"
-#  check_mode: no
-#  changed_when: "1 != 1"
-  register: result
-
-- debug: 
-    msg: "{{ result.stdout }}"
-
-- name: Force retrieval of the keytab - intentional repeat
   shell: echo "{{ idm_admin }}" | /usr/sbin/foreman-prepare-realm admin "{{ foreman_proxy_realm_principal }}"
   check_mode: no
 #  changed_when: "1 != 1"
