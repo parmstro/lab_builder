@@ -1,12 +1,8 @@
-# Format:
-# <classname>: false - don't include this class
-# <classname>: true - include and use the defaults
-# <classname>:
-#   <param>: <value> - include and override the default(s)
-#
-# See params.pp in each class for what options are available
+# Labbuilder unversioned
+# Current Changes:
+# server_cert_req: does not appear to be required anymore
+# 
 ---
-
 certs:
   log_dir: /var/log/certs
   node_fqdn: "{{ certs_node_fqdn }}"
@@ -86,9 +82,9 @@ foreman:
   server_ssl_ca: /etc/pki/katello/certs/katello-default-ca.crt
   server_ssl_chain: /etc/pki/katello/certs/katello-server-ca.crt
   server_ssl_cert: /etc/pki/katello/certs/katello-apache.crt
-  server_ssl_certs_dir: 
+  server_ssl_certs_dir: '' 
   server_ssl_key: /etc/pki/katello/private/katello-apache.key
-  server_ssl_crl: 
+  server_ssl_crl: ''
   server_ssl_protocol: 
   client_ssl_ca: /etc/foreman/proxy_ca.pem
   client_ssl_cert: /etc/foreman/client_cert.pem
@@ -102,7 +98,7 @@ foreman:
   oauth_consumer_secret: 7LXVBZk2qYZhVPvhBMfMYksF44Gnzm6h
   passenger_prestart: true
   passenger_min_instances: 1
-  passenger_start_timeout: 90
+  passenger_start_timeout: 600
   admin_username: "{{ foreman_admin_username }}"
   admin_password: "{{ foreman_admin_password }}"
   admin_first_name: "{{ foreman_admin_firstname }}"
@@ -172,21 +168,21 @@ foreman::plugin::tasks:
   cron_line: 45 19 * * *
 foreman::plugin::templates: {}
 foreman_proxy:
-  repo: '1.18'
+  repo: stable
   gpgcheck: true
   custom_repo: true
   version: present
   ensure_packages_version: present
   plugin_version: installed
   bind_host:
-  - '::'
+  - '*'
   http_port: 8000
   ssl_port: 9090
   dir: /usr/share/foreman-proxy
   user: foreman-proxy
   groups: []
   log: /var/log/foreman-proxy/proxy.log
-  log_level: INFO
+  log_level: ERROR
   log_buffer: 2000
   log_buffer_errors: 1000
   http: false
@@ -306,7 +302,7 @@ foreman_proxy:
   bmc: false
   bmc_listen_on: https
   bmc_default_provider: ipmitool
-  realm: false
+  realm: true
   realm_listen_on: https
   realm_provider: "{{ foreman_proxy_realm_provider }}"
   realm_keytab: "{{ foreman_proxy_realm_keytab }}"
@@ -358,7 +354,7 @@ foreman_proxy_content:
   enable_ostree: true
   enable_yum: true
   enable_file: true
-  enable_puppet: true
+  enable_puppet: false
   enable_docker: true
   enable_deb: false
   manage_broker: true
@@ -508,7 +504,7 @@ puppet:
   postrun_command: 
   dns_alt_names: []
   use_srv_records: false
-  srv_domain: labbuilder.ca
+  srv_domain: "{{ ansible_domain }}"
   pluginsource: puppet:///plugins
   pluginfactsource: puppet:///pluginfacts
   additional_settings: {}
