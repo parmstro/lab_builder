@@ -11,7 +11,7 @@ certs:
   log_dir: /var/log/certs
   node_fqdn: "{{ certs_node_fqdn }}"
   cname: []
-  generate: true
+  generate: false
   regenerate: true
   regenerate_ca: true
   deploy: true
@@ -25,7 +25,7 @@ certs:
   ca_expiration: '36500'
   server_cert: "{{ ipa_server_crt_file }}"
   server_key: "{{ ipa_server_key_file }}"
-  server_cert_req: "{{ ipa_server_csr_file }}"
+#  server_cert_req: "{{ ipa_server_csr_file }}"
   server_ca_cert: "/etc/ipa/ca.crt"
   pki_dir: /etc/pki/katello
   ssl_build_dir: /root/ssl-build
@@ -83,12 +83,12 @@ foreman:
   vhost_priority: '05'
   server_port: 80
   server_ssl_port: 443
-  server_ssl_ca: "{{ foreman_server_ssl_ca }}"
-  server_ssl_chain: "{{ foreman_server_ssl_chain }}"
-  server_ssl_cert: "{{ foreman_server_ssl_cert }}"
-  server_ssl_certs_dir: "{{ foreman_server_ssl_certs_dir }}"
-  server_ssl_key: "{{ foreman_server_ssl_key }}"
-  server_ssl_crl: "{{ foreman_server_ssl_crl }}"
+  server_ssl_ca: /etc/pki/katello/certs/katello-default-ca.crt
+  server_ssl_chain: /etc/pki/katello/certs/katello-server-ca.crt
+  server_ssl_cert: /etc/pki/katello/certs/katello-apache.crt
+  server_ssl_certs_dir: 
+  server_ssl_key: /etc/pki/katello/private/katello-apache.key
+  server_ssl_crl: 
   server_ssl_protocol: 
   client_ssl_ca: /etc/foreman/proxy_ca.pem
   client_ssl_cert: /etc/foreman/client_cert.pem

@@ -67,8 +67,8 @@ foreman_compute_ovirt: "true"
 foreman_compute_rackspace: "true"
 foreman_compute_vmware: "true"
 
-foreman_puppet_ca: "true"
-foreman_puppet: "true"
+foreman_puppet_ca: "false"
+foreman_puppet: "false"
 
 foreman_proxy_tftp: "true"
 foreman_proxy_tftp_servername: "{{ ansible_fqdn }}"
