@@ -143,11 +143,11 @@ foreman:
   dynflow_in_core: true
   hsts_enabled: true
 foreman::cli:
-  foreman_url: 
+  foreman_url: "{{ foreman_foreman_url }}"
   version: installed
   manage_root_config: true
-  username: 
-  password: 
+  username: "{{ foreman_admin_username }}"
+  password: "{{ foreman_admin_password }}"
   refresh_cache: false
   request_timeout: 120
   ssl_ca_file: 

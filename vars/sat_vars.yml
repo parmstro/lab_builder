@@ -102,7 +102,7 @@ puppet_enable_puppet_server: "false"
 setup_hammer: "true"
 
 upload_manifest: "true"
-manifest_src_location: "~/bootstrap_manifest.zip"
+manifest_src_location: "/root/bootstrap_manifest.zip"
 
 setup_repositories: "true"
 repos_mandatory:

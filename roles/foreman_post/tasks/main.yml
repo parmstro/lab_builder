@@ -8,7 +8,8 @@
 # Next we need to specify repositories to synch (for our lab)
 
 # Prepare Content for builds
-- import_tasks: "{{ role_path }}/tasks/setup_hammer.yaml"
+# hammer should get set up for root automatically when configured in template for foreman install
+# - import_tasks: "{{ role_path }}/tasks/setup_hammer.yml"
 - import_tasks: "{{ role_path }}/tasks/upload_manifest.yml" 
 - import_tasks: "{{ role_path }}/tasks/configure_mandatory_repositories.yml "
 - import_tasks: "{{ role_path }}/tasks/configure_optional_repositories.yml"
