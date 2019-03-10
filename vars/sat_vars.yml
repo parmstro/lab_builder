@@ -172,15 +172,15 @@ repos_optional:
      basearch: "x86_64"
      releasever: ""
 
-   - name: "Red Hat Enterprise Linux High Availability (for RHEL 7 Server) (RPMs)"
-     product: "Red Hat Enterprise Linux High Availability (for RHEL Server)"
-     basearch: "x86_64"
-     releasever: "7Server"
+#   - name: "Red Hat Enterprise Linux High Availability (for RHEL 7 Server) (RPMs)"
+#     product: "Red Hat Enterprise Linux High Availability (for RHEL Server)"
+#     basearch: "x86_64"
+#     releasever: "7Server"
 
-   - name: "Red Hat Enterprise Linux Resilient Storage (for RHEL 7 Server) (RPMs)"
-     product: "Red Hat Enterprise Linux Resilient Storage (for RHEL Server)"
-     basearch: "x86_64"
-     releasever: "7Server"
+#   - name: "Red Hat Enterprise Linux Resilient Storage (for RHEL 7 Server) (RPMs)"
+#     product: "Red Hat Enterprise Linux Resilient Storage (for RHEL Server)"
+#     basearch: "x86_64"
+#     releasever: "7Server"
 
    - name: "Red Hat Gluster Storage 3 NFS (RPMs)"
      product: "Red Hat Gluster Storage Server for On-premise"
