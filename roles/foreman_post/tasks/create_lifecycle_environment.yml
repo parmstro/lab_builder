@@ -8,7 +8,7 @@
     lifecycle_environment_absent: false
 
 - name: Determine if lifecycle environment {{ item.name }} exists
-  command: "hammer --output=json lifecycle-environment info --organization='{{ item.org }}' --name={{ item.name }}"
+  command: "hammer --output=json lifecycle-environment info --organization={{ item.org | quote }} --name={{ item.name | quote }}"
   register: result
   ignore_errors: true
 
@@ -24,6 +24,6 @@
   when: "lifecycle_environment_absent == false"
 
 - name: Creating lifecycle environment {{ item.name }} in Org {{ item.org }} 
-  command: "hammer lifecycle-environment create --name={{ item.name }} --label={{ item.label }} --description={{ item.desc }} --organization='{{ item.org }}' --prior={{ item.prior }}"
+  command: "hammer lifecycle-environment create --name={{ item.name }} --label={{ item.label }} --description={{ item.desc | quote }} --organization={{ item.org | quote }} --prior={{ item.prior | quote }}"
   when: "lifecycle_environment_absent == true"
 

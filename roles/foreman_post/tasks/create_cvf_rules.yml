@@ -4,13 +4,13 @@
 #
 
 - name: Determine if CV Filter has existing rules
-  command: "hammer --no-headers content-view filter rule list --content-view={{ cv.name }} --organization='{{ cv.org }}' --content-view-filter={{ cvf.name }}"
+  command: "hammer --no-headers content-view filter rule list --content-view={{ cv.name | quote }} --organization={{ cv.org | quote }} --content-view-filter={{ cvf.name | quote }}"
   register: cvfr_exists
   ignore_errors: true
 
 - name: Creating the base command
   set_fact:
-    hammer_command: "hammer content-view filter rule create --organization='{{ cv.org }}' --content-view={{ cv.name }} --content-view-filter={{ cvf.name }}"
+    hammer_command: "hammer content-view filter rule create --organization={{ cv.org | quote }} --content-view={{ cv.name | quote }} --content-view-filter={{ cvf.name | quote }}"
 
 - name: Add erratum types if applicable
   set_fact:
@@ -24,7 +24,7 @@
 
 - name: Specify rule name
   set_fact:
-    hammer_command: "{{ hammer_command }} --name={{ cvfr.name }}"
+    hammer_command: "{{ hammer_command }} --name={{ cvfr.name | quote }}"
   when: "cvf.type == 'rpm'"
 
 - name: Specify End Date if applicable

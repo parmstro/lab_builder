@@ -3,12 +3,12 @@
 # 
 
 - name: Determine if the Custom Product Exists Already
-  command: "hammer product info --organization='{{ cp.org }}' --name={{ cp.name }}"
+  command: "hammer product info --organization={{ cp.org | quote }} --name={{ cp.name | quote }}"
   register: cp_exists
   ignore_errors: true
 
 - name: Create the Product {{ cp.name }}
-  command: "hammer product create --name={{ cp.name }} --label={{ cp.label }} --organization='{{ cp.org }}' --description='{{ cp.desc }}'"
+  command: "hammer product create --name={{ cp.name }} --label={{ cp.label }} --organization={{ cp.org | quote }} --description={{ cp.desc | quote }}"
   when: "cp_exists.stdout == ''"
 
 - name: Create the Repositories for the required container images
