@@ -12,3 +12,5 @@ cp /mnt/rhvh/images/pxeboot/{vmlinuz,initrd.img} /root/rhvh
 mkdir /root/rhvh/media
 cp -a /mnt/rhvh/ /root/rhvh/media
 
+umount /mnt/rhvh
+
