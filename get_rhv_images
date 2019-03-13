@@ -1,11 +1,12 @@
 mkdir /root/rhvh
 
-curl -o /root/rhvh/rhvh.42.MB5.A2.iso 'https://access.cdn.redhat.com/content/origin/files/sha256/49/49c1858c52bf90cff064ba6ba93abad6a67bd08bbd684e2d61de724b65bbeb76/RHVH-4.2-20190219.0-RHVH-x86_64-dvd1.iso?user=9dfa24aa28956d5596d3409cfe7709a3&_auth_=1552431512_bc2707d2229d2811cb649beaa93216cc'
+curl -o /root/rhvh/rhvh.42.MB5.A2.iso 'https://access.cdn.redhat.com/content/origin/files/sha256/49/49c1858c52bf90cff064ba6ba93abad6a67bd08bbd684e2d61de724b65bbeb76/RHVH-4.2-20190219.0-RHVH-x86_64-dvd1.iso?user=9dfa24aa28956d5596d3409cfe7709a3&_auth_=1552440483_1ca85fbd2d16d95e55214bcdfd544493'
 
-curl -o /root/rhvh/rhvm_appliance.MB5.A2.ova 'https://access.cdn.redhat.com/content/origin/files/sha256/9c/9c195c197136b83d635694b8ea3b5ba34d8d5d46ddfd9ef17f2f5c5c688c75e1/rhvm-appliance-4.2-20190224.0.el7.ova?user=9dfa24aa28956d5596d3409cfe7709a3&_auth_=1552431512_05024b710733ce1c2b5b7f8158e170ce'
+curl -o /root/rhvh/rhvm_appliance.MB5.A2.ova 'https://access.cdn.redhat.com/content/origin/files/sha256/9c/9c195c197136b83d635694b8ea3b5ba34d8d5d46ddfd9ef17f2f5c5c688c75e1/rhvm-appliance-4.2-20190224.0.el7.ova?user=9dfa24aa28956d5596d3409cfe7709a3&_auth_=1552440483_f16ebb39717af381ec58dc60b9286081'
 
 mkdir /mnt/rhvh
-mount -o loop /root/rhvh.42.MB5.A2.iso /mnt/rhvh
+mount -o loop /root/rhvh/rhvh.42.MB5.A2.iso /mnt/rhvh
+
 rpm2cpio /mnt/rhvh/Packages/redhat-virtualization-host-image-update* | cpio -idmv /root/rhvh
 cp /mnt/rhvh/images/pxeboot/{vmlinuz,initrd.img} /root/rhvh
 
