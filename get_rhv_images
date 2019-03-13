@@ -7,7 +7,9 @@ curl -o /root/rhvh/rhvm_appliance.MB5.A2.ova 'https://access.cdn.redhat.com/cont
 mkdir /mnt/rhvh
 mount -o loop /root/rhvh/rhvh.42.MB5.A2.iso /mnt/rhvh
 
-rpm2cpio /mnt/rhvh/Packages/redhat-virtualization-host-image-update* | cpio -idmv /root/rhvh
+cp /mnt/rhvh/Packages/redhat-virtualization-host-image-update* /tmp
+rpm2cpio /tmp/redhat-virtualization-host-image-update* | cpio -idmv 
+cp /tmp/usr/share/redhat-virtualization-host/image/* /root/rhvh
 cp /mnt/rhvh/images/pxeboot/{vmlinuz,initrd.img} /root/rhvh
 
 mkdir /root/rhvh/media
