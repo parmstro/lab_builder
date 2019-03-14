@@ -112,14 +112,6 @@
     include_role:
       name: foreman_post
 
-  - name: "Wait for build_master"
-    wait_for:
-      path: "{{ locks_dir }}/build_master_complete"
-
-  - name: "Wait for foreman"
-    wait_for:
-      path: "{{ locks_dir }}/foreman_complete"
-
   - name: "END PHASE 1 - bootstrap complete"
     file:
       path: "{{ locks_dir }}/bootstrap_complete"

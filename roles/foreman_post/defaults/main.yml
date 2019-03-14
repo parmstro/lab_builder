@@ -11,7 +11,7 @@ foreman_initial_location: "Default Location"
 setup_hammer: "true"
 
 upload_manifest: "true"
-manifest_src_location: "~/bootstrap_manifest.zip"
+manifest_src_location: "/root/bootstrap_manifest.zip"
 
 setup_repositories: "true"
 repos_mandatory:
@@ -639,6 +639,31 @@ custom_products:
       username: "{{ cdn_username }}"
       password: "{{ cdn_password }}"
 
+
+setup_general_settings: "false"
+setup_organizations: "false"
+setup_locations: "false"
+setup_users: "false"
+setup_groups: "false"
+setup_roles: "false"
+
+setup_media: "true"
+media:
+  - name: RHEL
+    os_family: Redhat
+    path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization }}/Library/content/dist/rhel/server/7/$major.$minor/$arch/kickstart/"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+  - name: RHVH
+    os_family: Redhat
+    path: "https://{{ ansible_fqdn }}/pub/rhvh"
+    create_path: true
+    fetch_content: true
+    content_play: "{{ role_path }}/RHVH_content.yml"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+
+setup_optional_media: "false"
 
 setup_discovery: "true"
 setup_infrastructure: "false"

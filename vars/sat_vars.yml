@@ -730,6 +730,43 @@ custom_products:
       username: "{{ cdn_username }}"
       password: "{{ cdn_password }}"
 
+setup_general_settings: "false"
+setup_organizations: "false"
+setup_locations: "false"
+setup_users: "false"
+setup_groups: "false"
+setup_roles: "false"
+
+setup_media: "true"
+# PUT YOUR MANDATORY MEDIA DEFINITIONS IN HERE - stuff required for your initial builders 
+# OR BEST PRACTICE IS ADD YOUR OWN FOREMAN_POST to your builder.
+# DO NOT REMOVE RHEL OR RHVH
+media:
+  - name: RHEL
+    os_family: Redhat
+    path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization }}/Library/content/dist/rhel/server/7/$major.$minor/$arch/kickstart/"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+  - name: RHVH
+    os_family: Redhat
+    path: "https://{{ ansible_fqdn }}/pub/rhvh"
+    create_path: true
+    fetch_content: true
+    content_play: "{{ role_path }}/RHVH_content.yml"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+
+# PUT YOUR MEDIA DEFINITIONS IN OPTIONAL MEDIA
+setup_optional_media: "false"
+media_optional:
+  - name: MyOSName
+    os_family: Redhat #See Docs For Valid values Red Hat only "Supports" Redhat, others work from upstream as is
+    path: "https://{{ ansible_fqdn }}/some/path/can/use/foreman/vars" # where the content is or will be
+    create_path: true # whether or not to create the path if it does not exist
+    fetch_content: true  # whether or not to fetch content
+    content_play: "{{ role_path }}/RHVH_content.yml"  # your custom content fetching play that will put content at path
+    organization: "{{ foreman_initial_organization }}" # OR your organization variable org must exist
+    location: "{{ foreman_initial_location }}" # OR you location variable location must exist for org above
 
 setup_discovery: "true"
 setup_infrastructure: "false"
