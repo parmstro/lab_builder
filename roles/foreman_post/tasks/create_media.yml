@@ -12,7 +12,7 @@
 
 - name: Apply path standards - spaces become underscores
   set_fact: 
-    path: "{{ md.path }} | |replace(' ', '_' )"
+    path: "{{ md.path }} | replace(' ', '_' )"
 
 - name: Create the Media {{ md.name }}
   command: "hammer medium create --name={{ md.name }} --organization={{ md.organization | quote }} --location={{ md.location | quote }} --path={{ path }}"
