@@ -12,17 +12,59 @@
 # for some reason the installer adds a space on the end of the password. I can't track it down in 
 # this code, so, I am updating the file the installer creates in setup_hammer.yml
 - import_tasks: "{{ role_path }}/tasks/setup_hammer.yml"
-- import_tasks: "{{ role_path }}/tasks/upload_manifest.yml" 
-- import_tasks: "{{ role_path }}/tasks/configure_mandatory_repositories.yml "
-- import_tasks: "{{ role_path }}/tasks/configure_optional_repositories.yml"
-- import_tasks: "{{ role_path }}/tasks/start_synchronization.yml "
-- import_tasks: "{{ role_path }}/tasks/configure_lifecycle_environments.yml"
-- import_tasks: "{{ role_path }}/tasks/configure_mandatory_cvs.yml"
-- import_tasks: "{{ role_path }}/tasks/configure_optional_cvs.yml"
-- import_tasks: "{{ role_path }}/tasks/configure_mandatory_ccvs.yml"
-- import_tasks: "{{ role_path }}/tasks/configure_optional_ccvs.yml"
-- import_tasks: "{{ role_path }}/tasks/configure_custom_products.yml"
+  tags:
+    - import_content
 
-# Discover Infrastructure
-# - import_tasks: configure_discovery.yml
+- import_tasks: "{{ role_path }}/tasks/upload_manifest.yml" 
+  tags: 
+    - import_content
+
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_repositories.yml "
+  tags: 
+    - import_content
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_repositories.yml"
+  tags: 
+    - import_content
+
+- import_tasks: "{{ role_path }}/tasks/start_synchronization.yml "
+  tags: 
+    - import_content
+
+- import_tasks: "{{ role_path }}/tasks/configure_lifecycle_environments.yml"
+  tags: 
+    - import_content
+
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_cvs.yml"
+  tags: 
+    - import_content
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_cvs.yml"
+  tags: 
+    - import_content
+
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_ccvs.yml"
+  tags: 
+    - import_content
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_ccvs.yml"
+  tags: 
+    - import_content
+
+- import_tasks: "{{ role_path }}/tasks/configure_custom_products.yml"
+  tags: 
+    - import_content
+
+
+# Configure the Provisioning Components
+#
+
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_media.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_media.yml"
+  tags:
+    - config_pv
+
 
