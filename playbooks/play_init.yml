@@ -51,7 +51,7 @@
 
 - fail:
     msg: "Bootstrap configuration not found. Please run ansible-playbook prepare.yml and reboot before running site.yml"
-  when: "bc.stat.exists == false"
+  when: "bc.stat.exists == false and bootstrap_role == 'buildmaster'"
 
 - name: "Reading bootstrap configuration"
   include_vars:
