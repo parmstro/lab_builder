@@ -15,6 +15,6 @@
     path: "{{ md.path }} | |replace(' ', '_' )"
 
 - name: Create the Media {{ md.name }}
-  command: "hammer medium create --name={{ md.name }} --organization={{ md.organization | quote }} --location={{ md.location | quote }} --path={{ md.path }}"
+  command: "hammer medium create --name={{ md.name }} --organization={{ md.organization | quote }} --location={{ md.location | quote }} --path={{ path }}"
 
 
