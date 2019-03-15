@@ -3,7 +3,7 @@
 # 
 
 - name: Delete the previous Medium definition if it exists
-  command: "hammer medium delete --name={{ md.name }} --organization={{ md.org | quote }} --location={{ md.location | quote }}"
+  command: "hammer medium delete --name={{ md.name }} --organization={{ md.organization | quote }} --location={{ md.location | quote }}"
   ignore_errors: true
 
 - name: Fetch content if required
@@ -11,6 +11,6 @@
   when: "md.fetch_content_task is defined"
 
 - name: Create the Media {{ md.name }}
-  command: "hammer medium create --name={{ md.name }} --organization={{ md.org | quote }} --location={{ md.location | quote }} --path={{ md.path }}"
+  command: "hammer medium create --name={{ md.name }} --organization={{ md.organization | quote }} --location={{ md.location | quote }} --path={{ md.path }}"
 
 
