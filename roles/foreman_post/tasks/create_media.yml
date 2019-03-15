@@ -10,6 +10,10 @@
   include_tasks: "{{ md.fetch_content_task }}"
   when: "md.fetch_content_task is defined"
 
+- name: Apply path standards - spaces become underscores
+  set_fact: 
+    path: "{{ md.path }} | |replace(' ', '_' )"
+
 - name: Create the Media {{ md.name }}
   command: "hammer medium create --name={{ md.name }} --organization={{ md.organization | quote }} --location={{ md.location | quote }} --path={{ md.path }}"
 
