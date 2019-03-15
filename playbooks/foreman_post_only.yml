@@ -8,43 +8,19 @@
 
   tasks:
   
-  - name: "Who is the Foreman?"
-    debug:
-      msg: "{{ play_hosts }}"
-
-  - name: "Ping the foreman host"
-    ping:
-
-  - pause:
-      seconds: 30
-
-
-  - name: "DIE DIE DIE! "
-    fail:
-    when: "'foreman.labbuilder.lab' not in play_hosts"
-
   - name: "Phase initialization - {{ ansible_fqdn }} "
     include_tasks: play_init.yml
+    tags: 
+      - init
 
-  - name: "Apply role of foreman_pre to {{ ansible_fqdn }}"
-    include_role:
-      name: foreman_pre
-
-  - name: "Apply role of foreman to {{ ansible_fqdn }}"
-    include_role:
-      name: foreman
-  
-  - name: "Apply role of foreman_post to {{ ansible_fqdn }}"
+  - name: "Apply ONLY role of foreman_post to existing foreman"
     include_role:
       name: foreman_post
+    tags:
+      - import_content
+      - config_pv
+      - config_infra
 
-  - name: "Wait for build_master"
-    wait_for:
-      path: "{{ locks_dir }}/build_master_complete"
-
-  - name: "Wait for foreman"
-    wait_for:
-      path: "{{ locks_dir }}/foreman_complete"
 
   - name: "END PHASE 1 - bootstrap complete"
     file:
