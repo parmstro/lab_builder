@@ -12,6 +12,7 @@
     include_tasks: play_init.yml
     tags: 
       - init
+      - config_pv
 
   - name: "Apply ONLY role of foreman_post to existing foreman"
     include_role:
