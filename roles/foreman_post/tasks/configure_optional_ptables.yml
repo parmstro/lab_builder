@@ -10,7 +10,7 @@
 #
 - name: Create the mandatory partition tables defined
   include_tasks: create_ptable.yml
-  loop: "{{ ptable_optional }}"
+  loop: "{{ ptables_optional }}"
   loop_control:
     loop_var: ptable
-  when: "ptable_optional is defined"
+  when: "ptables_optional is defined"
