@@ -667,16 +667,19 @@ setup_optional_media: "false"
 setup_ptables: "true"
 ptables_mandatory:
   - name: RHEL_SOE
+    os_family: Redhat
     path: ptable_rhel_soe.j2
     audit_comment:
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
   - name: CPGPC
+    os_family: Redhat
     path: ptable_cpgpc.j2
     audit_comment:
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
   - name: OCP
+    os_family: Redhat
     path: ptable_ocp.j2
     audit_comment:
     organization: "{{ foreman_initial_organization }}"
