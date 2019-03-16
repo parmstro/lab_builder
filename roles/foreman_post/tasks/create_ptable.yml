@@ -29,5 +29,4 @@
 
 - name: Create Partition Table definition as initial version
   command: "hammer partition-table create --name={{ ptable.name | quote }} --organization={{ ptable.org | quote }} --location={{ ptable.location }} --file={{ output.path | quote }} --audit-comment={{ ptable.audit_comment }}"
-  when: "ptable_exist.stdout != ''"
 
