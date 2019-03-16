@@ -67,4 +67,12 @@
   tags:
     - config_pv
 
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_ptables.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_ptables.yml"
+  tags:
+    - config_pv
+
 

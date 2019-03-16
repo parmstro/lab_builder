@@ -1,0 +1,33 @@
+---
+# This task creates an individual partition table from specified paramters
+# Call this task with loop_var: ptable
+#
+# Specify the list as ptable_mandatory or ptable_optional in the vars file
+#
+# 
+- name: Determine if the Partition Table Exists
+  command: "hammer --output=json partition-table info --organization={{ ptable.organization | quote }} --name={{ ptable.name | quote }}"
+  register: ptable_exists
+  ignore_errors: true
+
+# update creates a new version any existing ptable information
+- name: Create temporary file
+  tempfile:
+    state: file
+    suffix: temp
+  register: output
+
+# NOTE: Jinja2 and Foreman templating seem to be exclusive and can co-exist in the same file.
+- name: Template out the partition table
+  template:
+    src: "{{ ptable.path }}"
+    dest: "{{ output.path }}"
+
+- name: Delete existing instance
+  command: "hammer partition-table detele --name={{ ptable.name | quote }} --organization={{ ptable.organization | quote }} --location={{ ptable.location | quote }}"
+  ignore_errors: true
+
+- name: Create Partition Table definition as initial version
+  command: "hammer partition-table create --name={{ ptable.name | quote }} --organization={{ ptable.org | quote }} --location={{ ptable.location }} --file={{ output.path | quote }} --audit-comment={{ ptable.audit_comment }}"
+  when: "ptable_exist.stdout != ''"
+
