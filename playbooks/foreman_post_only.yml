@@ -11,8 +11,7 @@
   - name: "Phase initialization - {{ ansible_fqdn }} "
     include_tasks: play_init.yml
     tags: 
-      - init
-      - config_pv
+      - all 
 
   - name: "Apply ONLY role of foreman_post to existing foreman"
     include_role:

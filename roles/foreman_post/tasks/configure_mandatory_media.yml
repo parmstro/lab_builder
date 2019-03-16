@@ -5,7 +5,7 @@
 
 - name: Configure the specified mandatory media.
   include_tasks: create_media.yml
-  loop: "{{ media }}"
+  loop: "{{ media_mandatory }}"
   loop_control:
     loop_var: md
 

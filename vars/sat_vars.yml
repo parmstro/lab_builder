@@ -810,11 +810,11 @@ setup_users: "false"
 setup_groups: "false"
 setup_roles: "false"
 
-setup_media: "true"
 # PUT YOUR MANDATORY MEDIA DEFINITIONS IN HERE - stuff required for your initial builders 
 # OR BEST PRACTICE IS ADD YOUR OWN FOREMAN_POST to your builder.
 # DO NOT REMOVE RHEL OR RHVH
-media:
+setup_mandatory_media: "true"
+media_mandatory:
   - name: RHEL
     os_family: Redhat
     path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization }}/Library/content/dist/rhel/server/7/$major.$minor/$arch/kickstart/"
@@ -828,6 +828,7 @@ media:
     content_play: "{{ role_path }}/RHVH_content.yml"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
+
 
 # PUT YOUR MEDIA DEFINITIONS IN OPTIONAL MEDIA
 setup_optional_media: "false"
