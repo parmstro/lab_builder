@@ -2,6 +2,28 @@
 # and then feed that to an ansible play to recreate. 
 # cdn_username and cdn_password are required 
 # when adding OCP Images as custom products as below. This is needed for registry.redhat.io
+
+############################################################################################
+# NOTE: This is a long and complicated file. It represents the complete configuration of 
+# a Foreman or Satellite Server, so, ya, long is a good word... lot's of knobs and dials
+#
+# So...
+# _optional sections are well, optional, they only run tasks when defined
+# _mandatory sections are, you guessed it, mandatory - they are critical to building
+# the foreman or Satellite server **FOR YOUR ENVIRONMENT** 
+# This is my environment so applies to mine and my goals... see the base README for more.
+# Also see my Lab Architecture drawing in the root of the project.
+#
+# Tasks that fail for anything configured in a section ending in _optional will not stop
+# the build of the environment like failures in a _mandatory sections will.
+# If you are testing new sections you wish to add and quickly move them between optional
+# and mandatory, configure them as optional and use optional_fatal: "true"
+#
+###########################################################################################
+
+optional_fatal: "false"
+builder_run_tag: "Lab Builder - Foreman Builder - {{ ansible_date_time.iso8601 }}"
+
 bootstrap_add_utils:
   - bind-utils
   - screen
@@ -212,25 +234,25 @@ setup_lifecycle_environments: "true"
 lifecycle_environments:
    - name: "Dev"
      label: "Dev"
-     desc: "Our Development Servers"
+     desc: "Our Development Servers - {{ builder_run_tag }}"
      org: "Default Organization"
      prior: "Library"
 
    - name: "QA"
      label: "QA"
-     desc: "Our Quality Assurance Servers"
+     desc: "Our Quality Assurance Servers - {{ builder_run_tag }}"
      org: "Default Organization"
      prior: "Dev"
 
    - name: "Prod"
      label: "Prod"
-     desc: "Our Production Servers"
+     desc: "Our Production Servers - {{ builder_run_tag }}"
      org: "Default Organization"
      prior: "QA"
 
    - name: "Retired"
      label: "Retired"
-     desc: "Our Retired Servers"
+     desc: "Our Retired Servers - {{ builder_run_tag }}"
      org: "Default Organization"
      prior: "Prod"
 
@@ -238,7 +260,7 @@ setup_base_soe_cv: "true"
 errata_end_date: "2019-01-01"
 cvs_mandatory:
   - name: SOE_RHEL
-    desc: "Our Red Hat Enterprise Linux Standard Operating Environment Content"
+    desc: "Our Red Hat Enterprise Linux Standard Operating Environment Content - {{ builder_run_tag }}"
     org: "Default Organization"
     repositories:
     - "Red Hat Ansible Engine 2.7 RPMs for Red Hat Enterprise Linux 7 Server x86_64"
@@ -280,7 +302,7 @@ cvs_mandatory:
 
 cvs_optional:
   - name: OCP3
-    desc: "Our Current OpenShift Container Platform Content"
+    desc: "Our Current OpenShift Container Platform Content - {{ builder_run_tag }}"
     org: "Default Organization"
     repositories:
     - "Red Hat OpenShift Application Runtimes Node.js v10 RPMs x86_64"
@@ -310,7 +332,7 @@ cvs_optional:
         - "security"
 
   - name: RHS_Gluster
-    desc: "Our Current Non-Hyperconverged Gluster Content"
+    desc: "Our Current Non-Hyperconverged Gluster Content - {{ builder_run_tag }}"
     org: "Default Organization"
     repositories:
     - "Red Hat Storage Console Main for Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server"
@@ -345,7 +367,7 @@ cvs_optional:
         - "security"
 
   - name: RHVH
-    desc: "Our Current RHEV Hypervisor Content"
+    desc: "Our Current RHEV Hypervisor Content - {{ builder_run_tag }}"
     org: "Default Organization"
     repositories:
     - "Red Hat Satellite Tools 6.4 for RHEL 7 Server RPMs x86_64"
@@ -374,7 +396,7 @@ cvs_optional:
         - "security"
 
   - name: RHVM
-    desc: "Our Current RHEV Manager Content"
+    desc: "Our Current RHEV Manager Content - {{ builder_run_tag }}"
     org: "Default Organization"
     repositories:
     - "JBoss Enterprise Application Platform 7 RHEL 7 Server RPMs x86_64 7Server"
@@ -404,7 +426,7 @@ cvs_optional:
 
 ccvs_mandatory:
   - name: SOE_OCP
-    desc: "Our Current OpenShift Standard Operating Environment Content"
+    desc: "Our Current OpenShift Standard Operating Environment Content - {{ builder_run_tag }}"
     org: "Default Organization"
     components:
     - "SOE_RHEL"
@@ -412,7 +434,7 @@ ccvs_mandatory:
     - "RHS_Gluster"
 
   - name: SOE_RHVM
-    desc: "Our Current RHV Manager Standard Operating Environment Content"
+    desc: "Our Current RHV Manager Standard Operating Environment Content - {{ builder_run_tag }}"
     org: "Default Organization"
     components:
     - "SOE_RHEL"
@@ -420,7 +442,7 @@ ccvs_mandatory:
     - "RHS_Gluster"
 
   - name: SOE_RHVH_HC
-    desc: "Our Current RHV Hyperconverged Infrastructure Standard Operating Environment Content"
+    desc: "Our Current RHV Hyperconverged Infrastructure Standard Operating Environment Content - {{ builder_run_tag }}"
     org: "Default Organization"
     components:
     - "RHVH"
@@ -429,15 +451,35 @@ ccvs_mandatory:
 ccvs_optional:
 # TODO: Add the MSSQL content view and component
   - name: SOE_MSSQL
-    desc: "Our Current MSSQL on Linux Standard Operating Environment Content"
+    desc: "Our Current MSSQL on Linux Standard Operating Environment Content - {{ builder_run_tag }}"
     org: "Default Organization"
     components:
     - "SOE_RHEL"
 
-setup_custom_products: true
+
+setup_sync_plans: "true"
+sync_plans_mandatory:
+  - name: nighly_os
+    desc: "Nightly OS repo sync - 00:30 - {{ builder_run_tag }}"
+    interval: "daily"
+    sync_date: "{{ ansible_date_time.date }} 00:30:00"
+    enabled: true
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+
+  - name: nightly_infra
+    desc: "Nightly non-OS repo sync - 01:30 {{ builder_run_tag }}"
+    interval: "daily"
+    sync_date: "{{ ansible_date_time.date }} 01:30:00"
+    enabled: "true"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+
+
+setup_products: true
 custom_products:
   - name: ocp_images
-    desc: "Our OpenShift Container Platform container images"
+    desc: "Our OpenShift Container Platform container images - {{ builder_run_tag }}"
     org: "Default Organization"
     label: ocp_images
     repository_name:
@@ -730,6 +772,37 @@ custom_products:
       username: "{{ cdn_username }}"
       password: "{{ cdn_password }}"
 
+
+setup_attach_plan_to_product: "true"
+product_plan:
+  - name: "ocp_images"
+    plan: "nightly_infra"
+    organization: "{{ foreman_initial_organization }}"
+  - name: "Red Hat Ansible Engine"          
+    plan: "nightly_infra"
+    organization: "{{ foreman_initial_organization }}"
+  - name: "Red Hat CloudForms"
+    plan: "nightly_infra"
+    organization: "{{ foreman_initial_organization }}"
+  - name: "Red Hat Enterprise Linux Server"
+    plan: "nightly_infra"
+    organization: "{{ foreman_initial_organization }}"
+  - name: "Red Hat Gluster Storage Nagios Server"
+    plan: "nightly_os"
+    organization: "{{ foreman_initial_organization }}"
+  - name: "Red Hat Gluster Storage Server for On-premise"
+    plan: "nightly_infra"
+    organization: "{{ foreman_initial_organization }}"
+  - name: "Red Hat OpenShift Container Platform"
+    plan: "nightly_infra"
+    organization: "{{ foreman_initial_organization }}"
+  - name: "Red Hat Virtualization"
+    plan: "nightly_infra"
+    organization: "{{ foreman_initial_organization }}"
+  - name: "Red Hat Virtualization Manager"
+    plan: "nightly_infra"
+    organization: "{{ foreman_initial_organization }}"
+
 setup_general_settings: "false"
 setup_organizations: "false"
 setup_locations: "false"
@@ -768,36 +841,192 @@ media_optional:
     organization: "{{ foreman_initial_organization }}" # OR your organization variable org must exist
     location: "{{ foreman_initial_location }}" # OR you location variable location must exist for org above
 
+
 setup_ptables: "true"
 ptables_mandatory:
   - name: RHEL_SOE
     os_family: "Redhat"
     path: ptable_rhel_soe.j2
-    audit_comment: "Lab Builder built: {{ ansible_date_time.iso8601 }}"
+    audit_comment: "Lab Builder Base RHEL SOE Partition Table - {{ builder_run_tag }}"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
   - name: CPGPC
     os_family: "Redhat"
     path: ptable_cpgpc.j2
-    audit_comment: "Lab Builder built: {{ ansible_date_time.iso8601 }}"
+    audit_comment: "Lab Builder Common Profile for General Purpose Computing Partition Table - {{ builder_run_tag }}"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
-  - name: OCP
+  - name: OCP_SOE
     os_family: "Redhat"
     path: ptable_ocp.j2
-    audit_comment: "Lab Builder built: {{ ansible_date_time.iso8601 }}"
+    audit_comment: "Lab Builder OpenShift Container Platform SOE Partition Table - {{ builder_run_tag }}"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
 
+
+setup_config_templates: "true"
+# hammer template kinds
+# ---------
+# NAME     
+# ---------
+# Bootdisk # PXELinux # PXEGrub  # PXEGrub2 # iPXE  # provision
+# finish   # script   # user_data# ZTP      # POAP  # kexec    
+# snippet  
+ctemplates_mandatory:
+  - name: rhc_kickstart_default
+    type: provision
+    audit_comment: "This is a sample template - can replace base - {{ builder_run_tag }}"
+    path: rhc_kickstart_default_ctemplate.j2
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+  - name: rhc_rhvh
+    type: provision
+    audit_comment: "This is a sample template - can replace base - {{ builder_run_tag }}"
+    path: rhc_rhvh_ctemplate.j2
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+
+# We are going to use the Satellite included provisioning 
+# templates for the Operating Systems, we may decide to customize 
+# later in the project
+#
+setup_oss: "true"
+oss_mandatory:
+  - name: RedHat
+    major: 7
+    minor: 6
+    description: "Red Hat Base OS created by synchronization - {{ builder_run_tag }}"
+    family: Redhat
+    password_hash: "SHA256"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+    architectures:
+      - x86_64
+    config_templates:
+      - "Kickstart default PXELinux"
+      - "Kickstart default PXEGrub"
+      - "Kickstart default PXEGrub2"
+      - "Kickstart default iPXE"
+      - "Kickstart default"
+      - "Kickstart default finish"
+      - "Kickstart default user data"
+    media:
+      - RHEL
+    ptables:
+      - RHEL_SOE
+      - CPGPC
+      - OCP
+
+  - name: RHVH
+    major: 7
+    minor: 6
+    description: "Red Hat Virtualization Hypervisor - {{ builder_run_tag }}"
+    family: Redhat
+    password_hash: "SHA256"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+    architectures:
+      - x86_64
+    config_templates:
+      - "Kickstart oVirt-RHVH PXELinux"
+      - "Kickstart oVirt-RHVH"
+      - "Kickstart default finish"
+      - "Kickstart default user data"
+    media:
+      - RHEL
+    ptables:
+      - RHEL_SOE
+      - CPGPC
+      - OCP
+    parameters:
+      - name: something
+        value: arbitrary
+      - name: forgetting
+        value: something
+
+#  - {{ builder_run_tag }}
+# We need to ensure that we have all the required configuration
+# for a host group
+# Currently, we are examining only one datacentre in this sample
+# Larger configurations with multiple DCs can be defined
+# you can configure optional domains, realms, etc.. for remotes
+# if you are concerned once happy, simply remove the _optional
+# tag or place it above only those that are truly optional
+# (demos, toys, skunkworks, 8-)  )
+
+setup_domains: "true"
+domains_mandatory:
+  - name: "{{ ansible_domain }}"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+
+setup_realms: "true"
+realms_mandatory:
+  - name: "{{ ansible_domain | upper }}"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+
+setup_subnets: "true"
+subnets_mandatory:
+  - name: "Frontside"
+  - name: "ProvMig"
+  - name: "Storage"
+
+
+setup_hostgroups: "true"
+
+
+
+
+
+
 setup_discovery: "true"
+
+# AKA enable_all_rules is full auto deployment of infrastructure
+# based totally on discovery
+# some assembly required :-) you need to create the discovery rules to match your Host Groups and infrastructure limits
+enable_all_rules: "false"
+discovery_rules:
+  - name: rhvh_node
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+
+
+#  PPPPPP   OOOOOO  WWW  WWW  WWW EEEEEEEE RRRRRRR      OOOOOO  NNNNN    NN
+#  PP   PP OO    OO  WW  W W  WW  EE       RR    RR    OO    OO NN NN    NN
+#  PP   PP OO    OO  WW WW WW WW  EE       RR    RR    OO    OO NN  NN   NN
+#  PPPPP   OO    OO   W W   W W   EEEEEEEE RRRRRRR     OO    OO NN   NN  NN
+#  PP      OO    OO   WWW   WWW   EE       RR  R       OO    OO NN   NN  NN
+#  PP      OO    OO    WW   WW    EE       RR   R      OO    OO NN    NN NN
+#  PP       OOOOOO     W     W    EEEEEEEE RR    R      OOOOOO  NN    NNNNN
+#
+#  The lab systems!!! They should discover (and optionally auto deploy) the infrastructure.
+
 setup_infrastructure: "false"
+# Infrastructure Setup will now follow the RHHI Ansible Deployment
+# Our goal here is to configure the pre-requisites for the deployment
+# using Satellite, Ansible, and IdM and the automate the configuration
+# of the deployment variables and launch the deployment
+# After deployment, we will automate the verification of the deployment
+# and then we will configure the cluster as a compute resource below
+
 setup_virtwho: "false"
 
 # This can be fleshed out after we create the bootable image
 # This will get updated on launch after bootstrapping the first server
 # The startup service will call git pull to update the local repository
 # Compute resources can only be built after the hypervisors are deployed.
-compute_resources:
+setup_compute_resources: "false"
+comp_res_mandatory:
+  - name: "RHV"
+    type: ovirt
+    controller_hostname: "your_rhvm_server_here"
+    controller_username: "service_admin_name"
+    controller_password: "service_password"   #Provide this as a variable in a private file
+    virtwho_username: "readonly_admin_name"
+    virtwho_password: "virtwho_password"    #Provide this as a variable in a private file - will be encrypted.
+
+comp_res_optional:
   - name: "VMware"
     type: "esx"
     controller_hostname: "your_vcentre_server_here"
@@ -806,11 +1035,5 @@ compute_resources:
     virtwho_username: "readonly_admin_name"
     virtwho_password: "virtwho_password"    #Provide this as a variable in a private file - will be encrypted.
 
-  - name: "RHV"
-    type: ovirt
-    controller_hostname: "your_rhvm_server_here"
-    controller_username: "service_admin_name"
-    controller_password: "service_password"   #Provide this as a variable in a private file
-    virtwho_username: "readonly_admin_name"
-    virtwho_password: "virtwho_password"    #Provide this as a variable in a private file - will be encrypted.
+setup_oscap: "false"
 

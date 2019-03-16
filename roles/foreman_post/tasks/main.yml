@@ -51,10 +51,21 @@
   tags: 
     - import_content
 
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_sync_plans.yml"
+  tags:
+    - import_content
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_sync_plans.yml"
+  tags:
+    - import_content
+
 - import_tasks: "{{ role_path }}/tasks/configure_custom_products.yml"
   tags: 
     - import_content
 
+- import_tasks: "{{ role_path }}/tasks/attach_sync_plans.yml"
+  tags:
+    - import_content
 
 # Configure the Provisioning Components
 #
@@ -75,4 +86,11 @@
   tags:
     - config_pv
 
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_ctemplates.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_ctemplates.yml"
+  tags:
+    - config_pv
 
