@@ -24,7 +24,7 @@
     dest: "{{ output.path }}"
 
 - name: Delete existing instance
-  command: "hammer partition-table detele --name={{ ptable.name | quote }} --organization={{ ptable.organization | quote }} --location={{ ptable.location | quote }}"
+  command: "hammer partition-table delete --name={{ ptable.name | quote }} --organization={{ ptable.organization | quote }} --location={{ ptable.location | quote }}"
   ignore_errors: true
 
 - name: Create Partition Table definition as initial version
