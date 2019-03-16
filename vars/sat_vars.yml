@@ -772,22 +772,19 @@ setup_ptables: "true"
 ptables_mandatory:
   - name: RHEL_SOE
     path: ptable_rhel_soe.j2
-    audit_comment:
+    audit_comment: "Lab Builder built: {{ ansible_date_time.iso8601 }}"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
   - name: CPGPC
     path: ptable_cpgpc.j2
-    audit_comment:
+    audit_comment: "Lab Builder built: {{ ansible_date_time.iso8601 }}"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
   - name: OCP
     path: ptable_ocp.j2
-    audit_comment:
+    audit_comment: "Lab Builder built: {{ ansible_date_time.iso8601 }}"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
-
-
-
 
 setup_discovery: "true"
 setup_infrastructure: "false"
