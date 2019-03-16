@@ -28,5 +28,5 @@
   ignore_errors: true
 
 - name: Create Partition Table definition as initial version
-  command: "hammer partition-table create --name={{ ptable.name | quote }} --organization={{ ptable.org | quote }} --location={{ ptable.location }} --file={{ output.path | quote }} --audit-comment={{ ptable.audit_comment }}"
+  command: "hammer partition-table create --name={{ ptable.name | quote }} --organization={{ ptable.organization | quote }} --location={{ ptable.location }} --file={{ output.path | quote }} --audit-comment={{ ptable.audit_comment }}"
 
