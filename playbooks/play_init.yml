@@ -80,6 +80,10 @@
   include_vars:
     file: "{{ sat_variable_file }}"
 
+- name: "Debug scope - delete_me"
+  debug:
+    msg: "{{ media_mandatory | to_nice_yaml }}"
+
 - name: "Set Variable files to read only"
   file:
     dest: "{{ vars_dir }}"
