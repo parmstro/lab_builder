@@ -5,7 +5,7 @@
 
 - name: Configure the specified optional media.
   include_tasks: create_media.yml
-  loop: "media_optional"
+  loop: "{{ media_optional }}"
   loop_control:
     loop_var: md
   when: "media_optional is defined"
