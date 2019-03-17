@@ -10,23 +10,25 @@
   
   - name: "Phase initialization - {{ ansible_fqdn }} "
     include_tasks: play_init.yml
-    tags: 
-      - all 
+    tags:
+      - all
+
+  - name: "Did we really pick up the variables?"
+    debug:
+      msg: "{{ media_mandatory | to_pretty_yaml }}"
 
   - name: "Apply ONLY role of foreman_post to existing foreman"
     include_role:
       name: foreman_post
     tags:
-      - import_content
-      - config_pv
-      - config_infra
-
+      - all
 
   - name: "END PHASE 1 - bootstrap complete"
     file:
       path: "{{ locks_dir }}/bootstrap_complete"
       state: touch
-
+    tags:
+      - all
 ## PHASE 2 - bootstrap 2 CONDITIONAL
 # AUTO
 #   PROCEED
