@@ -5,7 +5,9 @@
   hosts: foreman
   remote_user: root
   gather_facts: yes
-
+  vars:
+    phase_name: test_foreman_post
+ 
   tasks:
   
   - name: "Phase initialization - {{ ansible_fqdn }} "
