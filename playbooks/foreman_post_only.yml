@@ -15,7 +15,7 @@
 
   - name: "Did we really pick up the variables?"
     debug:
-      msg: "{{ media_mandatory | to_pretty_yaml }}"
+      msg: "{{ media_mandatory | to_nice_yaml }}"
     tags:
       - config_pv
 
@@ -33,7 +33,7 @@
       - config_pv
 
 
-## PHASE 2 - bootstrap 2 CONDITIONAL
+# PHASE 2 - bootstrap 2 CONDITIONAL
 # AUTO
 #   PROCEED
 # MANUAL
