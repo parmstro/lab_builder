@@ -876,12 +876,14 @@ setup_config_templates: "true"
 ctemplates_mandatory:
   - name: rhc_kickstart_default
     type: provision
+    locked: false
     audit_comment: "This is a sample template - can replace base - {{ builder_run_tag }}"
     path: rhc_kickstart_default_ctemplate.j2
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
   - name: rhc_rhvh
     type: provision
+    locked: false
     audit_comment: "This is a sample template - can replace base - {{ builder_run_tag }}"
     path: rhc_rhvh_ctemplate.j2
     organization: "{{ foreman_initial_organization }}"
