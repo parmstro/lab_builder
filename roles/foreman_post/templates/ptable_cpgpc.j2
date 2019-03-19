@@ -10,7 +10,7 @@
  part pv.01 --size=1 --grow --ondisk=sda
  <% end -%>
  
- <% if @host.provider.downcase == 'rhev' %>
+ <% if @host.provider.downcase == 'rhv' %>
  part /boot --fstype ext4 --size=512 --ondisk=vda
  part swap --recommended --ondisk=vda
  part pv.01 --size=1 --grow --ondisk=vda

@@ -186,13 +186,13 @@ echo 'proxy = <%= proxy_uri %>' >> /etc/yum.conf
 <% end -%>
 
 <% if rhel_compatible && !host_param_false?('enable-epel') -%>
-<%= snippet 'rhc_epel' -%>
+<%= snippet 'epel' -%>
 <% end -%>
 
-<%= snippet 'rhc_redhat_register' %>
+<%= snippet 'redhat_register' %>
 
 <% if host_enc['parameters']['realm'] && @host.realm && @host.realm.realm_type == 'Red Hat Identity Management' -%>
-<%= snippet 'rhc_freeipa_register' %>
+<%= snippet 'freeipa_register' %>
 <% end -%>
 
 <% unless host_param_false?('package_upgrade') -%>
@@ -206,28 +206,28 @@ fi
 
 # If we are installing on a virtualization host, install any platform specific stuff
 <% if @host.provider.downcase == 'vmware' %>
-<%= snippet('rhc_vmware_specific') %>
+<%= snippet('rhc_vmware_guest_specific') %>
 <% end -%>
 
 <% if @host.provider.downcase == 'rhv' %>
-<%= snippet('rhc_rhev_specific') %>
+<%= snippet('rhc_rhv_guest_specific') %>
 <% end -%>
 
-<%= snippet('rhc_remote_execution_ssh_keys') %>
+<%= snippet('remote_execution_ssh_keys') %>
 
 <% if chef_enabled %>
-<%= snippet 'rhc_chef_client' %>
+<%= snippet 'chef_client' %>
 <% end -%>
 
 <% if puppet_enabled %>
 <% if host_param_true?('enable-puppetlabs-pc1-repo') || host_param_true?('enable-puppetlabs-repo') || host_param_true?('enable-puppetlabs-puppet5-repo') -%>
-<%= snippet 'rhc_puppetlabs_repo' %>
+<%= snippet 'puppetlabs_repo' %>
 <% end -%>
-<%= snippet 'rhc_puppet_setup' %>
+<%= snippet 'puppet_setup' %>
 <% end -%>
 
 <% if salt_enabled %>
-<%= snippet 'rhc_saltstack_setup' %>
+<%= snippet 'saltstack_setup' %>
 <% end -%>
 
 <% if @host.operatingsystem.name == 'OracleLinux' && host_param_true?('disable-uek') -%>
@@ -236,7 +236,7 @@ yum -t -y remove kernel-uek*
 sed -e 's/DEFAULTKERNEL=kernel-uek/DEFAULTKERNEL=kernel/g' -i /etc/sysconfig/kernel
 <% end -%>
 
-<%= snippet('rhc_ansible_provisioning_callback') %>
+<%= snippet('ansible_provisioning_callback') %>
 
 sync
 

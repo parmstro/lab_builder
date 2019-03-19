@@ -33,10 +33,10 @@ nodectl init
 <%= snippet 'subscription_manager_registration' %>
 <%= snippet 'kickstart_networking_setup' %>
 <% if @host.info['parameters']['realm'] && @host.realm && @host.realm.realm_type == 'Red Hat Identity Management' -%>
-<%= snippet('rhc_idm_register') %>
+<%= snippet('freeipa_register') %>
 <% end -%>
 
-<%= snippet('rhc_remote_execution_ssh_keys') %>
+<%= snippet('remote_execution_ssh_keys') %>
 
 
 /usr/bin/curl <%= foreman_url('built') %>
