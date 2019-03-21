@@ -1,0 +1,16 @@
+---
+# This task is called to complete the definition
+# for the automatically created OS
+# name:RHEL
+# The only task required is to add the media to
+# the OS definition so that we can kickstart from it
+#
+# This is a key example of why we need configuration
+# analysis at the beginning of the code.
+# I would be pissed if I got 12 hours into a build and 
+# the code told me "Hey I'm bailing because you specified
+# an inconsistent parameter." Then again, RTFM...er, WTFM
+- name: Configure the auto-generated Operating Systems if it is defined
+  command: "hammer os update --organization={{ foreman_initial_organization }} --location={{ foreman_initial_location }} --name='RedHat' --media={{ oss_special[1].media | join(',') | quote }} --partition-tables={{ oss_special[1].ptables | join(',') | quote }}"
+  when: "oss_special is defined"
+  

@@ -95,3 +95,21 @@
   tags:
     - config_pv
 
+# Ready for OS creation
+# NOTE: RHEL OS is "special" - it is created by Satellite, you must include the version specific kickstart
+# as a synchronized repository to get the deployment to work with base components
+# Personally, I am of the opinion that this should happen in the background or don't include the OS..
+# Work completely when you sync 7Server only. No half measures. #OffSoapBox
+#
+- import_tasks: "{{ role_path }}/tasks/configure_special_oss.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_oss.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_oss.yml"
+  tags:
+    - config_pv
+
