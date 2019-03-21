@@ -132,7 +132,9 @@ repos_mandatory:
      product: "Red Hat Enterprise Linux Server"
      basearch: "x86_64"
      releasever: "7Server"
-   
+
+# 7 Server and the latest minor release will point to the same files on the back end
+# We will make a RHEL7 7Server OS
    - name: "Red Hat Enterprise Linux 7 Server (Kickstart)"
      product: "Red Hat Enterprise Linux Server"
      basearch: "x86_64"
@@ -808,8 +810,13 @@ product_plan:
     organization: "{{ foreman_initial_organization }}"
 
 setup_general_settings: "false"
+
 setup_organizations: "false"
+# Parameters?
+
 setup_locations: "false"
+# Paramters? Yes!
+
 setup_users: "false"
 setup_groups: "false"
 setup_roles: "false"
@@ -819,9 +826,14 @@ setup_roles: "false"
 # DO NOT REMOVE RHEL OR RHVH
 setup_mandatory_media: "true"
 media_mandatory:
-  - name: RHEL
+  - name: RHEL7Server
     os_family: Redhat
-    path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization }}/Library/content/dist/rhel/server/7/$major.$minor/$arch/kickstart/"
+    path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization | replace(' ', '_') }}/Library/content/dist/rhel/server/7/7Server/$arch/kickstart/"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+  - name: RHEL7x
+    os_family: Redhat
+    path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization | replace(' ', '_') }}/Library/content/dist/rhel/server/7/$major.$minor/$arch/kickstart/"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
   - name: RHVH
@@ -898,17 +910,18 @@ ctemplates_mandatory:
 # later in the project
 #
 setup_oss: "true"
-oss_mandatory:
-  - name: RedHat
+oss_special:
+  - name: "RedHat"
+    title: "RedHat 7.6"
     major: 7
     minor: 6
     description: "Red Hat Base OS created by synchronization - {{ builder_run_tag }}"
-    family: Redhat
+    family: "Redhat"
     password_hash: "SHA256"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
     architectures:
-      - x86_64
+      - "x86_64"
     config_templates:
       - "Kickstart default PXELinux"
       - "Kickstart default PXEGrub"
@@ -918,33 +931,34 @@ oss_mandatory:
       - "Kickstart default finish"
       - "Kickstart default user data"
     media:
-      - RHEL
+      - "RHEL7Server"
+      - "RHEL7x"
     ptables:
-      - RHEL_SOE
-      - CPGPC
-      - OCP
+      - "Kickstart default"
+      - "RHEL_SOE"
+      - "CPGPC"
+      - "OCP"
 
-  - name: RHVH
+oss_mandatory:
+  - name: "RHVH"
     major: 7
     minor: 6
     description: "Red Hat Virtualization Hypervisor - {{ builder_run_tag }}"
-    family: Redhat
+    family: "Redhat"
     password_hash: "SHA256"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
     architectures:
-      - x86_64
+      - "x86_64"
     config_templates:
       - "Kickstart oVirt-RHVH PXELinux"
       - "Kickstart oVirt-RHVH"
       - "Kickstart default finish"
       - "Kickstart default user data"
     media:
-      - RHEL
+      - "RHVH"
     ptables:
-      - RHEL_SOE
-      - CPGPC
-      - OCP
+      - "RHVH"
     parameters:
       - name: something
         value: arbitrary
@@ -985,10 +999,8 @@ setup_hostgroups: "true"
 
 
 
-
-
+# Turn on and of Discovery auto provisioning
 setup_discovery: "true"
-
 # AKA enable_all_rules is full auto deployment of infrastructure
 # based totally on discovery
 # some assembly required :-) you need to create the discovery rules to match your Host Groups and infrastructure limits
@@ -997,6 +1009,31 @@ discovery_rules:
   - name: rhvh_node
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
+
+# RHVH node basic requirements for RHHI - these will form the basis of our discovery rules
+# we will create rules for each role, RHHI, OCP++, Gluster, etc..
+#
+# Increase the size of /var/log to 15GB to provide sufficient space for the additional logging requirements of Red Hat Gluster Storage.
+# for lab deployments
+# at least 4 cores
+# at least 32 GB RAM
+# at least 1TB storage
+#
+# for small deployments:
+## at least 12 cores
+# at least 64GB RAM
+# at most 48TB storage
+#
+## for medium deployments:
+## at least 12 cores
+# at least 128GB RAM
+# at most 64TB storage
+##
+# for large deployments:
+## at least 16 cores
+# at least 256GB RAM
+# at most 80TB storage
+
 
 
 #  PPPPPP   OOOOOO  WWW  WWW  WWW EEEEEEEE RRRRRRR      OOOOOO  NNNNN    NN
@@ -1008,6 +1045,13 @@ discovery_rules:
 #  PP       OOOOOO     W     W    EEEEEEEE RR    R      OOOOOO  NN    NNNNN
 #
 #  The lab systems!!! They should discover (and optionally auto deploy) the infrastructure.
+
+#********************************************************************
+#*
+#*   DEPLOY SSH KEYS AS PART OF BUILD
+#    USE LABBUILDER KEYS FROM DRIVE 42
+#*
+#********************************************************************
 
 setup_infrastructure: "false"
 # Infrastructure Setup will now follow the RHHI Ansible Deployment
