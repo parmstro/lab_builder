@@ -135,10 +135,10 @@ repos_mandatory:
 
 # 7 Server and the latest minor release will point to the same files on the back end
 # We will make a RHEL7 7Server OS
-   - name: "Red Hat Enterprise Linux 7 Server (Kickstart)"
-     product: "Red Hat Enterprise Linux Server"
-     basearch: "x86_64"
-     releasever: "7Server"
+#   - name: "Red Hat Enterprise Linux 7 Server (Kickstart)"
+#     product: "Red Hat Enterprise Linux Server"
+#     basearch: "x86_64"
+#     releasever: "7Server"
 
    - name: "Red Hat Enterprise Linux 7 Server (Kickstart)"
      product: "Red Hat Enterprise Linux Server"
