@@ -975,6 +975,19 @@ oss_mandatory:
 # tag or place it above only those that are truly optional
 # (demos, toys, skunkworks, 8-)  )
 
+# ActivationKeys
+# Again, mandatory (to meet base config), optional (to add to the config - also failing will not stop build till the end of the phase)
+# you can have unlimited hosts defined or max_hosts defined, not both or boom
+setup_activation_keys: true
+ak_mandatory:
+  - name: "RHEL_SOE"
+    organization: "{{ foreman_initial_organization }}"
+    unlimited_hosts: true
+    subscritpions:
+    - name:
+      qty: 1
+
+  
 setup_domains: "true"
 domains_mandatory:
   - name: "{{ ansible_domain }}"
@@ -989,9 +1002,67 @@ realms_mandatory:
 
 setup_subnets: "true"
 subnets_mandatory:
-  - name: "Frontside"
-  - name: "ProvMig"
+  - name: "Public"
+    boot_mode: "Static"
+    description: "Front side for client apps  - {{ builder_run_tag }}"
+    network: 192.168.248.0
+    prefix: 22
+    mask: 255.255.252.0
+    network_type: "IPv4"
+    gateway: 192.168.248.1
+    primary dns: 192.168.248.10
+    secondary dns: 192.168.248.11
+    ipam: "Internal DB"
+    from: 192.168.250.1
+    to: 192.168.250.254
+    capsules:
+      - name: "{{ ansible_fqdn }}"
+        type: Discovery
+      - name: "{{ ansible_fqdn }}"
+        type: TFTP
+      - name: "{{ ansible_fqdn }}"
+        type: DNS
+    domains: # The names of the domains
+      - name: "{{ ansible_domain }}"
+    locations: # The name of the locations
+      - name: "{{ foreman_initial_location }}"
+    organizations: # The name of domains
+      - name: "{{ foreman_initial_domain }}"
+
+  - name: "ProvMgtMig"
+    boot_mode: "Static"
+    description: "Provisioning, Migration and Management - {{ builder_run_tag }}"
+    network: 192.168.148.0
+    prefix: 22
+    mask: 255.255.252.0
+    network_type: "IPv4"
+    gateway: 192.168.148.1
+    ipam: "Internal DB"
+    from: 192.168.148.1
+    to: 192.168.148.254
+    capsules: # get the ID of the tftp capsule
+      - name: "{{ ansible_fqdn }}"
+        type: TFTP
+    locations: # The name of the locations
+      - name: "{{ foreman_initial_location }}"
+    organizations: # The name of domains
+      - name: "{{ foreman_initial_domain }}"
+
   - name: "Storage"
+    boot_mode: "Static"
+    description: "Storage Network for Gluster and iSCSI  - {{ builder_run_tag }}"
+    network: 192.168.48.0
+    prefix: 22
+    mask: 255.255.252.0
+    network_type: "IPv4"
+    gateway: 192.168.48.1
+    ipam: "Internal DB"
+    from: 192.168.48.1
+    to: 192.168.48.254
+    locations: # The name of the locations
+      - name: "{{ foreman_initial_location }}"
+    organizations: # The name of domains
+      - name: "{{ foreman_initial_domain }}"
 
 
 setup_hostgroups: "true"

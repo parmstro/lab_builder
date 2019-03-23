@@ -1,0 +1,13 @@
+
+
+
+
+- name: Delete the realm if it already exists
+  command: "hammer realm delete --organization={{ realm.organization | quote }} --location={{ realm.location | quote }} --name={{ realm.name | quote }}"
+  ignore_errors: true
+
+# Hacking a short cut because I know
+# we are building here and the realm-proxy-id will always be 1 and I'm being lazy today
+- name: Create the specified domain
+  command: "hammer domain create --organization={{ domain.organization | quote }} --location={{ domain.location | quote }} --name={{ domain.name | quote }} --realm-type={{ realm.realm_type | quote }} --realm-proxy-id=1"
+

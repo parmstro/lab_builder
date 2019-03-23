@@ -1,0 +1,13 @@
+---
+# Create the specified domain
+#
+- name: Delete the domain if it already exists
+  command: "hammer domain delete --organization={{ domain.organization | quote }} --location={{ domain.location | quote }} --name={{ domain.name | quote }}"
+  ignore_errors: true
+
+
+- name: Create the specified domain
+  command: "hammer domain create --organization={{ domain.organization | quote }} --location={{ domain.location | quote }} --name={{ domain.name | quote }} --description={{ domain.description | quote }}"
+
+
+

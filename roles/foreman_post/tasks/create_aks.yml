@@ -1,0 +1,76 @@
+---
+# Create the activation key specified
+# expects ak dictionary
+#
+- name: Delete the activation key if it already exists
+  command: "hammer activation-key delete --organization={{ ak.organization | quote }} --name={{ ak.name | quote }}"
+  register: hammer_out
+  ignore_errors: true
+
+- name: Creating the base activation key.
+  command: "hammer activation-key create --organization={{ ak.organization | quote }} --name={{ ak.name }}"
+  when: "hammer_out.stdout == ''"
+
+- name: Generating the update for the activation key
+  set_fact:
+    hammer_command: "hammer activation-key update --organization={{ ak.organization | quote }} --name={{ ak.name }}"
+
+- name: Building Command - auto-attach
+  set_fact:
+    hammer_command: "{{ hammer_command }} --auto-attach={{ ak.auto_attach }}"
+  when: "ak.auto_attach is defined"
+
+- name: Building Command - content-view
+  set_fact:
+    hammer_command: "{{ hammer_command }} --content-view={{ ak.content_view }}"
+  when: "ak.content_view is defined"
+
+- name: Building Command - lifecycle-environment
+  set_fact:
+    hammer_command: "{{ hammer_command }} --lifecycle_environment={{ ak.lc_environment }}"
+  when: "ak.lc_environment is defined"
+
+- name: Building Command - max-hosts
+  set_fact:
+    hammer_command: "{{ hammer_command }} --max-hosts={{ ak.max_hosts }}"
+  when: 
+    - "ak.max_hosts is defined"
+    - "ak.unlimited_hosts is not defined"
+
+- name: Building Command - unlimited-hosts
+  set_fact:
+    hammer_command: "{{ hammer_command }} --unlimited-hosts={{ ak.unlimited_hosts }}"
+  when: 
+    - "ak.max_hosts is not defined"
+    - "ak.unlimited_hosts is defined"
+
+- name: Building Command - release-version
+  set_fact:
+    hammer_command: "{{ hammer_command }} --release-version={{ ak.release_version }}"
+  when: 
+    - "ak.release_version is defined"
+
+- name: Building Command - service-level
+  set_fact:
+    hammer_command: "{{ hammer_command }} --service-level={{ ak.service_level }}"
+  when: 
+    - "ak.service_level is defined"
+
+- name: Updating the activation key
+  command: "{{ hammer_command }}"
+
+# Now attach the subscriptions
+
+- name: Attach the subscriptions if required
+  include_tasks: attach_subscription_to_ak.yml    
+  when: "ak.subscriptions is defined"
+
+
+# Now perform the content overrides
+# This is something that we will add through the Foreman/Satellite configuration export utility
+# Host Collections is looooowwww on the list
+
+
+
+
+

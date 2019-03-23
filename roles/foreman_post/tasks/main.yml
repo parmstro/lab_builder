@@ -113,3 +113,41 @@
   tags:
     - config_pv
 
+# * ActivationKeys
+# Again, mandatory (to meet base config), optional (to add to the config - also failing will not stop build till the end of the phase)
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_aks.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_aks.yml"
+  tags:
+    - config_pv
+
+# * Domains
+# Ditto
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_domains.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_domains.yml"
+  tags:
+    - config_pv
+
+# * Realms
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_realms.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_realms.yml"
+  tags:
+    - config_pv
+
+# * Subnets
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_subnets.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_subnets.yml"
+  tags:
+    - config_pv
+
