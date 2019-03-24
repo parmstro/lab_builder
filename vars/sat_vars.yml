@@ -135,15 +135,16 @@ repos_mandatory:
 
 # 7 Server and the latest minor release will point to the same files on the back end
 # We will make a RHEL7 7Server OS
-#   - name: "Red Hat Enterprise Linux 7 Server (Kickstart)"
-#     product: "Red Hat Enterprise Linux Server"
-#     basearch: "x86_64"
-#     releasever: "7Server"
-
    - name: "Red Hat Enterprise Linux 7 Server (Kickstart)"
      product: "Red Hat Enterprise Linux Server"
      basearch: "x86_64"
-     releasever: "7.6"
+     releasever: "7Server"
+
+# It seems we will have to add this later, there is some dependency we don't understand
+#   - name: "Red Hat Enterprise Linux 7 Server (Kickstart)"
+#     product: "Red Hat Enterprise Linux Server"
+#     basearch: "x86_64"
+#     releasever: "7.6"
 
    - name: "Red Hat Ansible Engine 2.7 RPMs for Red Hat Enterprise Linux 7 Server"
      product: "Red Hat Ansible Engine"
