@@ -8,7 +8,7 @@
 # along with their pre-existing sync plans. So we have have a clean slate.
 
 - name: Attach the synchronization plans to their Products.
-  include_tasks: "{{ role_dir }}/tasks/link_sync_plan.yml"
+  include_tasks: "link_sync_plan.yml"
   loop: "{{ product_plan }}"
   loop_control:
     loop_var: pp
