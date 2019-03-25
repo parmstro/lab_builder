@@ -475,7 +475,7 @@ ccvs_optional:
 
 setup_sync_plans: "true"
 sync_plans_mandatory:
-  - name: nighly_os
+  - name: nightly_os
     desc: "Nightly OS repo sync - 00:30 - {{ builder_run_tag }}"
     interval: "daily"
     sync_date: "{{ ansible_date_time.date }} 00:30:00"
