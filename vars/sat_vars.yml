@@ -21,7 +21,16 @@
 #
 ###########################################################################################
 
-optional_fatal: "false"
+# cause optional sections below to fail the build 
+# if the optional section has a configuration failure
+# We are debugging, so currently true, everything breaks
+optional_fatal: "true"
+
+# reset foreman rather than reinstalling 
+# if you have made changes to the Satellite configuration since the last run 
+# on existing machines, set this to false otherwise leave as default
+reset_foreman: "true"
+
 builder_run_tag: "Lab Builder - Foreman Builder - {{ ansible_date_time.iso8601 }}"
 
 bootstrap_add_utils:
