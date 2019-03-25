@@ -11,6 +11,6 @@
 # the code told me "Hey I'm bailing because you specified
 # an inconsistent parameter." Then again, RTFM...er, WTFM
 - name: Configure the auto-generated Operating Systems if it is defined
-  command: "hammer os update --organization={{ foreman_initial_organization }} --location={{ foreman_initial_location }} --name='RedHat' --media={{ oss_special[1].media | join(',') | quote }} --partition-tables={{ oss_special[1].ptables | join(',') | quote }}"
+  command: "hammer os update --organization={{ foreman_initial_organization }} --location={{ foreman_initial_location }} --name='RedHat' --media={{ oss_special[0].media | join(',') | quote }} --partition-tables={{ oss_special[0].ptables | join(',') | quote }}"
   when: "oss_special is defined"
   

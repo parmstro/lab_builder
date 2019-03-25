@@ -841,11 +841,11 @@ media_mandatory:
     path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization | replace(' ', '_') }}/Library/content/dist/rhel/server/7/7Server/$arch/kickstart/"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
-  - name: RHEL7x
-    os_family: Redhat
-    path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization | replace(' ', '_') }}/Library/content/dist/rhel/server/7/$major.$minor/$arch/kickstart/"
-    organization: "{{ foreman_initial_organization }}"
-    location: "{{ foreman_initial_location }}"
+#  - name: RHEL7x
+#    os_family: Redhat
+#    path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization | replace(' ', '_') }}/Library/content/dist/rhel/server/7/$major.$minor/$arch/kickstart/"
+#    organization: "{{ foreman_initial_organization }}"
+#    location: "{{ foreman_initial_location }}"
   - name: RHVH
     os_family: Redhat
     path: "https://{{ ansible_fqdn }}/pub/rhvh"
@@ -942,7 +942,7 @@ oss_special:
       - "Kickstart default user data"
     media:
       - "RHEL7Server"
-      - "RHEL7x"
+#      - "RHEL7x"
     ptables:
       - "Kickstart default"
       - "RHEL_SOE"
