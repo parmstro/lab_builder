@@ -947,7 +947,7 @@ oss_special:
       - "Kickstart default"
       - "RHEL_SOE"
       - "CPGPC"
-      - "OCP"
+      - "OCP_SOE"
 
 oss_mandatory:
   - name: "RHVH"
