@@ -76,17 +76,17 @@
 
 - name: Add the title to the command
   set_fact: 
-    hammer_command: "{{ hammer_command }} --title={{ os_title }}"
+    hammer_command: "{{ hammer_command }} --title={{ os_title | quote }}"
 
 - name: Add the release name if necessary
   set_fact:
-    hammer_command: "{{ hammer_command }} --release-name={{ os.release_name }}"
+    hammer_command: "{{ hammer_command }} --release-name={{ os.release_name | quote }}"
 
 - name: Execute the command to update the OS
   command: "{{ hammer_command }}"
 
-- name: 
-  command: "hammer os info --organization={{ os.organization | quote }} --location={{ os.location | quote }} --name={{ os.name | quote }} --architectures={{ os.architectures | quote }} --config-templates={{ os.config_templates | quote }} --description={{ os.description | quote }} --family={{ os.family | quote }} --major={{ os.major | quote }} --minor={{ os.minor }} --partition-tables={{ 
+# - name: 
+#  command: "hammer os info --organization={{ os.organization | quote }} --location={{ os.location | quote }} --name={{ os.name | quote }} --architectures={{ os.architectures | quote }} --config-templates={{ os.config_templates | quote }} --description={{ os.description | quote }} --family={{ os.family | quote }} --major={{ os.major | quote }} --minor={{ os.minor }} --partition-tables={{ 
 
  
 
