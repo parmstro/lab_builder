@@ -10,7 +10,32 @@
 # I would be pissed if I got 12 hours into a build and 
 # the code told me "Hey I'm bailing because you specified
 # an inconsistent parameter." Then again, RTFM...er, WTFM
-- name: Configure the auto-generated Operating Systems if it is defined
-  command: "hammer os update --organization={{ foreman_initial_organization | quote }} --location={{ foreman_initial_location | quote }} --name='RedHat' --media={{ oss_special[0].media | join(',') | quote }} --partition-tables={{ oss_special[0].ptables | join(',') | quote }}"
-  when: "oss_special is defined"
+
+# After the initial run, if sub tasks are run, the special OS
+# becomes not so special, i.e. we will need to create it from 
+# scratch. So test to see if it exists, if yes, update it
+# else recreate it
+
+- set_fact:
+    os_exists: false
+
+- name: Does the RHEL auto-generated OS still exist
+  command: "hammer os info --title={{ sos.title | quote }}  --organization={{ sos.organization | quote }} --location={{ sos.location }}"
+  register: hammer_out
+  ignore_errors: true
+
+- set_fact:
+    os_exists: true
+  when: "hammer_out.std_err == ''"
+
+- name: Update the auto-generated Operating Systems if it still exists.
+  command: "hammer os update --organization={{ sos.organization | quote }} --location={{ sos.location | quote }} --title={{ sos.title | quote }}  --media={{ sos.media | join(',') | quote }} --partition-tables={{ sos.ptables | join(',') | quote }}"
+  when: "os_exists == true"
   
+
+- name: Re-create the auto-generated Operating System since it does not exist.
+  include_tasks: create_os.yml
+  vars: 
+    os: "{{ sos }}"
+  when: "os_exists == false"
+
