@@ -26,7 +26,7 @@
 
 - set_fact:
     os_exists: true
-  when: "hammer_out.std_err == ''"
+  when: "hammer_out.stderr == ''"
 
 - name: Update the auto-generated Operating Systems if it still exists.
   command: "hammer os update --organization={{ sos.organization | quote }} --location={{ sos.location | quote }} --title={{ sos.title | quote }}  --media={{ sos.media | join(',') | quote }} --partition-tables={{ sos.ptables | join(',') | quote }}"
