@@ -7,17 +7,17 @@
 # Call with loop variable os
 #
 - name: "Determine if the OS exists - {{ os.name }}"
-  command: "hammer os info --organization={{ os.organization | quote }} --location={{ os.location | quote }} --name={{ os.name | quote }}"
+  command: "hammer os info --organization={{ os.organization | quote }} --location={{ os.location | quote }} --title={{ os.title | quote }}"
   register: os_exists
   ignore_errors: true
 
 - name: Create the OS if it does not exist
-  command: "hammer os create --organization={{ os.organization | quote }} --location={{ os.location | quote }} --name={{ os.name | quote }}"
+  command: "hammer os create --organization={{ os.organization | quote }} --location={{ os.location | quote }} --title={{ os.title | quote }}"
   when: "os_exists.stdout ==''"
 
 - name: Build the base hammer command
   set_fact:
-    hammer_command: "hammer os info --organization={{ os.organization | quote }} --location={{ os.location | quote }} --name={{ os.name | quote }}"
+    hammer_command: "hammer os info --organization={{ os.organization | quote }} --location={{ os.location | quote }} --title={{ os.title | quote }}"
 
 - name: add Architectures if necessary
   set_fact:
@@ -63,20 +63,6 @@
   set_fact:
     hammer_command: "{{ hammer_command }} --provisioning-templates={{ os.ptemplates | join(',') | quote }}"
   when: "os.ptemplates is defined"
-
-- name: Add a title if it doesn't exist
-  set_fact:
-    os_title: "{{ os.name }}"
-  when: "os.title is not defined"
-
-- name: Otherwise set the title
-  set_fact:
-    os_title: "{{ os.title }}"
-  when: "os.title is defined"
-
-- name: Add the title to the command
-  set_fact: 
-    hammer_command: "{{ hammer_command }} --title={{ os_title | quote }}"
 
 - name: Add the release name if necessary
   set_fact:
