@@ -3,5 +3,5 @@
   loop: "{{ aks_optional }}"
   loop_control:
     loop_var: ak
-
-
+  when: "aks_optional is defined"
+ 
