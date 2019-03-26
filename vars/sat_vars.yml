@@ -1001,12 +1001,14 @@ aks_mandatory:
 setup_domains: "true"
 domains_mandatory:
   - name: "{{ ansible_domain }}"
+    description: "root domain for the installation"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
 
 setup_realms: "true"
 realms_mandatory:
   - name: "{{ ansible_domain | upper }}"
+    description: "root REALM for the installation"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
 
