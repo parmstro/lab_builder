@@ -989,7 +989,7 @@ oss_mandatory:
 # Again, mandatory (to meet base config), optional (to add to the config - also failing will not stop build till the end of the phase)
 # you can have unlimited hosts defined or max_hosts defined, not both or boom
 setup_activation_keys: true
-ak_mandatory:
+aks_mandatory:
   - name: "RHEL_SOE"
     organization: "{{ foreman_initial_organization }}"
     unlimited_hosts: true
