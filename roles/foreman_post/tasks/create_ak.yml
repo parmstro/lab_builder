@@ -39,7 +39,7 @@
 
 - name: Building Command - unlimited-hosts
   set_fact:
-    hammer_command: "{{ hammer_command }} --unlimited-hosts={{ ak.unlimited_hosts | quote }}"
+    hammer_command: "{{ hammer_command }} --unlimited-hosts"
   when: 
     - "ak.max_hosts is not defined"
     - "ak.unlimited_hosts is defined"
