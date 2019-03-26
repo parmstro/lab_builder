@@ -9,6 +9,6 @@
   command: "hammer domain create --organization={{ domain.organization | quote }} --location={{ domain.location | quote }} --name={{ domain.name | quote }}"
 
 - name: Update the description if defined
-  command: "hammer domain create --organization={{ domain.organization | quote }} --location={{ domain.location | quote }} --name={{ domain.name | quote }} --description={{ domain.description | quote }}"
+  command: "hammer domain update --organization={{ domain.organization | quote }} --location={{ domain.location | quote }} --name={{ domain.name | quote }} --description={{ domain.description | quote }}"
   when: "domain.description is defined"
 
