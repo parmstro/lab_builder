@@ -12,8 +12,9 @@
   ignore_errors: true
 
 - name: Create the OS if it does not exist
-  command: "hammer os create --organization={{ os.organization | quote }} --location={{ os.location | quote }} --name={{ os.name | quote }}"
+  command: "hammer os create --organization={{ os.organization | quote }} --location={{ os.location | quote }} --name={{ os.name | quote }} --family={{os.family | quote }} --major={{ os.major | quote }} --minor={{ os.minor | quote }}"
   when: "os_exists.stdout ==''"
+
 
 - name: Build the base hammer os update command
   set_fact:
@@ -33,21 +34,6 @@
   set_fact:
     hammer_command: "{{ hammer_command }} --description={{ os.description | quote }}"
   when: "os.description is defined"
-
-- name: add Family if necessary
-  set_fact:
-    hammer_command: "{{ hammer_command }} --family={{os.family | quote }}"
-  when: "os.family is defined"
-
-- name: add Major Relase if necessary
-  set_fact:
-    hammer_command: "{{ hammer_command }} --family={{os.major | quote }}"
-  when: "os.major is defined"
-
-- name: add Minor Relase if necessary
-  set_fact:
-    hammer_command: "{{ hammer_command }} --family={{os.minor | quote }}"
-  when: "os.minor is defined"
 
 - name: add Partition Tables if necessary
   set_fact:
