@@ -9,7 +9,6 @@
 
 - name: Creating the base activation key.
   command: "hammer activation-key create --organization={{ ak.organization | quote }} --name={{ ak.name }}"
-  when: "hammer_out.stdout == ''"
 
 - name: Generating the update for the activation key
   set_fact:
