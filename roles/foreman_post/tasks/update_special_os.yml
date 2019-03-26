@@ -20,7 +20,7 @@
     os_exists: false
 
 - name: Does the RHEL auto-generated OS still exist
-  command: "hammer os info --title={{ sos.title | quote }}  --organization={{ sos.organization | quote }} --location={{ sos.location | quote }}"
+  command: "hammer os info --title={{ sos.title | quote }}  --organization={{ sos.organization | quote }}"
   register: hammer_out
   ignore_errors: true
 
