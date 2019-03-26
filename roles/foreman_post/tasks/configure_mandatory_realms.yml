@@ -6,4 +6,3 @@
     loop_var: realm
   when: "realms_mandatory is defined"
 
-

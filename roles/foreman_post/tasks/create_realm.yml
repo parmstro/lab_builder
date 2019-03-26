@@ -1,7 +1,4 @@
-
-
-
-
+---
 - name: Delete the realm if it already exists
   command: "hammer realm delete --organization={{ realm.organization | quote }} --location={{ realm.location | quote }} --name={{ realm.name | quote }}"
   ignore_errors: true

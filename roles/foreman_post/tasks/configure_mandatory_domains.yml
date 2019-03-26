@@ -4,4 +4,5 @@
   loop: "{{ domains_mandatory }}"
   loop_control:
     loop_var: domain
+  when: "domains_mandatory is defined"
 
