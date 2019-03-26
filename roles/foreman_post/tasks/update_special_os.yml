@@ -35,7 +35,9 @@
 
 - name: Re-create the auto-generated Operating System since it does not exist.
   include_tasks: create_os.yml
-  vars: 
-    os: "{{ sos }}"
+  loop: 
+    - "{{ sos }}"
+  loop_control:
+    loop_var: "os"
   when: "os_exists == false"
 
