@@ -29,7 +29,7 @@
   when: "hammer_out.stderr == ''"
 
 - name: Update the auto-generated Operating Systems if it still exists.
-  command: "hammer os update --organization={{ sos.organization | quote }} --location={{ sos.location | quote }} --title={{ sos.title | quote }}  --media={{ sos.media | join(',') | quote }} --partition-tables={{ sos.ptables | join(',') | quote }}"
+  command: "hammer os update --name={{ sos.name }} --title={{ sos.title | quote }}  --media={{ sos.media | join(',') | quote }} --partition-tables={{ sos.ptables | join(',') | quote }}"
   when: "os_exists == true"
   
 
