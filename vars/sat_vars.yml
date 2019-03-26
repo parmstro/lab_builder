@@ -1008,9 +1008,9 @@ domains_mandatory:
 setup_realms: "true"
 realms_mandatory:
   - name: "{{ ansible_domain | upper }}"
-    description: "root REALM for the installation"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
+    realm_proxy: "{{ ansible_fqdn }}"
 
 setup_subnets: "true"
 subnets_mandatory:

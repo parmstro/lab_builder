@@ -3,8 +3,20 @@
   command: "hammer realm delete --organization={{ realm.organization | quote }} --location={{ realm.location | quote }} --name={{ realm.name | quote }}"
   ignore_errors: true
 
-# Hacking a short cut because I know
-# we are building here and the realm-proxy-id will always be 1 and I'm being lazy today
-- name: Create the specified domain
-  command: "hammer realm create --organization={{ realm.organization | quote }} --location={{ realm.location | quote }} --name={{ realm.name | upper | quote }} --realm-type={{ realm.realm_type | quote }} --realm-proxy-id=1"
+# blow up here if the capsule doesn't exist, because it means
+# the config is messed up
+- name: Get the capsule id for the specified capsule
+  command: "hammer --output=yaml capsule info --name={{ realm.capsule | quote }}"
+  register: hammer_out
+
+- set_fact:
+    realm_proxy_id: "{{  hammer_out.stdout | map('Id') }}"
+
+- debug:
+    msg: "{{ realm_proxy_id }}"
+
+- name: Create the specified REALM
+  command: "hammer realm create --organization={{ realm.organization | quote }} --location={{ realm.location | quote }} --name={{ realm.name | upper | quote }} --realm-type={{ realm.realm_type | quote }} --realm-proxy-id={{ realm_proxy_id }}"
+
+
 
