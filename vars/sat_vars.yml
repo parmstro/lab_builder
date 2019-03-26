@@ -1010,7 +1010,7 @@ realms_mandatory:
   - name: "{{ ansible_domain | upper }}"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
-    realm_proxy: "{{ ansible_fqdn }}"
+    capsule: "{{ ansible_fqdn }}"
 
 setup_subnets: "true"
 subnets_mandatory:
