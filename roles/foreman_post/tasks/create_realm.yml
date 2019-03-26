@@ -6,7 +6,7 @@
 # blow up here if the capsule doesn't exist, because it means
 # the config is messed up
 - name: Get the capsule id for the specified capsule
-  command: "hammer --output=json capsule info --name={{ realm.capsule | quote }}"
+  command: "hammer capsule info --name={{ realm.capsule | quote }}"
   register: hammer_out
 
 - debug:
