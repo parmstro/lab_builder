@@ -53,6 +53,7 @@
 - name: Add the release name if necessary
   set_fact:
     hammer_command: "{{ hammer_command }} --release-name={{ os.release_name | quote }}"
+  when: "os.release_name is defined"
 
 - name: Execute the command to update the OS
   command: "{{ hammer_command }}"
