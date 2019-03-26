@@ -12,12 +12,12 @@
   ignore_errors: true
 
 - name: Create the OS if it does not exist
-  command: "hammer os create --organization={{ os.organization | quote }} --location={{ os.location | quote }} --title={{ os.title | quote }}"
+  command: "hammer os create --organization={{ os.organization | quote }} --location={{ os.location | quote }} --name={{ os.name | quote }}"
   when: "os_exists.stdout ==''"
 
-- name: Build the base hammer command
+- name: Build the base hammer os update command
   set_fact:
-    hammer_command: "hammer os info --organization={{ os.organization | quote }} --location={{ os.location | quote }} --title={{ os.title | quote }}"
+    hammer_command: "hammer os update --organization={{ os.organization | quote }} --location={{ os.location | quote }} --name={{ os.name | quote }} --title={{ os.title | quote }}"
 
 - name: add Architectures if necessary
   set_fact:
@@ -71,8 +71,4 @@
 - name: Execute the command to update the OS
   command: "{{ hammer_command }}"
 
-# - name: 
-#  command: "hammer os info --organization={{ os.organization | quote }} --location={{ os.location | quote }} --name={{ os.name | quote }} --architectures={{ os.architectures | quote }} --config-templates={{ os.config_templates | quote }} --description={{ os.description | quote }} --family={{ os.family | quote }} --major={{ os.major | quote }} --minor={{ os.minor }} --partition-tables={{ 
-
- 
 
