@@ -10,10 +10,10 @@
   register: hammer_out
 
 - debug:
-    msg: "{{ hammer_out.stdout | from_json | json_query('[0].Id') }}"
+    msg: "{{ hammer_out.stdout | from_json | json_query('Id') }}"
 
 - set_fact:
-    realm_proxy_id: "{{  hammer_out.stdout | from_json | json_query('[0].Id')}}"
+    realm_proxy_id: "{{  hammer_out.stdout | from_json | json_query('Id')}}"
 
 - debug:
     msg: "{{ realm_proxy_id }}"
