@@ -104,7 +104,7 @@
     hammer_command: "{{ hammer_command }} --domains={{ subnet.domains | list | quote }}"
   when: 
     - "subnet.domains is defined"
-    - "subnet.domains.length > 0"
+    - "(subnet.domains | length) > 0"
 
 - name: Build the command - subnet starting ip - from
   set_fact:
@@ -161,14 +161,14 @@
     hammer_command: "{{ hammer_command }} --location={{ subnet.locations | list | quote }}"
   when: 
     - "subnet.locations is defined"
-    - "subnet.locations.length > 0"
+    - "(subnet.locations | length) > 0"
 
 - name: Build the command - organizations
   set_fact:
     hammer_command: "{{ hammer_command }} --dns-primary={{ subnet.organizations | list | quote }}"
   when:
     - "subnet.organizations is defined"
-    - "subnet.organizations.length > 0"
+    - "(subnet.organizations | length) > 0"
 
 - name: Create the Subnet - execute the hammer command
   command: "{{ hammer_command }}"
