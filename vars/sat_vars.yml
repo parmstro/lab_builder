@@ -1040,7 +1040,7 @@ subnets_mandatory:
     locations: # The name of the locations
       - name: "{{ foreman_initial_location }}"
     organizations: # The name of domains
-      - name: "{{ foreman_initial_domain }}"
+      - name: "{{ foreman_initial_organization }}"
 
   - name: "ProvMgtMig"
     boot_mode: "Static"
@@ -1059,7 +1059,7 @@ subnets_mandatory:
     locations: # The name of the locations
       - name: "{{ foreman_initial_location }}"
     organizations: # The name of domains
-      - name: "{{ foreman_initial_domain }}"
+      - name: "{{ foreman_initial_organization }}"
 
   - name: "Storage"
     boot_mode: "Static"
@@ -1075,12 +1075,10 @@ subnets_mandatory:
     locations: # The name of the locations
       - name: "{{ foreman_initial_location }}"
     organizations: # The name of domains
-      - name: "{{ foreman_initial_domain }}"
+      - name: "{{ foreman_initial_organization }}"
 
 
 setup_hostgroups: "true"
-
-
 
 
 # Turn on and of Discovery auto provisioning
