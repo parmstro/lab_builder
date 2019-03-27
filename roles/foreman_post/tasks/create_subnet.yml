@@ -158,14 +158,14 @@
 
 - name: Build the command - locations
   set_fact:
-    hammer_command: "{{ hammer_command }} --location={{ subnet.locations | list | quote }}"
+    hammer_command: "{{ hammer_command }} --locations={{ subnet.locations | list | quote }}"
   when: 
     - "subnet.locations is defined"
     - "(subnet.locations | length) > 0"
 
 - name: Build the command - organizations
   set_fact:
-    hammer_command: "{{ hammer_command }} --dns-primary={{ subnet.organizations | list | quote }}"
+    hammer_command: "{{ hammer_command }} --organizations={{ subnet.organizations | list | quote }}"
   when:
     - "subnet.organizations is defined"
     - "(subnet.organizations | length) > 0"
