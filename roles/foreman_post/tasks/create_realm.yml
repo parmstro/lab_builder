@@ -10,7 +10,7 @@
   register: hammer_out
 
 - debug:
-    msg: "{{ hammer_out.stdout | to_pretty_yaml | json_query('Id') }}"
+    msg: "{{ hammer_out.stdout | to_nice_yaml | json_query('Id') }}"
 
 - set_fact:
     realm_proxy_id: "{{  hammer_out.stdout | to_yaml | json_query('Id')}}"
