@@ -1036,11 +1036,11 @@ subnets_mandatory:
       - name: "{{ ansible_fqdn }}"
         type: DNS
     domains: # The names of the domains
-      - name: "{{ ansible_domain }}"
+      - "{{ ansible_domain }}"
     locations: # The name of the locations
-      - name: "{{ foreman_initial_location }}"
+      - "{{ foreman_initial_location }}"
     organizations: # The name of domains
-      - name: "{{ foreman_initial_organization }}"
+      - "{{ foreman_initial_organization }}"
 
   - name: "ProvMgtMig"
     boot_mode: "Static"
@@ -1057,9 +1057,9 @@ subnets_mandatory:
       - name: "{{ ansible_fqdn }}"
         type: TFTP
     locations: # The name of the locations
-      - name: "{{ foreman_initial_location }}"
+      - "{{ foreman_initial_location }}"
     organizations: # The name of domains
-      - name: "{{ foreman_initial_organization }}"
+      - "{{ foreman_initial_organization }}"
 
   - name: "Storage"
     boot_mode: "Static"
@@ -1073,9 +1073,9 @@ subnets_mandatory:
     from: 192.168.48.1
     to: 192.168.48.254
     locations: # The name of the locations
-      - name: "{{ foreman_initial_location }}"
+      - "{{ foreman_initial_location }}"
     organizations: # The name of domains
-      - name: "{{ foreman_initial_organization }}"
+      - "{{ foreman_initial_organization }}"
 
 
 setup_hostgroups: "true"
