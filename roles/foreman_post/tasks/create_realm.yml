@@ -6,11 +6,11 @@
 # blow up here if the capsule doesn't exist, because it means
 # the config is messed up
 - name: Get the capsule id for the specified capsule
-  command: "hammer --output=yaml capsule info --name={{ realm.capsule | quote }}"
+  command: "hammer --output=json capsule info --name={{ realm.capsule | quote }}"
   register: hammer_out
 
 - debug:
-    msg: "{{ hammer_out.stdout | to_nice_yaml | json_query('Id') }}"
+    msg: "{{ hammer_out.stdout | to_json_yaml | json_query('$.Id') }}"
 
 - set_fact:
     realm_proxy_id: "{{  hammer_out.stdout | to_yaml | json_query('Id')}}"
