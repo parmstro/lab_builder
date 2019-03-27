@@ -1030,9 +1030,9 @@ subnets_mandatory:
     to: 192.168.250.254
     discovery_capsule: "{{ ansible_fqdn }}"
     tftp_capsule: "{{ ansible_fqdn }}"
-    dns_capsule: "{{ ansible_fqdn }}"
-    template_capsule: "{{ ansible_fqdn }}"
-#   dhcp_capsule: "{{ ansible_fqdn }}"
+#    dns_capsule: "{{ ansible_fqdn }}"
+#    template_capsule: "{{ ansible_fqdn }}"
+#    dhcp_capsule: "{{ ansible_fqdn }}"
     domains: 
       - "{{ ansible_domain }}"
     locations:
