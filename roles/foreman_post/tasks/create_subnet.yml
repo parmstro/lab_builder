@@ -23,80 +23,80 @@
 
 # The ID of the capsule supporting DHCP services - we are using hardware
 - name: Get the DHCP Capsule ID
-  command: "hammer --output=json capsule info --name={{ subnet.capsules.[?(type='DHCP')].name | quote }}"
+  command: "hammer --output=json capsule info --name={{ subnet.dhcp_capsule | quote }}"
   register: hammer_out
-  when: "subnet.capsules.[?(type='DHCP')].name is defined"
+  when: "subnet.dhcp_capsule is defined"
 
 - set_fact:
     dhcp_capsule_id: "{{  hammer_out.stdout | from_json | json_query('Id')}}"
-  when: "subnet.capsules.[?(type='DHCP')].name is defined"
+  when: "subnet.dhcp_capsule is defined"
 
 - name: Build the command - dhcp-id
   set_fact:
     hammer_command: "{{ hammer_command }} --dhcp-id={{ dhcp_capsule_id }}"
-  when: "subnet.capsules.[?(type='DHCP')].name is defined"
+  when: "subnet.dhcp_capsule is defined"
 
 
 # The ID of the capsule supporting Discovery services - our satellite is
 - name: Get the Discovery Capsule ID
-  command: "hammer --output=json capsule info --name={{ subnet.capsules.[?(type='Discovery')].name | quote }}"
+  command: "hammer --output=json capsule info --name={{ subnet.discovery_capsule | quote }}"
   register: hammer_out
-  when: "subnet.capsules.[?(type='Discovery')].name is defined"
+  when: "subnet.discovery_capsule is defined"
 
 - set_fact:
     discovery_capsule_id: "{{  hammer_out.stdout | from_json | json_query('Id')}}"
-  when: "subnet.capsules.[?(type='Discovery')].name is defined"
+  when: "subnet.discovery_capsule is defined"
 
 - name: Build the command - discovery-id
   set_fact:
     hammer_command: "{{ hammer_command }} --discovery-id={{ discovery_capsule_id }}"
-  when: "subnet.capsules.[?(type='Discovery')].name is defined"
+  when: "subnet.discovery_capsule is defined"
 
 - name: Get the TFTP Capsule ID
-  command: "hammer --output=json capsule info --name={{ subnet.capsules.[?(type='TFTP')].name | quote }}"
+  command: "hammer --output=json capsule info --name={{ subnet.tftp_capsule | quote }}"
   register: hammer_out
-  when: "subnet.capsules.[?(type='TFTP')].name is defined"
+  when: "subnet.tftp_capsule is defined"
 
 - set_fact:
     tftp_capsule_id: "{{  hammer_out.stdout | from_json | json_query('Id')}}"
-  when: "subnet.capsules.[?(type='TFTP')].name is defined"
+  when: "subnet.tftp_capsule is defined"
 
 - name: Build the command - tftp-id
   set_fact:
     hammer_command: "{{ hammer_command }} --tftp-id={{ tftp_capsule_id }}"
-  when: "subnet.capsules.[?(type='TFTP')].name is defined"
+  when: "subnet.tftp_capsule is defined"
 
 
 - name: Get the Template Capsule ID
-  command: "hammer --output=json capsule info --name={{ subnet.capsules.[?(type='Template')].name | quote }}"
+  command: "hammer --output=json capsule info --name={{ subnet.template_capsule | quote }}"
   register: hammer_out
-  when: "subnet.capsules.[?(type='Template')].name is defined"
+  when: "subnet.template_capsule is defined"
 
 - set_fact:
     template_capsule_id: "{{  hammer_out.stdout | from_json | json_query('Id')}}"
-  when: "subnet.capsules.[?(type='Template')].name is defined"
+  when: "subnet.template_capsule is defined"
 
 - name: Build the command - template-id
   set_fact:
     hammer_command: "{{ hammer_command }} --template-id={{ template_capsule_id }}"
-  when: "subnet.capsules.[?(type='Template')].name is defined"
+  when: "subnet.template_capsule is defined"
 
 
 # The ID of the capsule supporting DNS services - our satellite is - throught REALM
 # This will update the DNS managed by IdM
 - name: Get the DNS Capsule ID
-  command: "hammer --output=json capsule info --name={{ subnet.capsules.[?(type='DNS')].name | quote }}"
+  command: "hammer --output=json capsule info --name={{ subnet.dns_capsule | quote }}"
   register: hammer_out
-  when: "subnet.capsules.[?(type='DNS')].name is defined"
+  when: "subnet.dns_capsule is defined"
 
 - set_fact:
     dns_capsule_id: "{{  hammer_out.stdout | from_json | json_query('Id')}}"
-  when: "subnet.capsules.[?(type='DNS')].name is defined"
+  when: "subnet.dns_capsule is defined"
 
 - name: Build the command - dns-id
   set_fact:
     hammer_command: "{{ hammer_command }} --dns-id={{ dns_capsule_id }}"
-  when: "subnet.capsules.[?(type='DNS')].name is defined"
+  when: "subnet.dns_capsule is defined"
 
 
 - name: Build the command - domains

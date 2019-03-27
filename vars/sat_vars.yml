@@ -1023,23 +1023,21 @@ subnets_mandatory:
     mask: 255.255.252.0
     network_type: "IPv4"
     gateway: 192.168.248.1
-    primary dns: 192.168.248.10
-    secondary dns: 192.168.248.11
+    dns_primary: 192.168.248.10
+    dns_secondary: 192.168.248.11
     ipam: "Internal DB"
     from: 192.168.250.1
     to: 192.168.250.254
-    capsules:
-      - name: "{{ ansible_fqdn }}"
-        type: Discovery
-      - name: "{{ ansible_fqdn }}"
-        type: TFTP
-      - name: "{{ ansible_fqdn }}"
-        type: DNS
-    domains: # The names of the domains
+    discovery_capsule: "{{ ansible_fqdn }}"
+    tftp_capsule: "{{ ansible_fqdn }}"
+    dns_capsule: "{{ ansible_fqdn }}"
+    template_capsule: "{{ ansible_fqdn }}"
+#   dhcp_capsule: "{{ ansible_fqdn }}"
+    domains: 
       - "{{ ansible_domain }}"
-    locations: # The name of the locations
+    locations:
       - "{{ foreman_initial_location }}"
-    organizations: # The name of domains
+    organizations: 
       - "{{ foreman_initial_organization }}"
 
   - name: "ProvMgtMig"
@@ -1053,12 +1051,11 @@ subnets_mandatory:
     ipam: "Internal DB"
     from: 192.168.148.1
     to: 192.168.148.254
-    capsules: # get the ID of the tftp capsule
-      - name: "{{ ansible_fqdn }}"
-        type: TFTP
-    locations: # The name of the locations
+    discovery_capsule: "{{ ansible_fqdn }}"
+    tftp_capsule: "{{ ansible_fqdn }}"
+    locations: 
       - "{{ foreman_initial_location }}"
-    organizations: # The name of domains
+    organizations: 
       - "{{ foreman_initial_organization }}"
 
   - name: "Storage"
@@ -1072,9 +1069,9 @@ subnets_mandatory:
     ipam: "Internal DB"
     from: 192.168.48.1
     to: 192.168.48.254
-    locations: # The name of the locations
+    locations: 
       - "{{ foreman_initial_location }}"
-    organizations: # The name of domains
+    organizations: 
       - "{{ foreman_initial_organization }}"
 
 
