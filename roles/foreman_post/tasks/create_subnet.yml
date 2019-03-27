@@ -8,7 +8,7 @@
 # Create and update are identical unless you are changing an existing name so just build create command
 - name: Create the base subnet command
   set_fact:
-    hammer_command: "hammer subnet create --name={{ subnet.name | quote }} --organization={{ subnet.organization | quote }} --location={{ subnet.location | quote }}"
+    hammer_command: "hammer subnet create --name={{ subnet.name | quote }}"
 
 - name: Build the command - boot-mode
   set_fact:
