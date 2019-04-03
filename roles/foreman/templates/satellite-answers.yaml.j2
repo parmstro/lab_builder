@@ -194,7 +194,7 @@ foreman_proxy:
   foreman_ssl_cert: /etc/foreman-proxy/foreman_ssl_cert.pem
   foreman_ssl_key: /etc/foreman-proxy/foreman_ssl_key.pem
   trusted_hosts:
-  - "{{ foreman_servername }}"
+  - "{{ ansible_fqdn }}"
   ssl_disabled_ciphers: []
   tls_disabled_versions: []
   manage_sudoersd: true
@@ -287,22 +287,22 @@ foreman_proxy:
   dhcp_manage_acls: true
   dns: "{{ foreman_proxy_dns }}"
   dns_listen_on: https
-  dns_managed: true
-  dns_provider: nsupdate
+  dns_managed: "{{ foreman_proxy_dns_managed }}"
+  dns_provider: "{{ foreman_proxy_dns_provider }}"
   dns_interface: "{{ foreman_proxy_dns_interface }}"
   dns_zone: "{{ foreman_proxy_dns_zone }}"
   dns_reverse: "{{ foreman_proxy_dns_reverse }}"
-  dns_server: 127.0.0.1
+  dns_server: "{{ foreman_proxy_dns_server }}"
   dns_ttl: 86400
-  dns_tsig_keytab: ""
-  dns_tsig_principal: ""
+  dns_tsig_keytab: "{{ foreman_proxy_dns_tsig_keytab }}" 
+  dns_tsig_principal: "{{ foreman_proxy_dns_tsig_principal }}"
   dns_forwarders: "{{ foreman_proxy_dns_forwarders }}"
   libvirt_network: default
   libvirt_connection: qemu:///system
   bmc: false
   bmc_listen_on: https
   bmc_default_provider: ipmitool
-  realm: true
+  realm: "{{ foreman_proxy_realm }}"
   realm_listen_on: https
   realm_provider: "{{ foreman_proxy_realm_provider }}"
   realm_keytab: "{{ foreman_proxy_realm_keytab }}"

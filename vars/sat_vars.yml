@@ -104,26 +104,34 @@ foreman_puppet: "false"
 foreman_proxy_tftp: "true"
 foreman_proxy_tftp_servername: "{{ ansible_fqdn }}"
 
-foreman_proxy_dns: "false"
-foreman_proxy_dns_interface: "discover"
+foreman_proxy_dns: "true"
+foreman_proxy_dns_managed: "true"
+foreman_proxy_dns_provider: "nsupdate_gss"
+foreman_proxy_dns_interface: "{{ ansible_facts.interfaces | select('match', '^(e)+') | list | first }}"
 foreman_proxy_dns_zone: "{{ ansible_domain }}"
 foreman_proxy_dns_forwarders: ""
 foreman_proxy_dns_reverse: "192.168.in-addr.arpa"
+foreman_proxy_dns_server: "{{ groups['build_master'] | first }}"
+foreman_proxy_dns_tsig_keytab: "/etc/foreman-proxy/freeipa.keytab"
+foreman_proxy_dns_tsig_principal: "realm-capsule"
+ 
 
-foreman_proxy_dhcp: "false"
+foreman_proxy_dhcp: "true"
 foreman_proxy_dhcp_interface: "{{ ansible_facts.interfaces | select('match', '^(e)+') | list | first }}"
-foreman_proxy_dhcp_range: "192.168.254.172 192.168.254.204" 
-foreman_proxy_dhcp_gateway: "192.168.252.1"
-foreman_proxy_dhcp_nameservers: "192.168.252.10" 
-foreman_proxy_dhcp_option_domain: ["{{ ansible_domain }}"]
+foreman_proxy_dhcp_range: "192.168.250.1 192.168.250.254" 
+foreman_proxy_dhcp_gateway: "192.168.248.1"
+foreman_proxy_dhcp_nameservers: "192.168.248.10" 
+foreman_proxy_dhcp_option_domain: 
+  - "{{ ansible_domain }}"
 foreman_proxy_dhcp_pxeserver: "{{ ansible_fqdn }}"
-foreman_proxy_dhcp_network: ""
+foreman_proxy_dhcp_network: "192.168.248.0"
 foreman_proxy_dhcp_netmask: "255.255.252.0"
 
 foreman_proxy_realm: "true"
 foreman_proxy_realm_provider: "freeipa"
 foreman_proxy_realm_keytab: "/etc/foreman-proxy/freeipa.keytab"
 foreman_proxy_realm_principal: "realm-capsule"
+
 foreman_proxy_puppet: "false"
 puppet_enable_puppet_server: "false"
 
