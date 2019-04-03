@@ -116,7 +116,7 @@ foreman_proxy_dns_tsig_keytab: "/etc/foreman-proxy/freeipa.keytab"
 foreman_proxy_dns_tsig_principal: "realm-capsule"
  
 
-foreman_proxy_dhcp: "true"
+foreman_proxy_dhcp: "false"
 foreman_proxy_dhcp_interface: "{{ ansible_facts.interfaces | select('match', '^(e)+') | list | first }}"
 foreman_proxy_dhcp_range: "192.168.250.1 192.168.250.254" 
 foreman_proxy_dhcp_gateway: "192.168.248.1"
