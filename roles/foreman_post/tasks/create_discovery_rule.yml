@@ -1,0 +1,12 @@
+---
+# This task creates the discovery rules in Foreman using hammer
+#
+
+- name: Delete the rule if the discovery rule already exists
+  command: "hammer discovery-rule delete --name={{ drule.name | quote }} --organization={{ drule.organization | quote }} --location={{ drule.location | quote }}"
+
+- name: Set up the create command
+  set_fact:
+    hammer_command: "hammer discovery-rule create --name{{ drule.name | quote }} --organization={{ drule.organization | quote }} --location={{ drule.location | quote }}"
+
+

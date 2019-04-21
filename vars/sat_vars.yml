@@ -1084,7 +1084,23 @@ subnets_mandatory:
 
 
 setup_hostgroups: "true"
-
+hostgroups_manadatory:
+  - name: "RHVH"
+    title: "Red Hat Hypervisors"
+    arch: "x86_64"
+    ask_root_password: false
+    content_view: 
+    description: "Use to deploy RHEV hypervisors"
+    domain: "{{ ansible_domain }}"
+    environment: "Library"
+    kickstart_repo:
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+    medium: "RHVH" 
+    pxe_loader: "PXELinux BIOS"
+    realm: "{{ ansible_domain | upper }}"
+    subnet: "Public"
+    root_pass: ""
 
 # Turn on and of Discovery auto provisioning
 setup_discovery: "true"

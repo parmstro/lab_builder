@@ -151,3 +151,38 @@
   tags:
     - config_pv
 
+# * Discovery - boot to discovery image on timeout
+- import_tasks: "{{ role_path }}/tasks/build_pxe_defaults.yml"
+  tags:
+    - config_pv
+
+
+# * Create Host Groups - we need these to attach to the discovery rules
+#
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_host_groups.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_host_groups.yml"
+  tags:
+    - config_pv
+
+
+# Note you may define any additional discovery rules here that are required for your
+# implementation in Phase 3 Infrastructure
+# For others baremetal systems that may part of your platform deployment
+# include discovery rules in your Phase 4 configuration
+#
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_discovery_rules.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/configure_optional_discovery_rules.yml"
+  tags:
+    - config_pv
+
+- import_tasks: "{{ role_path }}/tasks/poweron.yml"
+  tags:
+    - config_pv
+
+
