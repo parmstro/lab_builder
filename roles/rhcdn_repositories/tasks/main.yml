@@ -4,7 +4,7 @@
   katello_repository_set:
     username: "{{ foreman_admin_username }}"
     password: "{{ foreman_admin_password }}"
-    server_url: "https://{{ foreman_foreman_url }}"
+    server_url: "{{ foreman_foreman_url }}"
     verify_ssl: false
     organization: "{{ org_name }}"
     label: "{{ item.name }}"
@@ -18,7 +18,7 @@
   foreman_search_facts:
     username: "{{ foreman_admin_username }}"
     password: "{{ foreman_admin_password }}"
-    server_url: "https://{{ foreman_foreman_url }}"
+    server_url: "{{ foreman_foreman_url }}"
     verify_ssl: false
     resource: repositories
   register: repositories
@@ -27,7 +27,7 @@
   katello_repository:
     username: "{{ foreman_admin_username }}"
     password: "{{ foreman_admin_password }}"
-    server_url: "https://{{ foreman_foreman_url }}"
+    server_url: "{{ foreman_foreman_url }}"
     verify_ssl: false
     organization: "{{ org_name }}"
     name: "{{ item.name }}"
@@ -40,7 +40,7 @@
   katello_sync:
     username: "{{ foreman_admin_username }}"
     password: "{{ foreman_admin_password }}"
-    server_url: "https://{{ foreman_foreman_url }}"
+    server_url: "{{ foreman_foreman_url }}"
     verify_ssl: false
     product: "{{ item.product.name }}"
     repository:  "{{ item.name }}"
