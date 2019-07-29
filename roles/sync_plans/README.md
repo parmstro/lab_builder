@@ -1,15 +1,12 @@
 Role Name
 =========
 
-This role will manage RH CDN-based repositories on Satellite 6.
+A brief description of the role goes here.
 
 Requirements
 ------------
 
-This role makes use of the foreman_ansible_modules project. While not 
-officially supported as of July 25 2019, these modules are being actively 
-developed with the intention of distributing them as supported Ansible modules
-in the near future.
+Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
 Role Variables
 --------------
@@ -24,20 +21,18 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 Example Playbook
 ----------------
 
-This role must be delegated to a host that has the foreman_ansible_modules 
-project downloaded. Usually, this will be localhost. Once that project
-is distributed with Satellite, the requirement to delegate should disappear.
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
     - hosts: servers
       roles:
-         - { role: rhcdn_repositories, delegate_to: localhost }
+         - { role: username.rolename, x: 42 }
 
 License
 -------
 
-Apache License, Version 2.0
+BSD
 
 Author Information
 ------------------
 
-John Berninger <john dot berninger at redhat dot com>
+An optional section for the role authors to include contact information, or a website (HTML is not allowed).

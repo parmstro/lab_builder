@@ -1,7 +1,7 @@
 Role Name
 =========
 
-This role will manage RH CDN-based repositories on Satellite 6.
+Role to configure custom (a.k.a. third party) products and repositories
 
 Requirements
 ------------
@@ -10,6 +10,7 @@ This role makes use of the foreman_ansible_modules project. While not
 officially supported as of July 25 2019, these modules are being actively 
 developed with the intention of distributing them as supported Ansible modules
 in the near future.
+
 
 Role Variables
 --------------
@@ -30,7 +31,7 @@ is distributed with Satellite, the requirement to delegate should disappear.
 
     - hosts: servers
       roles:
-         - { role: rhcdn_repositories, delegate_to: localhost }
+         - { role: custom_products, delegate_to: locahost }
 
 License
 -------

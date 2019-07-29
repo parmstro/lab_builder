@@ -1,0 +1,18 @@
+---
+# tasks file for thirdparty_repositories
+- name: Create Product
+  katello_product:
+    username: "{{ foreman_admin_username }}"
+    password: "{{ foreman_admin_password }}"
+    server_url: "{{ foreman_foreman_url }}"
+    verify_ssl: false
+    name: "{{ item.name }}"
+    organization: "{{ org_name }}"
+    state: present
+  loop: "{{ custom_products }}"
+
+- name: Create repos for products
+  include_tasks: create_repos.yml
+  loop: "{{ custom_products }}"
+  loop_control:
+    loop_var: product
