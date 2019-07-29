@@ -1,6 +1,6 @@
 galaxy_info:
   author: John Berninger
-  description: Manage RH CDN repositories on Satellite 6
+  description: Manage Custom Products on Satellite 6
   company: Red Hat, Inc.
 
   license: Apache License, Version 2.0
@@ -11,4 +11,5 @@ galaxy_info:
   - name: EL
     versions:
     - 8
+
 
