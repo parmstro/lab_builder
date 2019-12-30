@@ -145,89 +145,156 @@ manifest_src_location: "/root/bootstrap_manifest.zip"
 
 setup_repositories: "true"
 repos_mandatory:
-   - name: "Red Hat Enterprise Linux 7 Server (RPMs)"
+
+#RHEL7
+   - name: "Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server"
      product: "Red Hat Enterprise Linux Server"
      basearch: "x86_64"
      releasever: "7Server"
 
-# 7 Server and the latest minor release will point to the same files on the back end
-# We will make a RHEL7 7Server OS
-   - name: "Red Hat Enterprise Linux 7 Server (Kickstart)"
+   - name: "Red Hat Enterprise Linux 7 Server - Extras RPMs x86_64"
+     product: "Red Hat Enterprise Linux Server"
+     basearch: "x86_64"
+     releasever: ""
+
+   - name: "Red Hat Enterprise Linux 7 Server - RH Common RPMs x86_64 7Server"
      product: "Red Hat Enterprise Linux Server"
      basearch: "x86_64"
      releasever: "7Server"
 
-# It seems we will have to add this later, there is some dependency we don't understand
-#   - name: "Red Hat Enterprise Linux 7 Server (Kickstart)"
-#     product: "Red Hat Enterprise Linux Server"
-#     basearch: "x86_64"
-#     releasever: "7.6"
+   - name: "Red Hat Enterprise Linux 7 Server - Optional RPMs x86_64 7Server"
+     product: "Red Hat Enterprise Linux Server"
+     basearch: "x86_64"
+     releasever: "7Server"
 
-   - name: "Red Hat Ansible Engine 2.7 RPMs for Red Hat Enterprise Linux 7 Server"
+   - name: "Red Hat Enterprise Linux 7 Server - Supplementary RPMs x86_64 7Server"
+     product: "Red Hat Enterprise Linux Server"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "Red Hat Enterprise Linux 7 Server Kickstart x86_64 7.6"
+     product: "Red Hat Enterprise Linux Server"
+     basearch: "x86_64"
+     releasever: "7.6"
+
+   - name: "Red Hat Enterprise Linux 7 Server Kickstart x86_64 7.7"
+     product: "Red Hat Enterprise Linux Server"
+     basearch: "x86_64"
+     releasever: "7.7"
+
+   - name: "Red Hat Insights 3 for RHEL 7 Server RPMs x86_64"
+     product: "Red Hat Enterprise Linux Server"
+     basearch: "x86_64"
+     releasever: ""
+
+   - name: "Red Hat Ansible Engine 2.7 RPMs for Red Hat Enterprise Linux 7 Server x86_64"
      product: "Red Hat Ansible Engine"
      basearch: "x86_64"
      releasever: ""
 
-   - name: "Red Hat Enterprise Linux 7 Server - Extras (RPMs)"
-     product: "Red Hat Enterprise Linux Server"
+#RHEL8
+   - name: "Red Hat Enterprise Linux 8 for x86_64 - BaseOS RPMs x86_64 8"
+     product: "Red Hat Enterprise Linux for x86_64"
+     basearch: "x86_64"
+     releasever: "8"
+
+   - name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream RPMs x86_64 8"
+     product: "Red Hat Enterprise Linux for x86_64"
+     basearch: "x86_64"
+     releasever: "8"
+
+   - name: "Red Hat Enterprise Linux 8 for x86_64 - Supplementary RPMs x86_64 8"
+     product: "Red Hat Enterprise Linux for x86_64"
+     basearch: "x86_64"
+     releasever: "8"
+
+   - name: "Red Hat Enterprise Linux 8 for x86_64 - BaseOS Kickstart x86_64 8"
+     product: "Red Hat Enterprise Linux for x86_64"
+     basearch: "x86_64"
+     releasever: "8"
+
+   - name: "Red Hat Enterprise Linux 8 for x86_64 - BaseOS Kickstart x86_64 8.1"
+     product: "Red Hat Enterprise Linux for x86_64"
+     basearch: "x86_64"
+     releasever: "8.1"
+
+   - name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream Kickstart x86_64 8"
+     product: "Red Hat Enterprise Linux for x86_64"
+     basearch: "x86_64"
+     releasever: "8"
+
+   - name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream Kickstart x86_64 8.1"
+     product: "Red Hat Enterprise Linux for x86_64"
+     basearch: "x86_64"
+     releasever: "8.1"
+
+   - name: "Red Hat Ansible Engine 2.8 for RHEL 8 x86_64 RPMs x86_64"
+     product: "Red Hat Ansible Engine"
      basearch: "x86_64"
      releasever: ""
 
-   - name: "Red Hat Enterprise Linux 7 Server - RH Common (RPMs)"
-     product: "Red Hat Enterprise Linux Server"
+#RHV
+   - name: "Red Hat Virtualization Host 7 RPMs x86_64"
+     product: "Red Hat Virtualization Host"
      basearch: "x86_64"
      releasever: "7Server"
 
-   - name: "Red Hat Enterprise Linux 7 Server - Optional (RPMs)"
-     product: "Red Hat Enterprise Linux Server"
-     basearch: "x86_64"
-     releasever: "7Server"
-
-   - name: "Red Hat Enterprise Virtualization Hypervisor 7 (RPMs)"
-     product: "Red Hat Virtualization"
-     basearch: "x86_64"
-     releasever: "7Server"
-
-   - name: "Red Hat Virtualization Manager v4.2 (RHEL 7 Server) (RPMs)"
+   - name: "Red Hat Virtualization Manager v4.3 RHEL 7 Server RPMs x86_64"
      product: "Red Hat Virtualization Manager"
      basearch: "x86_64"
      releasever: ""
 
-   - name: "Red Hat Virtualization 4 Management Agents for RHEL 7 (RPMs)"
+   - name: "Red Hat Virtualization 4 Management Agents for RHEL 7 RPMs x86_64 7Server"
      product: "Red Hat Virtualization"
      basearch: "x86_64"
      releasever: "7Server"
 
-   - name: "Red Hat Virtualization Manager 4 Tools (RHEL 7 Server) (RPMs)"
+   - name: "Red Hat Virtualization Manager 4 Tools RHEL 7 Server RPMs x86_64"
      product: "Red Hat Virtualization Manager"
      basearch: "x86_64"
      releasever: ""
 
+   - name: "JBoss Enterprise Application Platform 7.2 RHEL 7 Server RPMs x86_64"
+     product: "JBoss Enterprise Application Platform"
+     basearch: "x86_64"
+     releasever: ""
+
+#Gluster Storage
    - name: "Red Hat Gluster Storage 3 Server (RPMs)"
      product: "Red Hat Gluster Storage Server for On-premise"
      basearch: "x86_64"
      releasever: "7Server"
 
 repos_optional:
-   - name: "Red Hat OpenShift Container Platform 3.11 (RPMs)"
+   - name: "Red Hat OpenShift Container Platform 4.2 for RHEL 8 x86_64 RPMs x86_64"
      product: "Red Hat OpenShift Container Platform"
      basearch: "x86_64"
      releasever: ""
 
-   - name: "Red Hat CloudForms Management Engine 5.9 (RPMs)"
-     product: "Red Hat CloudForms"
+   - name: "Red Hat OpenShift Container Platform 4.2 RPMs x86_64"
+     product: "Red Hat OpenShift Container Platform"
      basearch: "x86_64"
      releasever: ""
 
-#   - name: "Red Hat Enterprise Linux High Availability (for RHEL 7 Server) (RPMs)"
-#     product: "Red Hat Enterprise Linux High Availability (for RHEL Server)"
-#     basearch: "x86_64"
-#     releasever: "7Server"
+   - name: "Red Hat Enterprise Linux High Availability for RHEL 7 Server RPMs x86_64 7Server"
+     product: "Red Hat Enterprise Linux High Availability for x86_64"
+     basearch: "x86_64"
+     releasever: "7Server"
 
-#   - name: "Red Hat Enterprise Linux Resilient Storage (for RHEL 7 Server) (RPMs)"
-#     product: "Red Hat Enterprise Linux Resilient Storage (for RHEL Server)"
-#     basearch: "x86_64"
-#     releasever: "7Server"
+   - name: "Red Hat Enterprise Linux Resilient Storage for RHEL 7 Server RPMs x86_64 7Server"
+     product: "Red Hat Enterprise Linux Resilient Storage for x86_64"
+     basearch: "x86_64"
+     releasever: "7Server"
+
+   - name: "Red Hat Enterprise Linux 8 for x86_64 - High Availability RPMs x86_64 8"
+     product: "Red Hat Enterprise Linux High Availability for x86_64"
+     basearch: "x86_64"
+     releasever: "8"
+
+   - name: "Red Hat Enterprise Linux 8 for x86_64 - Resilient Storage RPMs x86_64 8"
+     product: "Red Hat Enterprise Linux Resilient Storage for x86_64"
+     basearch: "x86_64"
+     releasever: "8"
 
    - name: "Red Hat Gluster Storage 3 NFS (RPMs)"
      product: "Red Hat Gluster Storage Server for On-premise"
@@ -298,18 +365,18 @@ cvs_mandatory:
     - name: "IncludePackagesNoErrata"
       type: "rpm"
       inclusion: "true"
-      desc: "Include all packages with no errata for all repositories"
-      originalpackages: "true"
-      repositories: "all"
+      description: "Include all packages with no errata for all repositories"
+#      originalpackages: "true"
+      repositories: "[]"
     - name: "IncludeErrataByDate"
       type: "erratum"
       inclusion: "true"
-      desc: "Include all errata updated as of the 1st of the month"
-      repositories: "all"
+      description: "Include all errata updated as of the 1st of the month"
+      repositories: "[]"
       rules:
       - name: "errata-by-date-{{ errata_end_date }}"
-        enddate: "2019-01-01"
-        datetype: "issued"
+        end_date: "2019-01-01"
+        date_type: "issued"
         types:
         - "enhancement"
         - "bugfix"
@@ -317,9 +384,9 @@ cvs_mandatory:
     - name: "NoFireFox"
       type: "rpm"
       inclusion: "false"
-      desc: "Do provide Firefox to be installed on servers"
-      originalpackages: "true"
-      repositories: "all"
+      description: "Do provide Firefox to be installed on servers"
+#      originalpackages: "true"
+      repositories: "[]"
       rules:
       - name: "firefox*"
         basearch: "x86_64"
@@ -1100,7 +1167,7 @@ hostgroups_manadatory:
     pxe_loader: "PXELinux BIOS"
     realm: "{{ ansible_domain | upper }}"
     subnet: "Public"
-    root_pass: ""
+    root_pass: "{{ sat_admin }}"
 
 # Turn on and of Discovery auto provisioning
 setup_discovery: "true"
