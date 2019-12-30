@@ -1,0 +1,9 @@
+sync_plans:
+  - name: "Daily sync plan"
+    sync_internal: "daily"
+    sync_date_time: "2019/06/01 23:45:00 +0000"
+    sync_products:
+      - 'Red Hat Enterprise Linux Server'
+      - 'Red Hat Enterprise Linux for x86_64'
+      - 'Red Hat Software Collections for RHEL Server'
+      - 'Red Hat Ansible Engine'
