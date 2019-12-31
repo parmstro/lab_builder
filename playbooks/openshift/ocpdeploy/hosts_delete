@@ -1,6 +1,0 @@
-[delete_nodes]
-node1 ansible_host=192.168.252.30
-node2 ansible_host=192.168.252.112
-node3 ansible_host=192.168.252.32
-node4 ansible_host=192.168.252.139
-node5 ansible_host=192.168.252.114
