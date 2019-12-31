@@ -1,0 +1,21 @@
+---
+# This task copies the manifest from the ansible control host
+# and uploads it to the satellite to enable content
+#
+# default manifest_src_ location is the role's files directory 
+#
+
+- name: Copy the manifest to the target Satellite server
+  copy:
+    src: "{{ manifest_src_location }}"
+    dest: "/root/manifest.zip"
+
+- name: Remove any existing manifest, ignore if it doesn't exist
+  command: "hammer subscription delete-manifest --organization='{{ foreman_initial_organization }}'"
+  ignore_errors: true
+
+- name: Upload the manifest to Satellite
+  command: "hammer subscription upload --file=/root/manifest.zip --organization='{{ foreman_initial_organization }}'"
+
+- name: Refresh the manifest from CDN to get latest subscriptions
+  command: "hammer subscription refresh-manifest --organization='{{ foreman_initial_organization }}'"
