@@ -1,0 +1,92 @@
+---
+# This is the lab_builder entry point
+# This play will start the build_master and the foreman
+# The builder definitions and phase definitions you provide
+# will determine what is built.
+# note, this playbook requires that you run prepare.yml first
+#
+- name: "Sanity Check..."
+  hosts: all
+  remote_user: root
+  gather_facts: true
+
+  tasks:
+
+  - name: "Just ping them for me..."
+    ping:
+
+##############################################
+
+- name: "Starting lab_builder" 
+  hosts: build_master 
+  remote_user: root
+  gather_facts: true
+
+  vars_prompt:
+    - name: "cdn_username_prompt"
+      prompt: "Enter the username to log into the Red Hat CDN for container images (will be encrypted)"
+      default: "parmstro@redhat.com"
+      private: no
+    - name: "cdn_password_prompt"
+      prompt: "Enter the password to log into the Red Hat CDN for container images (will be encrypted)"
+      default: ""
+      private: yes
+    - name: "root_password"
+      prompt: "Enter the desired administrative password for the lab (will be encrypted)"
+      default: "#M@k31t5omeThing[0mpl3x"
+      private: yes
+
+
+  vars:
+    phase_name: "bootstrap_build_master"
+    epf_overwrite: true
+
+  tasks:
+
+# TODO: Lock variable files exclusively, these are very long processes
+#       where it would easily be possible for these to change 
+#       underneath us. We don't want that.
+
+  - name: "PHASE 1 - BEGIN bootstrap build_master"
+    include_tasks: play_init.yml
+
+# TODO: Put sanity_check code here, steal it from openshift
+
+  - name: "Apply role of build_master to {{ ansible_fqdn }}"
+    include_role:
+       name: build_master
+
+
+#######################################################
+
+- name: "PHASE 1 - BEGIN bootstrap foreman"
+  hosts: foreman
+  remote_user: root
+  gather_facts: yes
+
+  vars:
+    phase_name: "bootstrap_foreman"
+    epf_overwrite: false
+
+  tasks:
+  
+  - name: "Phase initialization - {{ ansible_fqdn }} "
+    include_tasks: play_init.yml
+
+  - name: "Apply role of foreman_pre to {{ ansible_fqdn }}"
+    include_role:
+      name: foreman_pre
+
+  - name: "Apply role of foreman to {{ ansible_fqdn }}"
+    include_role:
+      name: foreman
+  
+  - name: "Apply role of foreman_post to {{ ansible_fqdn }}"
+    include_role:
+      name: foreman_post
+
+  - name: "END PHASE 1 - bootstrap complete"
+    file:
+      path: "{{ locks_dir }}/bootstrap_complete"
+      state: touch
+
