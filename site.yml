@@ -73,6 +73,11 @@
   - name: "Phase initialization - {{ ansible_fqdn }} "
     include_tasks: play_init.yml
 
+  # We could make the foreman_pre role a dependency of foreman
+  # however this tends to obscure its precense and importance
+  # I prefer to make it explicit here to prompt users to go
+  # investigate the role and its behaviour
+
   - name: "Apply role of foreman_pre to {{ ansible_fqdn }}"
     include_role:
       name: foreman_pre
@@ -81,6 +86,8 @@
     include_role:
       name: foreman
   
+  # Ditto for foreman_post 
+  # This is where all the configuration happens anyway...
   - name: "Apply role of foreman_post to {{ ansible_fqdn }}"
     include_role:
       name: foreman_post

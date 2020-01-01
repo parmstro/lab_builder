@@ -57,12 +57,12 @@
 
   tasks:
 
-  - name: "Setting remote bootstrap role"
+  - name: "Setting remote bootstrap role to foreman"
     set_fact:
       remote_bootstrap_role: "foreman"
     when: "bootstrap_role == 'build_master'"
 
-  - name: "Setting remote bootstrap role"
+  - name: "Setting remote bootstrap role to build_master"
     set_fact:
       remote_bootstrap_role: "build_master"
     when: "bootstrap_role == 'foreman'"

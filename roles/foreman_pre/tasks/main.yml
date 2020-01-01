@@ -6,6 +6,7 @@
 - import_tasks: install_utilities.yml
 - import_tasks: install_chronyd.yml
 - import_tasks: sat_firewalld_config.yml
+- import_tasks: install_satellite.yml
 
 - import_tasks: install_idm_client.yml
   when: ipa_install_client == true

@@ -4,6 +4,7 @@
 #
 # Provide the utilities packages as a list in the satellite-servers group_vars file
 # I am putting in bind-utils and screen
+# screen has been replaced by tmux in future releases of RHEL
 
 - name: Install Lab Builder utilities
   yum:
