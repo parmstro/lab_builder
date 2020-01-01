@@ -40,17 +40,6 @@
     country_name: "{{ ipa_country_name }}"
     email_address: "{{ ipa_email_address }}"
 
-# 
-# WORKAROUND: This works but requires a specific openssl.conf file 
-# This section will be removed and tagged in git
-
-# - name: Get an external use key
-#   command: "openssl rsa -in {{ ipa_server_pem_file }} -out {{ ipa_server_key_file }} -passin pass:{{ rsa_key_pass }}"
-#
-# - name: Generate the CSR with subjectAltNames set
-#   command: "openssl req -new -key {{ ipa_server_key_file }} -out {{ ipa_server_csr_file }} -subj '/C={{ ipa_country_name }}/ST={{ ipa_prov_name }}/L={{ ipa_locality_name }}/O={{ ipa_organization_name }}/OU={{ ipa_ou_name }}/CN={{ ansible_fqdn }}/subjectAltName={{ ansible_fqdn }}'"
-
-# END WORKAROUND
 
 - name: Initialize the admin user
   shell: echo "{{ idm_admin }}" | kinit admin
