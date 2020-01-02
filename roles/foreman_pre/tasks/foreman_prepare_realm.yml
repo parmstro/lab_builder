@@ -65,3 +65,20 @@
     msg: "Success"
   when: is_success == ""
 
+- name: copy the ipa ca-certificates to the trust directory
+  copy:
+    src: /etc/ipa/ca.crt
+    dest: /etc/pki/ca-trust/source/anchors/ipa.crt
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: enable the trust
+  command: "update-ca-trust enable"
+
+- name: update the trust
+  command: "update-ca-trust"
+
+# we will restart the foreman-proxy several times, this is optional at this point
+# we could use notify... if we were really concerned... which we are not.
