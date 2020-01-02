@@ -1,5 +1,0 @@
-auxiliary_organizations:
-  - name: org1
-    manifest_path: "/root/manifest1.zip"
-  - name: org2
-    manifest_path: "/root/manifest2.zip"

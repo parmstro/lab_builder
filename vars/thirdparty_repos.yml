@@ -1,9 +1,0 @@
-custom_products:
-  - name: Product1
-    repos:
-      - name: repo1
-        upstream: url1
-        upstream_username: user
-        upstream_password: pass
-        gpgkey_file: filename
-    

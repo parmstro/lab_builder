@@ -29,13 +29,13 @@ optional_fatal: "true"
 # reset foreman rather than reinstalling 
 # if you have made changes to the Satellite configuration since the last run 
 # on existing machines, set this to false otherwise leave as default
-reset_foreman: "true"
+reset_foreman: "false"
 
 builder_run_tag: "Lab Builder - Foreman Builder - {{ ansible_date_time.iso8601 }}"
 
 bootstrap_add_utils:
   - bind-utils
-  - screen
+  - tmux
 
 # used for preparing the Satellite Server
 sat_firewalld_zone: "public"
@@ -51,6 +51,7 @@ ipa_server_crt_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.crt"
 ipa_server_key_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.key"
 ipa_server_csr_file: "{{ ipa_server_certs_dir }}{{ ansible_fqdn }}.csr"
 ipa_server_ca_file: "/etc/ipa/ca.crt"
+
 # ipa_rsa_key_pass is defined in password_vars.yml for random password generation
 # configure password_vars.yml to set the password to a known value
 ipa_organization_name: "{{ ansible_domain | upper }}"
@@ -64,10 +65,7 @@ ipa_service_type: "HTTP"
 # used for installing the Satellite Server
 # See template file in ../roles/satellite/templates/satellite-answers.yml
 scenario: "satellite"
-# the following 2 keys are unused now that registration is managed in prepare
-# for bootstrap hosts
-# redhat_org: "6856506"
-# activation_key: "satbootstrap"
+
 cdn_proxy_hostname: ""
 cdn_proxy_port: ""
 cdn_proxy_username: ""
