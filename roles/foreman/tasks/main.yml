@@ -24,7 +24,7 @@
 
 - name: Install the Foreman/Satellite Server
   command: "satellite-installer --scenario={{ scenario }}"
-  when: "sat_exists == false"
+  when: "foreman_exists == false"
 
 - name: Foreman/Satellite is already installed, resetting the installation databases
   command: "satellite-installer --reset"
