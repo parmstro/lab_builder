@@ -958,8 +958,8 @@ subnets_mandatory:
     dns_primary: 192.168.248.10
     dns_secondary: 192.168.248.11
     ipam: "Internal DB"
-    from: 192.168.250.1
-    to: 192.168.250.254
+    from: 192.168.249.1
+    to: 192.168.249.254
     discovery_capsule: "{{ ansible_fqdn }}"
     tftp_capsule: "{{ ansible_fqdn }}"
 #    dns_capsule: "{{ ansible_fqdn }}"
@@ -981,8 +981,8 @@ subnets_mandatory:
     network_type: "IPv4"
     gateway: 192.168.148.1
     ipam: "Internal DB"
-    from: 192.168.148.1
-    to: 192.168.148.254
+    from: 192.168.149.1
+    to: 192.168.149.254
     discovery_capsule: "{{ ansible_fqdn }}"
     tftp_capsule: "{{ ansible_fqdn }}"
     locations: 
@@ -999,27 +999,45 @@ subnets_mandatory:
     network_type: "IPv4"
     gateway: 192.168.48.1
     ipam: "Internal DB"
-    from: 192.168.48.1
-    to: 192.168.48.254
+    from: 192.168.49.1
+    to: 192.168.49.254
     locations: 
       - "{{ foreman_initial_location }}"
     organizations: 
       - "{{ foreman_initial_organization }}"
 
 
+#TODO: set up Ansible Roles in foreman
+# then we can add them to the hostgroup
+
 setup_hostgroups: "true"
-hostgroups_manadatory:
-  - name: "RHVH"
-    title: "Red Hat Hypervisors"
+hostgroups_baremetal:
+  - name: "BaseBareMetal"
     arch: "x86_64"
     ask_root_password: false
-    content_view: 
-    description: "Use to deploy RHEV hypervisors"
+    content_view: "SOE_RHEL"
+    description: "Use to deploy basic bare metal RHEL systems e.g. IdM Servers, etc.."
+    content_source: "{{ ansible_fqdn }}"
     domain: "{{ ansible_domain }}"
-    environment: "Library"
-    kickstart_repo:
+    lifecycle_environment: "Library"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
+    os: "RedHat"
+    medium: "RHEL7Server"
+    pxe_loader: "PXELinux BIOS"
+    realm: "{{ ansible_domain | upper }}"
+    subnet: "Public"
+    root_pass: "{{ sat_admin }}"
+  - name: "RHVH"
+    arch: "x86_64"
+    ask_root_password: false
+    content_view: "RHVH" 
+    description: "Use to deploy RHEV hypervisors"
+    domain: "{{ ansible_domain }}"
+    lifecycle_environment: "Library"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+    os: "RHVH"
     medium: "RHVH" 
     pxe_loader: "PXELinux BIOS"
     realm: "{{ ansible_domain | upper }}"
@@ -1030,18 +1048,14 @@ hostgroups_manadatory:
         type: "string"
         value: "http://{{ ansible_fqdn }}/pub/rhvh/"
 
-# Turn on and of Discovery auto provisioning
-setup_discovery: "true"
-# AKA enable_all_rules is full auto deployment of infrastructure
-# based totally on discovery
-# some assembly required :-) you need to create the discovery rules to match your Host Groups and infrastructure limits
 
-enable_all_rules: "false"
+#TODO: setup SCAP profiles... this can wait till a later phase
+        
+setup_discovery: "true"
 discovery_rules:
   - name: rhvh_node
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
-
 
 setup_infrastructure: "false"
 # Infrastructure Setup will now follow the RHHI Ansible Deployment

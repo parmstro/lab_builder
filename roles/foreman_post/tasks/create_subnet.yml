@@ -5,7 +5,6 @@
   command: "hammer subnet delete --name={{ subnet.name | quote }} --organization={{ subnet.organization | quote }} --location={{ subnet.location }}"
   ignore_errors: true
 
-# Create and update are identical unless you are changing an existing name so just build create command
 - name: Create the base subnet command
   set_fact:
     hammer_command: "hammer subnet create --name={{ subnet.name | quote }}"
@@ -52,6 +51,7 @@
     hammer_command: "{{ hammer_command }} --discovery-id={{ discovery_capsule_id }}"
   when: "subnet.discovery_capsule is defined"
 
+
 - name: Get the TFTP Capsule ID
   command: "hammer --output=json capsule info --name={{ subnet.tftp_capsule | quote }}"
   register: hammer_out
@@ -82,7 +82,7 @@
   when: "subnet.template_capsule is defined"
 
 
-# The ID of the capsule supporting DNS services - our satellite is - throught REALM
+# The ID of the capsule supporting DNS services - our satellite is - through REALM
 # This will update the DNS managed by IdM
 - name: Get the DNS Capsule ID
   command: "hammer --output=json capsule info --name={{ subnet.dns_capsule | quote }}"

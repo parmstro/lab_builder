@@ -3,8 +3,8 @@
 #
 - name: Create the mandatory hostgroups
   include_tasks: create_hostgroup.yml
-  loop: "{{ hostgroups_mandatory }}"
+  loop: "{{ hostgroups_baremetal }}"
   loop_control:
     loop_var: hg
-  when: "hostgroups_mandatory is defined"
+  when: "hostgroups_baremetal is defined"
 
