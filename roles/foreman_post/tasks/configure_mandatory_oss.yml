@@ -3,13 +3,8 @@
 #
 
 - name: "Configure the Mandatory Operating Systems defined."
-  block:
-    - include_tasks: create_os.yml
-      loop: "{{ mandatory_oss }}"
-      loop_control:
-        loop_var: "os"
-  rescue:
-    - name: "An Error occurred while executing an optional task... ignoring"
-      debug:
-        msg: "Optional Operating System creation - {{ ansible_failed_task.name }}"
-  when: "mandatory_oss is defined"
+  include_tasks: create_os.yml
+  loop: "{{ oss_mandatory }}"
+  loop_control:
+    loop_var: "os"
+  when: "oss_mandatory is defined"
