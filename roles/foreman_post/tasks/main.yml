@@ -27,6 +27,10 @@
   tags: 
     - import_content
 
+- import_tasks: "{{ role_path }}/tasks/configure_custom_products.yml"
+  tags:
+    - import_content
+    
 - import_tasks: "{{ role_path }}/tasks/start_synchronization.yml "
   tags: 
     - import_content
@@ -59,10 +63,6 @@
   tags:
     - import_content
 
-- import_tasks: "{{ role_path }}/tasks/configure_custom_products.yml"
-  tags: 
-    - import_content
-
 - import_tasks: "{{ role_path }}/tasks/attach_sync_plans.yml"
   tags:
     - import_content
@@ -87,11 +87,11 @@
   tags:
     - config_pv
 
-- import_tasks: "{{ role_path }}/tasks/configure_mandatory_ctemplates.yml"
+- import_tasks: "{{ role_path }}/tasks/configure_mandatory_prov_templates.yml"
   tags:
     - config_pv
 
-- import_tasks: "{{ role_path }}/tasks/configure_optional_ctemplates.yml"
+- import_tasks: "{{ role_path }}/tasks/configure_optional_prov_templates.yml"
   tags:
     - config_pv
 

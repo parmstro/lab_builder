@@ -1,8 +1,8 @@
 ---
-# This playbook configures the optional configuration templates 
+# This playbook configures the mandatory configuration templates 
 #
 # NOTE: the files referenced in the sat_vars.yml file
-# for optional configuration templates are located in the template directory
+# for mandatory configuration templates are located in the template directory
 # of the foreman_post role. Optional configuration template files may be 
 # placed in the same directory or a custom path may be provided.
 # Also, if no variables are present, the file will simply
@@ -14,10 +14,10 @@
 # that may be incompatible with anisble template parsing,
 # however, I think this should be rare.
 #
-- name: Create the optional configuration templates defined
+- name: Create the mandatory configuration templates defined
   include_tasks: create_ctemplate.yml
-  loop: "{{ ctemplates_optional }}"
+  loop: "{{ prov_templates_mandatory }}"
   loop_control:
-    loop_var: ct
-  when: "ctemplates_optional is defined"
+    loop_var: pt
+  when: "prov_templates_mandatory is defined"
 
