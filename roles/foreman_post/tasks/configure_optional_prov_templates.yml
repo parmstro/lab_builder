@@ -15,7 +15,7 @@
 # however, I think this should be rare.
 #
 - name: Create the optional configuration templates defined
-  include_tasks: create_ctemplate.yml
+  include_tasks: create_prov_template.yml
   loop: "{{ prov_templates_optional }}"
   loop_control:
     loop_var: pt

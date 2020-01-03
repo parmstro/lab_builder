@@ -349,7 +349,6 @@ cvs_mandatory:
       type: "rpm"
       inclusion: "true"
       description: "Include all packages with no errata for all repositories"
-#      originalpackages: "true"
       repositories: "[]"
     - name: "IncludeErrataByDate"
       type: "erratum"
@@ -368,7 +367,6 @@ cvs_mandatory:
       type: "rpm"
       inclusion: "false"
       description: "Do provide Firefox to be installed on servers"
-#      originalpackages: "true"
       repositories: "[]"
       rules:
       - name: "firefox*"
@@ -400,7 +398,7 @@ cvs_mandatory:
         - "bugfix"
         - "security"
 
-  - name: RHS_Gluster
+  - name: "RHS_Gluster"
     desc: "Our Current Non-Hyperconverged Gluster Content - {{ builder_run_tag }}"
     org: "{{ foreman_initial_organization }}"
     repositories:
@@ -426,7 +424,7 @@ cvs_mandatory:
         - "bugfix"
         - "security"
 
-  - name: RHVH
+  - name: "RHVH"
     desc: "Our Current RHEV Hypervisor Content - {{ builder_run_tag }}"
     org: "{{ foreman_initial_organization }}"
     repositories:
@@ -454,7 +452,7 @@ cvs_mandatory:
         - "bugfix"
         - "security"
 
-  - name: RHVM
+  - name: "RHVM"
     desc: "Our Current RHEV Manager Content - {{ builder_run_tag }}"
     org: "{{ foreman_initial_organization }}"
     repositories:
@@ -546,7 +544,7 @@ ccvs_mandatory:
     org: "{{ foreman_initial_organization }}"
     components:
     - "SOE_RHEL"
-    - "OCP3"
+    - "OCP4"
     - "RHS_Gluster"
 
   - name: "SOE_RHVM"
@@ -571,6 +569,13 @@ ccvs_optional:
     org: "{{ foreman_initial_organization }}"
     components:
     - "SOE_RHEL"
+    - "MSSQLServer"
+  - name: "DEV_Fedora"
+    desc: "Developer Environment for Fedora - {{ builder_run_tag }}"
+    org: "{{ foreman_initial_organization }}"
+    components:
+    - "SOE_RHEL"
+    - "MSSQLServer"
 
 
 setup_sync_plans: "true"
@@ -582,11 +587,17 @@ sync_plans_mandatory:
     enabled: true
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
-
   - name: nightly_infra
-    desc: "Nightly non-OS repo sync - 01:30 {{ builder_run_tag }}"
+    desc: "Nightly non-OS repo sync - 02:30 {{ builder_run_tag }}"
     interval: "daily"
-    sync_date: "{{ ansible_date_time.date }} 01:30:00"
+    sync_date: "{{ ansible_date_time.date }} 02:30:00"
+    enabled: "true"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+  - name: nightly_third_party
+    desc: "Nightly non-OS repo sync - 03:30 {{ builder_run_tag }}"
+    interval: "daily"
+    sync_date: "{{ ansible_date_time.date }} 03:30:00"
     enabled: "true"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
@@ -647,7 +658,7 @@ product_plan:
     plan: "nightly_infra"
     organization: "{{ foreman_initial_organization }}"
   - name: "Red Hat Enterprise Linux Server"
-    plan: "nightly_infra"
+    plan: "nightly_os"
     organization: "{{ foreman_initial_organization }}"
   - name: "Red Hat Gluster Storage Server for On-premise"
     plan: "nightly_infra"
@@ -661,7 +672,13 @@ product_plan:
   - name: "Red Hat Virtualization Manager"
     plan: "nightly_infra"
     organization: "{{ foreman_initial_organization }}"
-
+  - name: "Fedora"
+    plan: "nightly_third_party"
+    organization: "{{ foreman_initial_organization }}"
+  - name: "Microsoft SQL Server for Linux"
+    plan: "nightly_third_party"
+    organization: "{{ foreman_initial_organization }}"
+  
 setup_general_settings: "false"
 
 setup_organizations: "false"
@@ -681,7 +698,7 @@ setup_mandatory_media: "true"
 media_mandatory:
   - name: RHEL7Server
     os_family: Redhat
-    path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization | replace(' ', '_') }}/Library/content/dist/rhel/server/7/7Server/$arch/kickstart/"
+    path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization | replace(' ', '_') }}/Library/content/dist/rhel/server/7/$major.$minor/$arch/kickstart/"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
   - name: RHVH
@@ -695,17 +712,14 @@ media_mandatory:
 
 
 # PUT YOUR MEDIA DEFINITIONS IN OPTIONAL MEDIA
-setup_optional_media: "false"
+setup_optional_media: "true"
 media_optional:
-  - name: MyOSName
-    os_family: Redhat #See Docs For Valid values Red Hat only "Supports" Redhat, others work from upstream as is
-    path: "https://{{ ansible_fqdn }}/some/path/can/use/foreman/vars" # where the content is or will be
-    create_path: true # whether or not to create the path if it does not exist
-    fetch_content: true  # whether or not to fetch content
-    content_play: "{{ role_path }}/RHVH_content.yml"  # your custom content fetching play that will put content at path
-    organization: "{{ foreman_initial_organization }}" # OR your organization variable org must exist
-    location: "{{ foreman_initial_location }}" # OR you location variable location must exist for org above
-
+  - name: Fedora31 
+    os_family: Redhat
+    path: "http://{{ ansible_fqdn }}/pulp/repos/{{ foreman_initial_organization | replace(' ', '_') }}/Library/custom/Fedora/Fedora31/"
+    organization: "{{ foreman_initial_organization }}"
+    location: "{{ foreman_initial_location }}"
+ 
 
 # Place your partition table templates in the foreman_post templates directory
 
@@ -741,7 +755,6 @@ ptables_mandatory:
     audit_comment: "Lab Builder OpenShift Container Platform SOE Partition Table - {{ builder_run_tag }}"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
-
 
 
 setup_prov_templates: "true"
@@ -907,11 +920,13 @@ aks_mandatory:
   - name: "RHEL_SOE"
     organization: "{{ foreman_initial_organization }}"
     unlimited_hosts: true
-    subscritpions:
-    - name:
-      qty: 1
+    auto_attach: true
 
-  
+  - name: "RHVH"
+    organization: "{{ foreman_initial_organization }}"
+    unlimited_hosts: true
+    auto_attach: true
+
 setup_domains: "true"
 domains_mandatory:
   - name: "{{ ansible_domain }}"
@@ -1007,6 +1022,10 @@ hostgroups_manadatory:
     realm: "{{ ansible_domain | upper }}"
     subnet: "Public"
     root_pass: "{{ sat_admin }}"
+    parameters:
+      - name: "rhvh_image"
+        type: "string"
+        value: "http://{{ ansible_fqdn }}/pub/rhvh/"
 
 # Turn on and of Discovery auto provisioning
 setup_discovery: "true"

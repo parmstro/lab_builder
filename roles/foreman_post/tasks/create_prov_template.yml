@@ -1,8 +1,8 @@
 ---
-# This task creates an individual configuration template from specified paramters
-# Call this task with loop_var: ct
+# This task creates an individual provisioning template from specified paramters
+# Call this task with loop_var: pt
 #
-# Specify the list as ctemplate_mandatory or ctemplate_optional in the vars file
+# Specify the list as prov_template_mandatory or prov_template_optional in the vars file
 #
 # 
 - name: Create temporary file
@@ -14,11 +14,11 @@
 # NOTE: Jinja2 and Foreman templating seem to be exclusive and can co-exist in the same file.
 - name: Apply any ansible templating defined in the configuration template
   template:
-    src: "{{ ct.path }}"
+    src: "{{ pt.path }}"
     dest: "{{ output.path }}"
 
 - name: Delete the existing instance of the configuration template
-  command: "hammer template delete --name={{ ct.name | quote }} --organization={{ ct.organization | quote }} --location={{ ct.location | quote }}"
+  command: "hammer template delete --name={{ pt.name | quote }} --organization={{ pt.organization | quote }} --location={{ pt.location | quote }}"
   ignore_errors: true
 
 # Attach to operating system later. During OS Congfig as many to many. Let the OS take from what's available.
@@ -28,5 +28,5 @@
 # Depending, this may necessitate a matching effort like we did with sync plans (kind of Satellite specific as we auto create some things...)
 #
 - name: Create configuration template definition as new initial version
-  command: "hammer template create --name={{ ct.name | quote }} --organization={{ ct.organization | quote }} --location={{ ct.location | quote }} --file={{ output.path | quote }} --type={{ ct.type | quote }} --locked={{ ct.locked | quote }} --audit-comment={{ ct.audit_comment | quote }}"
+  command: "hammer template create --name={{ pt.name | quote }} --organization={{ pt.organization | quote }} --location={{ pt.location | quote }} --file={{ output.path | quote }} --type={{ pt.type | quote }} --locked={{ pt.locked | quote }} --audit-comment={{ pt.audit_comment | quote }}"
 

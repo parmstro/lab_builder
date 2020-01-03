@@ -10,7 +10,7 @@
 - name: Creating the base activation key.
   command: "hammer activation-key create --organization={{ ak.organization | quote }} --name={{ ak.name }}"
 
-- name: Generating the update for the activation key
+- name: Generating the update command for the activation key
   set_fact:
     hammer_command: "hammer activation-key update --organization={{ ak.organization | quote }} --name={{ ak.name | quote }}"
 
@@ -67,6 +67,5 @@
 
 
 # Now perform the content overrides
-# This is something that we will add through the Foreman/Satellite configuration export utility
 # Host Collections is looooowwww on the list
 
