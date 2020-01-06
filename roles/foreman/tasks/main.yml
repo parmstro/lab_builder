@@ -13,6 +13,12 @@
     dest: /etc/foreman-installer/scenarios.d/satellite-answers.yaml
     backup: yes
 
+- name: Deploy the custom-hiera.yaml.j2 template - disabling weak encryption (backup original)
+  template:
+    src: templates/custom-hiera.yaml.j2
+    dest: /etc/foreman-installer/custom-hiera.yaml
+    backup: yes
+
 - name: Determine if Foreman/Satellite is already installed
   command: "foreman-maintain health check"
   register: health_check
