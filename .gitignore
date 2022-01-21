@@ -5,3 +5,5 @@ playbooks/inventory
 playbooks/locks/
 vars/encrypted_password.yml
 library/
+lab_builder.code-workspace
+ansible.cfg
