@@ -11,6 +11,7 @@
 # hammer should get set up for root automatically when configured in template for foreman install
 # for some reason the installer adds a space on the end of the password. I can't track it down in 
 # this code, so, I am updating the file the installer creates in setup_hammer.yml
+
 - import_tasks: "{{ role_path }}/tasks/setup_hammer.yml"
   tags:
     - import_content

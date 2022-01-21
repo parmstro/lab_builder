@@ -7,6 +7,17 @@
 
 - name: Set up the create command
   set_fact:
-    hammer_command: "hammer discovery-rule create --name{{ drule.name | quote }} --organization={{ drule.organization | quote }} --location={{ drule.location | quote }}"
+          hammer_command: "hammer discovery-rule create --name{{ drule.name | quote }} --organization={{ drule.organization | quote }} --location={{ drule.location | quote }} --enabled={{ drule.enabled }} --hostgroup={{ drule.hostgroup | quote }} --max-count={{ drule.hostslimit }} --priority={{ drule.priority }} --search={{ drule.search | quote }}"
 
+- name: Command to execute
+  debug:
+    msg: "{{ hammer_command }}"
+
+- name: Execute the hammer command
+  command: "{{ hammer_command }}"
+  register: result
+
+- name: Result of command execution
+  debug:
+    msg: "{{ result.stdout }}"
 

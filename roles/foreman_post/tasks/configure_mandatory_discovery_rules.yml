@@ -6,5 +6,5 @@
   loop: "{{ drules_mandatory }}"
   loop_control:
     loop_var: drule
-  when: "drule_mandatory is defined"
+  when: "drules_mandatory is defined"
 

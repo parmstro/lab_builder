@@ -16,8 +16,12 @@ TODO:
 - create provisioning snippets
 - create rhv (all) os
 - create discovery rules for rhv hosts
+  - search = "disk_count = 2 and memory > 32000 and facts.interfaces ~ "*,*,*,*""
+  # this gets us systems with 2 hdds, 32GB ram and 3 nics. This is required for RHHI
+
 - power-on hosts
 - provision rhv hosts (auto)
+  - because of the above rule, this should happen automagically if we have systems that meet 
 - figure out how to make them hyper-converged
 - configure RHHI hosts
 - configure rhvm

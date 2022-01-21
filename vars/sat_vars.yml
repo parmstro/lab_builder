@@ -858,7 +858,7 @@ prov_templates_mandatory:
 setup_oss: "true"
 oss_special:
   - name: "RedHat"
-    title: "RedHat 7.7"
+    title: "RHEL Server 7.7"
     major: 7
     minor: 7
     description: "Red Hat Base OS created by synchronization - {{ builder_run_tag }}"
@@ -886,8 +886,8 @@ oss_special:
 
 oss_mandatory:
   - name: "RHVH"
-    major: 7
-    minor: 7
+    major: 4
+    minor: 3
     description: "Red Hat Virtualization Hypervisor - {{ builder_run_tag }}"
     family: "Redhat"
     password_hash: "SHA256"
@@ -1022,7 +1022,7 @@ hostgroups_baremetal:
     lifecycle_environment: "Library"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
-    os: "RedHat"
+    os_title: "RHEL Server 7.7"
     medium: "RHEL7Server"
     pxe_loader: "PXELinux BIOS"
     realm: "{{ ansible_domain | upper }}"
@@ -1037,7 +1037,7 @@ hostgroups_baremetal:
     lifecycle_environment: "Library"
     organization: "{{ foreman_initial_organization }}"
     location: "{{ foreman_initial_location }}"
-    os: "RHVH"
+    os_title: "RHVH"
     medium: "RHVH" 
     pxe_loader: "PXELinux BIOS"
     realm: "{{ ansible_domain | upper }}"
@@ -1045,7 +1045,6 @@ hostgroups_baremetal:
     root_pass: "{{ sat_admin }}"
     parameters:
       - name: "rhvh_image"
-        type: "string"
         value: "http://{{ ansible_fqdn }}/pub/rhvh/"
 
 

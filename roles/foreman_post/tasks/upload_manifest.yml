@@ -4,6 +4,7 @@
 #
 # default manifest_src_ location is the role's files directory 
 #
+# TODO: use CDN credentials to download manifest directly from Red Hat
 
 - name: Copy the manifest to the target Satellite server
   copy:
