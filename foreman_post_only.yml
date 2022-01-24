@@ -27,21 +27,3 @@
       state: touch
     tags:
       - always
-
-
-# PHASE 2 - bootstrap 2 CONDITIONAL
-# AUTO
-#   PROCEED
-# MANUAL
-#   UNLOCK VAR FILES
-#   TERMINATE
-## PHASE 2 - bootstrap 2 CONDITIONAL 
-
-
-## PHASE 2 - bootstrap 2
-#
-#
-# BEGIN ANSIBLE MANAGED BLOCK
-# BEGIN needed to indent - prepare.yml
-# END needed to indent - prepare.yml
-# END ANSIBLE MANAGED BLOCK
