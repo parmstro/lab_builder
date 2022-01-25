@@ -29,7 +29,3 @@
     path: "{{ output_file }}"
     marker: "# {mark}  {{ var.name }}  ANSIBLE MANAGED BLOCK"
     block: "{{ output.stdout }}"
-
-- name: pausing
-  pause:
-    seconds: 5
