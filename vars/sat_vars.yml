@@ -608,23 +608,6 @@ sync_plans_mandatory:
 
 setup_products: true
 custom_products:
-  - name: "Fedora"
-    desc: "Fedora from Red Hat"
-    org: "{{ foreman_initial_organization }}"
-    label: fedora
-    repository_name:
-    - name: fedora31
-      upstream_name: fedora
-      repository_content_type: yum
-      url: "https://mirror.csclub.uwaterloo.ca/fedora/linux/releases/31/Everything/x86_64/os/"
-      username: ""
-      password: ""
-   - name: fedora31_updates
-      upstream_name: fedora_updates
-      repository_content_type: yum
-      url: "https://mirror.csclub.uwaterloo.ca/fedora/linux/updates/31/Everything/x86_64/"
-      username: ""
-      password: ""
   - name: "Red Hat SCAP OVAL Files"
     desc: "SCAP Content for Red Hat Products managed by Red Hat"
     org: "{{ foreman_initial_organization }}"
@@ -636,24 +619,6 @@ custom_products:
       url: "https://redhat.com/security/data/oval/"
       username: ""
       password: ""
-  - name: "Microsoft SQL Server for Linux 2019"
-    desc: "Microsoft SQL Server for Linux 2019 installation and tools"
-    org: "{{ foreman_initial_organization }}"
-    label: mmsqlserver_2019
-    repository_name:
-    - name: packages-microsoft-com-mssql-server-2019-7server
-      upstream_name: ""
-      repository_content_type: yum
-      url: "https://packages.microsoft.com/rhel/7/mssql-server-2019/"
-      username: ""
-      password: ""
-    - name: msql-tools-2019-7server
-      upstream_name: ""
-      repository_content_type: yum
-      url: "https://packages.microsoft.com/rhel/7/prod/"
-      username: ""
-      password: ""
-
 
 setup_attach_plan_to_product: "true"
 product_plan:
