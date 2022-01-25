@@ -1,6 +1,9 @@
 ---
 
-- name: create a random variable
+- set_fact:
+    encrypt_this: "{{ var.value }}"
+
+- name: create a random variable if one was not supplied
   block:
   - set_fact:
       options: "-l {{ var.minlength }}"
@@ -14,11 +17,7 @@
 
   - set_fact:
       encrypt_this: "{{ result.stdout | quote }}"
-  when: "var.value is not defined"
-
-- set_fact:
-    encrypt_this: "{{ var.value }}"
-  when: "var.value is defined"
+  when: var.value == ""
 
 - name: encrypt it
   shell: "echo {{ encrypt_this }} | ansible-vault encrypt_string --vault-id {{ password_file }}  --stdin-name {{ var.name }}"

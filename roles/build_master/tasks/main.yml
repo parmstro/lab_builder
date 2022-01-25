@@ -20,11 +20,11 @@
 
 - name: "Uninstall the idm server if it exists"
   command: "ipa-server-install --uninstall --unattended"
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: "Uninstall idm client if it exists, should be uninstalled with the server"
   command: "ipa-client-install --uninstall --unattended"
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: "Install IdM packages"
   yum: 
