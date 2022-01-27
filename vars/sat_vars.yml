@@ -20,6 +20,20 @@
 # and mandatory, configure them as optional and use optional_fatal: "true"
 #
 ###########################################################################################
+# This is the list of repos that need to be enabled on the server to install Satellite
+# This list is for version 6.10 - modify as needed for your version of Satellite
+satellite_repos:
+  - name: "RHEL 7 Server rpms"
+    repodid: "rhel-7-servers-rpms"
+  - name: "Red Hat Software Collections"
+    repoid: "rhel-server-rhscl-7-rpms" 
+  - name: "Red Hat Satellite 6.10 rpms"
+    repoid: "rhel-7-server-satellite-6.10-rpms"
+  - name: "Red Hat Satellite 6 Maintenance rpms"
+    repoid: "rhel-7-server-satellite-maintenance-6-rpms"
+  - name: "Red Hat Ansible 2.9"
+    repoid: "rhel-7-server-ansible-2.9-rpms"
+
 
 # cause optional sections below to fail the build 
 # if the optional section has a configuration failure
