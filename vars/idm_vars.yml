@@ -1,4 +1,13 @@
 ---
+# repos to enable for IdM hosts
+# This code does not currently support install on RHEL 8
+# RHEL 8 uses a modular install for IdM
+idm_repos:
+- name: "RHEL 7 Server RPMs"
+  repoid: "rhel-7-server-rpms"
+- name: "RHEL Optional RPMs"
+  repoid: "rhel-7-server-optional-rpms"
+
 setupdns: true
 makehomedir: true
 nodnshost: true

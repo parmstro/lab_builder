@@ -1,5 +1,7 @@
 ---
-# This task controls the install and initial configuration of IdM
+# This task controls the install and initial configuration of IdM on RHEL7 only
+# RHEL 8 uses a modular install.
+
 - import_tasks: role_begin.yml
 
 - name: "Enable the RHEL Server repo required for IdM"
