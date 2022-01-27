@@ -21,7 +21,7 @@
   when: var.value == ""
 
 - name: "encrypting {{ var.name }}"
-  shell: "echo {{ encrypt_this }} | ansible-vault encrypt_string --vault-id {{ password_file }}  --stdin-name {{ var.name }}"
+  shell: "echo {{ encrypt_this | trim }} | ansible-vault encrypt_string --vault-id {{ password_file }}  --stdin-name {{ var.name }}"
   register: output
 
 - name: "writing encrypted {{ var.name }} to vault"

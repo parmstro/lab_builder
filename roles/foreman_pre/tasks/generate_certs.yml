@@ -9,6 +9,9 @@
 - set_fact:
     target_service: "{{ ipa_service_type }}/{{ ansible_fqdn }}"
 
+- set_fact:
+    ipa_admin: "{{ idm_admin | trim }}"
+
 - name: Create the directory to contain the certificates
   file:
     state: directory
@@ -40,7 +43,7 @@
 
 
 - name: Determine if the service exists
-  shell: "echo {{ idm_admin }} | kinit admin; ipa service-show {{ target_service }}"
+  shell: "echo {{ ipa_admin }} | kinit admin; ipa service-show {{ target_service }}"
   register: result
   ignore_errors: true
 
@@ -48,12 +51,11 @@
     service_exists: "{{ result.stderr | regex_search('(service not found)') }}"
 
 - name: Add the service to IdM/FreeIPA
-  shell: "echo {{ idm_admin }} | kinit admin; ipa service-add {{ target_service }}"
+  shell: "echo {{ ipa_admin }} | kinit admin; ipa service-add {{ target_service }}"
   when: service_exists != ""
 
 - name: Generate the certificate for the service
-  shell: "echo {{ idm_admin }} | kinit admin; ipa cert-request --add --principal={{ target_service }} {{ ipa_server_csr_file }} --certificate-out={{ ipa_server_crt_file }}"
+  shell: "echo {{ ipa_admin }} | kinit admin; ipa cert-request --add --principal={{ target_service }} {{ ipa_server_csr_file }} --certificate-out={{ ipa_server_crt_file }}"
 
 - name: Ensure that certmonger starts-tracking the new certificate for autorenewals
-  shell: "echo {{ idm_admin }} | kinit admin; ipa-getcert start-tracking -k {{ ipa_server_pem_file }} -f {{ ipa_server_crt_file }} -I {{ ansible_fqdn }}"
-
+  shell: "echo {{ ipa_admin }} | kinit admin; ipa-getcert start-tracking -k {{ ipa_server_pem_file }} -f {{ ipa_server_crt_file }} -I {{ ansible_fqdn }}"
