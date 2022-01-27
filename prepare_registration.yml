@@ -9,8 +9,7 @@
     msg: |
       "Organization:      {{ redhat_org }}"
       "Activation Key:    {{ activation_key }}"
-      "Subscription Pool: {{ subscription_pool }}"
-
+  
 - name: Register the server to the Red Hat Network using an activation key
   redhat_subscription:
     state: present
@@ -22,6 +21,5 @@
     server_proxy_port: "{{ cdn_proxy_port }}"
     server_proxy_user: "{{ cdn_proxy_username }}"
     server_proxy_password: "{{ cdn_proxy_password }}"
-    pool: "{{ subscription_pool | quote }}" 
     force_register: yes
 

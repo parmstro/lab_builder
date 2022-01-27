@@ -59,8 +59,3 @@
 
 - debug:
     msg: "Can reach the internet continuing..."
-
-- debug:
-    msg: "Building system {{ ansible_fqdn }}"
-
-

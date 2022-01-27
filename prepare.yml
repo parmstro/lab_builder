@@ -78,14 +78,6 @@
   - name: "Configuring local network."
     include_tasks: prepare_connect_network.yml
 
-  - set_fact:
-      subscription_pool: "{{ idm_pool }}" 
-    when: "bootstrap_role == 'build_master'"
-
-  - set_fact:
-      subscription_pool: "{{ satellite_pool }}"
-    when: "bootstrap_role == 'foreman'"
-
   - name: "Register the local system to the CDN"
     include_tasks: prepare_registration.yml
 
