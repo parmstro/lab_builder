@@ -6,6 +6,9 @@
 - set_fact:
     key_pass: "{{ foreman_admin_password  }}"
 
+- set_fact:
+    target_service: "{{ ipa_service_type }}/{{ ansible_fqdn }}"
+
 - name: Create the directory to contain the certificates
   file:
     state: directory
