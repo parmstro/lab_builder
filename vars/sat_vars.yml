@@ -57,9 +57,7 @@ bootstrap_add_utils:
 # used for preparing the Satellite Server
 sat_firewalld_zone: "public"
 
-
 # The IPA client can only be configured after the IPA Server is installed
-# We will ues these values after the Satellite and IPA serves are bootstrapped
 ipa_install_client: true
 ipa_generate_certs: true
 ipa_server_certs_dir: "/etc/ipa/private/"

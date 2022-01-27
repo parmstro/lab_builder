@@ -4,7 +4,7 @@
 #
 
 - set_fact:
-    rsa_key_pass: "{{ foreman_admin_password  }}"
+    key_pass: "{{ foreman_admin_password  }}"
 
 - name: Create the directory to contain the certificates
   file:
@@ -17,19 +17,14 @@
 - name: Generate a private key
   openssl_privatekey:
     path: "{{ ipa_server_pem_file }}"
-    passphrase: "{{ rsa_key_pass }}"
-    cipher: "DES3"
-    force: yes
-
-# This module requires ansible 2.8 on RHEL 7.6 or better
-# otherwise it will fail with an error stating it 
-# requires pyOpenSSL >= 0.15 
+    passphrase: "{{ key_pass }}"
+    cipher: "aes256"
 
 - name: Generate the CSR with subjectAltNames set
   openssl_csr:
     path: "{{ ipa_server_csr_file }}"
-    privatekey_path: "{{ ipa_server_prv_file }}"
-    privatekey_passphrase: "{{ ipa_rsa_key_pass }}"
+    privatekey_path: "{{ ipa_server_pem_file }}"
+    privatekey_passphrase: "{{ key_pass }}"
     state: present
     common_name: "{{ ansible_fqdn }}"
     subject_alt_name: "DNS:{{ ansible_fqdn }}"
@@ -41,18 +36,8 @@
     email_address: "{{ ipa_email_address }}"
 
 
-- name: Initialize the admin user
-  shell: echo "{{ idm_admin }}" | kinit admin
-  check_mode: no
-  changed_when: "1 != 1"
-
-
-# The new foreman-maintain/satellite-maintain package control handles the installation of ipa-client binaries
-# so that compatibility can be maintained. /usr/bin/ipa is included in ipa-client, therefore, it should not
-# be necessary to install ipa-admin-tools rpm
-
 - name: Determine if the service exists
-  command: "ipa service-show {{ ipa_service_type }}/{{ ansible_fqdn }}"
+  shell: "echo {{ idm_admin }} | kinit admin; ipa service-show {{ target_service }}"
   register: result
   ignore_errors: true
 
@@ -60,17 +45,12 @@
     service_exists: "{{ result.stderr | regex_search('(service not found)') }}"
 
 - name: Add the service to IdM/FreeIPA
-  command: "ipa service-add {{ ipa_service_type }}/{{ ansible_fqdn }}"
+  shell: "echo {{ idm_admin }} | kinit admin; ipa service-add {{ target_service }}"
   when: service_exists != ""
 
-- name: Request the certificate
-  command: "ipa cert-request --add --principal={{ ipa_service_type }}/{{ ansible_fqdn }} {{ ipa_server_csr_file }}"
-  register: result
+- name: Generate the certificate for the service
+  shell: "echo {{ idm_admin }} | kinit admin; ipa cert-request --add --principal={{ target_service }} {{ ipa_server_csr_file }} --certificate-out={{ ipa_server_crt_file }}"
 
-- name: Get the certificate serial number
-  set_fact: 
-    serial_number: "{{ result.stdout_lines.7 | regex_replace('^.*: ', '') }}"
-
-- name: Retrieve the certificate
-  command: "ipa cert-show --certificate-out={{ ipa_server_crt_file }} {{ serial_number }}"
+- name: Ensure that certmonger starts-tracking the new certificate for autorenewals
+  shell: "echo {{ idm_admin }} | kinit admin; ipa-getcert start-tracking -k {{ ipa_server_pem_file }} -f {{ ipa_server_crt_file }} -I {{ ansible_fqdn }}"
 
