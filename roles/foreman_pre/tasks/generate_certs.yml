@@ -26,11 +26,16 @@
     passphrase: "{{ key_pass }}"
     cipher: "aes256"
 
+- shell: "echo {{ key_pass }} > {{ ipa_server_passfile }}"
+  no_log: true
+
+- command: "openssl rsa -in {{ ipa_server_pem_file }} -out {{ ipa_server_key_file }} -passin file:/{{ ipa_server_passfile }}"
+  no_log: true
+  
 - name: Generate the CSR with subjectAltNames set
   openssl_csr:
     path: "{{ ipa_server_csr_file }}"
-    privatekey_path: "{{ ipa_server_pem_file }}"
-    privatekey_passphrase: "{{ key_pass }}"
+    privatekey_path: "{{ ipa_server_key_file }}"
     state: present
     common_name: "{{ ansible_fqdn }}"
     subject_alt_name: "DNS:{{ ansible_fqdn }}"
@@ -58,4 +63,4 @@
   shell: "echo {{ ipa_admin }} | kinit admin; ipa cert-request --add --principal={{ target_service }} {{ ipa_server_csr_file }} --certificate-out={{ ipa_server_crt_file }}"
 
 - name: Ensure that certmonger starts-tracking the new certificate for autorenewals
-  shell: "echo {{ ipa_admin }} | kinit admin; ipa-getcert start-tracking -k {{ ipa_server_pem_file }} -f {{ ipa_server_crt_file }} -I {{ ansible_fqdn }}"
+  shell: "echo {{ ipa_admin }} | kinit admin; ipa-getcert start-tracking -k {{ ipa_server_key_file }} -f {{ ipa_server_crt_file }} -I {{ ansible_fqdn }}"
