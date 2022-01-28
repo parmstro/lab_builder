@@ -4,7 +4,7 @@
 #
 
 - set_fact:
-    key_pass: "{{ foreman_admin_password  }}"
+    key_pass: "random64bitvalue"
 
 - set_fact:
     target_service: "{{ ipa_service_type }}/{{ ansible_fqdn }}"
