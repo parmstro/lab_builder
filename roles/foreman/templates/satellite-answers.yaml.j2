@@ -21,40 +21,28 @@ certs:
   ca_expiration: '36500'
   server_cert: "{{ ipa_server_crt_file }}"
   server_key: "{{ ipa_server_key_file }}"
-#  server_cert_req: "{{ ipa_server_csr_file }}"
+  server_cert_req:
   server_ca_cert: "/etc/ipa/ca.crt"
-  pki_dir: /etc/pki/katello
-  ssl_build_dir: /root/ssl-build
+  pki_dir: "/etc/pki/katello"
+  ssl_build_dir: "/root/ssl-build"
   user: root
   group: foreman
   default_ca_name: katello-default-ca
   server_ca_name: katello-server-ca
+  tar_file:
 foreman:
   foreman_url: "{{ foreman_foreman_url }}"
-  puppetrun: false
   unattended: true
   unattended_url: 
-  authentication: true
-  passenger: true
-  passenger_ruby: /usr/bin/tfm-ruby
-  passenger_ruby_package: tfm-rubygem-passenger-native
+  apache: true
   plugin_prefix: tfm-rubygem-foreman_
-  use_vhost: true
   servername: "{{ foreman_servername }}"
   serveraliases:
   - foreman
   ssl: true
-  custom_repo: true
-  repo: stable
-  configure_epel_repo: false
-  configure_scl_repo: false
-  selinux: 
-  gpgcheck: true
   version: present
   plugin_version: present
   db_manage: true
-  db_type: postgresql
-  db_adapter: 
   db_host: 
   db_port: 
   db_database: 
@@ -68,14 +56,8 @@ foreman:
   manage_user: true
   user: foreman
   group: foreman
-  user_groups:
-  - puppet
+  user_groups: []
   rails_env: production
-  puppet_home: /var/lib/puppet
-  puppet_ssldir: /etc/puppetlabs/puppet/ssl
-  locations_enabled: true
-  organizations_enabled: true
-  passenger_interface: 
   vhost_priority: '05'
   server_port: 80
   server_ssl_port: 443
@@ -86,24 +68,21 @@ foreman:
   server_ssl_key: /etc/pki/katello/private/katello-apache.key
   server_ssl_crl: ''
   server_ssl_protocol: 
+  server_ssl_verify_client: optional
   client_ssl_ca: /etc/foreman/proxy_ca.pem
   client_ssl_cert: /etc/foreman/client_cert.pem
   client_ssl_key: /etc/foreman/client_key.pem
-  keepalive: true
-  max_keepalive_requests: 10000
-  keepalive_timeout: 5
   oauth_active: true
   oauth_map_users: false
   oauth_consumer_key: 6ANX2qBvmNUPZDX3LaxRrjeVfdrCUMKr
   oauth_consumer_secret: 7LXVBZk2qYZhVPvhBMfMYksF44Gnzm6h
-  passenger_prestart: true
-  passenger_min_instances: 1
-  passenger_start_timeout: 600
-  admin_username: "{{ foreman_admin_username }}"
-  admin_password: "{{ foreman_admin_password }}"
-  admin_first_name: "{{ foreman_admin_firstname }}"
-  admin_last_name: "{{ foreman_admin_lastname }}"
-  admin_email: "{{ foreman_admin_email }}"
+  initial_admin_username: "{{ foreman_admin_username }}"
+  initial_admin_password: "{{ foreman_admin_password }}"
+  initial_admin_first_name: "{{ foreman_admin_firstname }}"
+  initial_admin_last_name: "{{ foreman_admin_lastname }}"
+  initial_admin_email: "{{ foreman_admin_email }}"
+  initial_admin_locale:
+  initial_admin_timezone:
   initial_organization: "{{ foreman_initial_organization }}"
   initial_location: "{{ foreman_initial_location }}"
   ipa_authentication: "{{ foreman_ipa_authentication }}"
@@ -115,11 +94,8 @@ foreman:
   websockets_ssl_cert: /etc/pki/katello/certs/katello-apache.crt
   logging_level: info
   logging_type: file
-  logging_layout: pattern
+  logging_layout: multiline_request_pattern
   loggers: {}
-  email_config_method: file
-  email_conf: email.yaml
-  email_source: email.yaml.erb
   email_delivery_method: 
   email_smtp_address: 
   email_smtp_port: 25
@@ -134,55 +110,74 @@ foreman:
   telemetry_statsd_protocol: statsd
   telemetry_logger_enabled: false
   telemetry_logger_level: DEBUG
-  dynflow_pool_size: 5
-  jobs_service: 
-  dynflow_in_core: true
+  dynflow_manage_services: true
+  dynflow_orchestrator_ensure: present
+  dynflow_worker_instances: 1
+  dynflow_worker_concurrency: 5
+  dynflow_redis_url: 
   hsts_enabled: true
+  cors_domains: []
+  foreman_service_puma_threads_min: 
+  foreman_service_puma_threads_max: 5
+  foreman_service_puma_workers: 
+  rails_cache_store:
+    type: file
+  keycloak: false
+  keycloak_app_name: foreman-openidc
+  keycloak_realm: ssl-realm
 foreman::cli:
   foreman_url: "{{ foreman_foreman_url }}"
   version: installed
   manage_root_config: true
   username: "{{ foreman_admin_username }}"
   password: "{{ foreman_admin_password }}"
+  use_sessions: false
   refresh_cache: false
   request_timeout: 120
   ssl_ca_file: 
   hammer_plugin_prefix: tfm-rubygem-hammer_cli_
+foreman::cli::ansible: {}
+foreman::cli::azure: {}
+foreman::cli::katello: {}
+foreman::cli::kubevirt: false
+foreman::cli::remote_execution: {}
+foreman::cli::virt_who_configure: {}
 foreman::compute::ec2: "{{ foreman_compute_ec2 }}"
 foreman::compute::gce: "{{ foreman_compute_gce }}"
 foreman::compute::libvirt: "{{ foreman_compute_libvirt }}"
 foreman::compute::openstack: "{{ foreman_compute_openstack }}"
 foreman::compute::ovirt: "{{ foreman_compute_ovirt }}"
-foreman::compute::rackspace: "{{ foreman_compute_rackspace }}"
 foreman::compute::vmware: "{{ foreman_compute_vmware }}"
 foreman::plugin::ansible: {}
+foreman::plugin::azure: {}
 foreman::plugin::bootdisk: false
 foreman::plugin::discovery: {}
-foreman::plugin::docker: {}
 foreman::plugin::hooks: {}
+foreman::plugin::kubevirt: false
+foreman::plugin::leapp: true
 foreman::plugin::openscap: {}
 foreman::plugin::remote_execution: {}
+foreman::plugin::remote_execution::cockpit: {}
+foreman::plugin::rh_cloud: {}
 foreman::plugin::tasks:
-  package: tfm-rubygem-foreman-tasks
-  automatic_cleanup: false
+  automatic_cleanup: true
   cron_line: 45 19 * * *
+  backup: true
 foreman::plugin::templates: {}
+foreman::plugin::virt_who_configure: {}
+foreman::plugin::webhooks: true
 foreman_proxy:
-  repo: stable
+  repo: 
   gpgcheck: true
-  custom_repo: true
   version: present
   ensure_packages_version: present
-  plugin_version: installed
   bind_host:
   - '*'
   http_port: 8000
   ssl_port: 9090
-  dir: /usr/share/foreman-proxy
-  user: foreman-proxy
   groups: []
   log: /var/log/foreman-proxy/proxy.log
-  log_level: ERROR
+  log_level: INFO
   log_buffer: 2000
   log_buffer_errors: 1000
   http: false
@@ -210,29 +205,22 @@ foreman_proxy:
   manage_puppet_group: false
   puppet: false 
   puppet_listen_on: https
-  puppetrun_cmd: /opt/puppetlabs/bin/puppet kick
-  puppetrun_provider: 
-  customrun_cmd: /bin/false
-  customrun_args: -ay -f -s
-  mcollective_user: root
-  puppetssh_sudo: false
-  puppetssh_command: /opt/puppetlabs/bin/puppet agent --onetime --no-usecacheonfailure
-  puppetssh_user: root
-  puppetssh_keyfile: /etc/foreman-proxy/id_rsa
-  puppetssh_wait: false
-  salt_puppetrun_cmd: puppet.run
-  puppet_user: root
   puppet_url: https://{{ ansible_fqdn}}:8140
   puppet_ssl_ca: /etc/puppetlabs/puppet/ssl/certs/ca.pem
   puppet_ssl_cert: /etc/puppetlabs/puppet/ssl/certs/{{ ansible_fqdn }}.pem
   puppet_ssl_key: /etc/puppetlabs/puppet/ssl/private_keys/{{ ansible_fqdn }}.pem
-  puppet_use_environment_api: 
   puppet_api_timeout: 30
   templates: false
   templates_listen_on: both
   template_url: "http://{{ ansible_fqdn }}:8000"
   logs: true
   logs_listen_on: https
+  registration: true
+  registration_listen_on: https
+  logs: true
+  logs_listen_on: https
+  httpboot: 
+  httpboot_listen_on: both
   tftp: "{{ foreman_proxy_tftp }}"
   tftp_listen_on: https
   tftp_managed: true
@@ -258,6 +246,7 @@ foreman_proxy:
   dhcp_managed: true
   dhcp_provider: isc
   dhcp_subnets: []
+  dhcp_ping_free_ip: true
   dhcp_option_domain: "{{ foreman_proxy_dhcp_option_domain }}"
   dhcp_search_domains: 
   dhcp_interface: "{{ foreman_proxy_dhcp_interface }}"
@@ -302,6 +291,12 @@ foreman_proxy:
   bmc: false
   bmc_listen_on: https
   bmc_default_provider: ipmitool
+  bmc_ssh_user: root
+  bmc_ssh_key: "/usr/share/foreman/.ssh/id_rsa"
+  bmc_ssh_powerstatus: 'true'
+  bmc_ssh_powercycle: shutdown -r +1
+  bmc_ssh_poweroff: shutdown +1
+  bmc_ssh_poweron: 'false'
   realm: "{{ foreman_proxy_realm }}"
   realm_listen_on: https
   realm_provider: "{{ foreman_proxy_realm_provider }}"
@@ -317,53 +312,72 @@ foreman_proxy:
   oauth_effective_user: admin
   oauth_consumer_key: 6ANX2qBvmNUPZDX3LaxRrjeVfdrCUMKr
   oauth_consumer_secret: 7LXVBZk2qYZhVPvhBMfMYksF44Gnzm6h
-  puppet_use_cache: 
 foreman_proxy_content:
-  parent_fqdn: "{{ foreman_servername }}"
-  certs_tar: 
-  pulp_master: true
-  pulp_admin_password: XvpUwbZ2e3YerwUapVb3LJd9pTm4xtNB
-  pulp_max_speed: 
-  pulp_max_tasks_per_child: 
-  pulp_num_workers: 
-  pulp_proxy_password: 
-  pulp_proxy_port: 
-  pulp_proxy_url: 
-  pulp_proxy_username: 
-  pulp_puppet_wsgi_processes: 1
-  pulp_ca_cert: 
-  pulp_worker_timeout: 60
+  pulpcore_mirror: false
   puppet: true
   reverse_proxy: false
   reverse_proxy_port: 8443
-  ssl_protocol: 
-  rhsm_hostname: 
-  rhsm_url: /rhsm
-  qpid_router: true
-  qpid_router_hub_addr: 0.0.0.0
+  qpid_router_hub_addr: 
   qpid_router_hub_port: 5646
-  qpid_router_agent_addr: 0.0.0.0
+  qpid_router_agent_addr: 
   qpid_router_agent_port: 5647
   qpid_router_broker_addr: localhost
   qpid_router_broker_port: 5671
   qpid_router_logging_level: info+
   qpid_router_logging: syslog
-  qpid_router_logging_path: /var/log/qdrouterd
-  qpid_router_ssl_ciphers: 
+  qpid_router_logging_path: "/var/log/qdrouterd"
+  qpid_router_ssl_ciphers: ALL:!aNULL:+HIGH:-SSLv3:!IDEA-CBC-SHA
   qpid_router_ssl_protocols: 
-  enable_ostree: true
   enable_yum: true
   enable_file: true
-  enable_puppet: false
   enable_docker: true
   enable_deb: false
-  manage_broker: true
+  enable_ansible: true
+  enable_katello_agent: true
+  pulpcore_manage_postgresql: true
+  pulpcore_postgresql_host: localhost
+  pulpcore_postgresql_port: 5432
+  pulpcore_allowed_content_checksums:
+  - md5
+  - sha1
+  - sha224
+  - sha256
+  - sha384
+  - sha512
+  pulpcore_postgresql_user: pulp
+  pulpcore_postgresql_password: JbDhjdKErnbLxm9MExy8hMdBCkSKhauB
+  pulpcore_postgresql_db_name: pulpcore
+  pulpcore_postgresql_ssl: false
+  pulpcore_postgresql_ssl_require: true
+  pulpcore_postgresql_ssl_cert: "/etc/pki/katello/certs/pulpcore-database.crt"
+  pulpcore_postgresql_ssl_key: "/etc/pki/katello/private/pulpcore-database.key"
+  pulpcore_postgresql_ssl_root_ca: "/etc/pki/tls/certs/ca-bundle.crt"
+  pulpcore_worker_count: 4
+  pulpcore_use_rq_tasking_system: false
+  pulpcore_django_secret_key: 
+  pulpcore_content_service_worker_timeout: 90
+  pulpcore_api_service_worker_timeout: 90
+  pulpcore_cache_enabled: false
+  pulpcore_cache_expires_ttl: 
 foreman_proxy::plugin::ansible:
   enabled: true
   listen_on: https
-  ansible_dir: /usr/share/foreman-proxy
-  working_dir: /tmp
+  ansible_dir: "/usr/share/foreman-proxy"
+  working_dir: "/tmp"
   host_key_checking: false
+  stdout_callback: yaml
+  roles_path:
+  - "/etc/ansible/roles"
+  - "/usr/share/ansible/roles"
+  ssh_args: "-o ProxyCommand=none -C -o ControlMaster=auto -o ControlPersist=60s"
+  install_runner: true
+  manage_runner_repo: true
+  callback: redhat.satellite.foreman
+  runner_package_name: ansible-runner
+  collections_paths:
+  - "/etc/ansible/collections"
+  - "/usr/share/ansible/collections"
+foreman_proxy::plugin::dhcp::infoblox: false
 foreman_proxy::plugin::dhcp::remote_isc: false
 foreman_proxy::plugin::discovery:
   install_images: true
@@ -379,18 +393,9 @@ foreman_proxy::plugin::openscap:
   contentdir: /var/lib/foreman-proxy/openscap/content
   reportsdir: /var/lib/foreman-proxy/openscap/reports
   failed_dir: /var/lib/foreman-proxy/openscap/failed
+  corrupted_dir: "/var/lib/foreman-proxy/openscap/corrupted"
   proxy_name: 
-foreman_proxy::plugin::pulp:
-  enabled: true
-  listen_on: https
-  pulpnode_enabled: false
-  version: 
-  group: 
-  pulp_url: "https://{{ ansible_fqdn }}/pulp"
-  pulp_dir: /var/lib/pulp
-  pulp_content_dir: /var/lib/pulp/content
-  puppet_content_dir: /etc/puppetlabs/code/environments
-  mongodb_dir: /var/lib/mongodb
+  timeout: 60
 foreman_proxy::plugin::remote_execution::ssh:
   enabled: true
   listen_on: https
@@ -404,61 +409,21 @@ foreman_proxy::plugin::remote_execution::ssh:
   ssh_kerberos_auth: false
   async_ssh: false
 katello:
-  user: foreman
-  group: foreman
-  user_groups:
-  - foreman
-  candlepin_oauth_key: katello
-  candlepin_oauth_secret: M3bXMuztSD92jRGoTZcMkaCMTSfdAJUr
-  post_sync_token: 7mjck6ofYi7NjS2qgKxS35XpZnAjbkHn
+  candlepin_oauth_key:
+  candlepin_oauth_secret:
   rest_client_timeout: 3600
   qpid_wcache_page_size: 4
   qpid_interface: lo
   qpid_hostname: localhost
-  num_pulp_workers: 2
-  pulp_worker_timeout: 60
-  max_tasks_per_pulp_worker: 2
-  proxy_url: 
-  proxy_port: 
-  proxy_username: 
-  proxy_password: 
-  pulp_max_speed: 
-  cdn_ssl_version: 
-  package_names:
-  - katello
-  - tfm-rubygem-katello
-  enable_ostree: true
-  enable_yum: true
-  enable_file: true
-  enable_puppet: "{{ puppet_enable_puppet_server }}"
-  enable_docker: true
-  enable_deb: false
-  repo_export_dir: /var/lib/pulp/katello-export
-  manage_repo: false
-  repo_version: latest
-  repo_gpgcheck: false
-  repo_gpgkey: 
   candlepin_db_host: localhost
   candlepin_db_port: 
   candlepin_db_name: candlepin
   candlepin_db_user: candlepin
-  candlepin_db_password: 5CksnLDmFcnnbVBKEZFLGYw9yzHsM7Ev
+  candlepin_db_password:
   candlepin_db_ssl: false
   candlepin_db_ssl_verify: true
   candlepin_manage_db: true
-  pulp_db_name: pulp_database
-  pulp_db_seeds: localhost:27017
-  pulp_db_username: 
-  pulp_db_password: 
-  pulp_db_replica_set: 
-  pulp_db_ssl: false
-  pulp_db_ssl_keyfile: 
-  pulp_db_ssl_certfile: 
-  pulp_db_verify_ssl: true
-  pulp_db_ca_path: /etc/pki/tls/certs/ca-bundle.crt
-  pulp_db_unsafe_autoretry: false
-  pulp_db_write_concern: 
-  pulp_manage_db: true
+  hosts_queue_workers: 1
 puppet:
   version: present
   user: puppet
@@ -476,8 +441,6 @@ puppet:
   package_provider: 
   package_source: 
   port: 8140
-  listen: false
-  listen_to: []
   pluginsync: true
   splay: false
   splaylimit: '1800'
@@ -496,7 +459,8 @@ puppet:
   agent_noop: false
   show_diff: false
   module_repository: 
-  configtimeout: 
+  http_connect_timeout: 
+  http_read_timeout: 
   ca_server: 
   ca_port: 
   ca_crl_filepath: 
@@ -541,42 +505,35 @@ puppet:
   server_ca_crl_sync: false
   server_crl_enable: 
   server_ca_auth_required: true
+  server_ca_client_self_delete: false
   server_ca_client_whitelist:
   - localhost
   - "{{ ansible_fqdn }}"
   server_http: false
   server_http_port: 8139
-  server_http_allow: []
   server_reports: foreman
   server_implementation: puppetserver
-  server_passenger: true
   server_puppetserver_dir: /etc/puppetlabs/puppetserver
   server_puppetserver_vardir: /opt/puppetlabs/server/data/puppetserver
   server_puppetserver_rundir: /var/run/puppetlabs/puppetserver
   server_puppetserver_logdir: /var/log/puppetlabs/puppetserver
-  server_puppetserver_version: 5.1.0
-  server_service_fallback: true
-  server_passenger_min_instances: 1
-  server_passenger_pre_start: true
-  server_passenger_ruby: 
-  server_httpd_service: httpd
+  server_puppetserver_version: 
   server_external_nodes: /etc/puppetlabs/puppet/node.rb
+  server_trusted_external_command: 
   server_cipher_suites:
-  - TLS_RSA_WITH_AES_256_CBC_SHA256
-  - TLS_RSA_WITH_AES_256_CBC_SHA
-  - TLS_RSA_WITH_AES_128_CBC_SHA256
-  - TLS_RSA_WITH_AES_128_CBC_SHA
+  - TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+  - TLS_DHE_RSA_WITH_AES_256_GCM_SHA384
+  - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+  - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+  - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+  - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
   server_config_version: 
   server_connect_timeout: 120000
   server_git_repo: false
   server_dynamic_environments: false
-  server_directory_environments: true
   server_default_manifest: false
   server_default_manifest_path: /etc/puppet/manifests/default_manifest.pp
   server_default_manifest_content: ''
-  server_environments:
-  - development
-  - production
   server_environments_owner: apache
   server_environments_group: 
   server_environments_mode: '0755'
@@ -595,8 +552,7 @@ puppet:
   server_idle_timeout: 1200000
   server_post_hook_content: puppet/server/post-receive.erb
   server_post_hook_name: post-receive
-  server_storeconfigs_backend: 
-  server_app_root: /etc/puppetlabs/puppet/rack
+  server_storeconfigs: false
   server_ruby_load_paths:
   - /opt/puppetlabs/puppet/lib/ruby/vendor_ruby
   server_ssl_dir: /etc/puppetlabs/puppet/ssl
@@ -608,13 +564,9 @@ puppet:
   server_package: 
   server_version: 
   server_certname: "{{ ansible_fqdn }}"
-  server_enc_api: v2
-  server_report_api: v2
   server_request_timeout: 60
-  server_ca_proxy: 
   server_strict_variables: false
   server_additional_settings: {}
-  server_rack_arguments: []
   server_foreman: true
   server_foreman_url: "https://{{ ansible_fqdn }}"
   server_foreman_ssl_ca: /etc/pki/katello/puppet/puppet_client_ca.crt
@@ -622,19 +574,18 @@ puppet:
   server_foreman_ssl_key: /etc/pki/katello/puppet/puppet_client.key
   server_foreman_facts: true
   server_puppet_basedir: /opt/puppetlabs/puppet/lib/ruby/vendor_ruby/puppet
-  server_puppetdb_host: 
-  server_puppetdb_port: 8081
-  server_puppetdb_swf: false
   server_parser: current
   server_environment_timeout: 
   server_jvm_java_bin: /usr/bin/java
   server_jvm_config: /etc/sysconfig/puppetserver
   server_jvm_min_heap_size: 2G
   server_jvm_max_heap_size: 2G
-  server_jvm_extra_args: -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger
+  server_jvm_extra_args:
+  - "-Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"
+  - "-XX:ReservedCodeCacheSize=512m"
   server_jvm_cli_args: 
   server_jruby_gem_home: /opt/puppetlabs/server/data/puppetserver/jruby-gems
-  server_max_active_instances: 2
+  server_max_active_instances: 4
   server_max_requests_per_instance: 0
   server_max_queued_requests: 0
   server_max_retry_delay: 1800
@@ -644,7 +595,8 @@ puppet:
   server_allow_header_cert_info: false
   server_web_idle_timeout: 30000
   server_puppetserver_jruby9k: false
-  server_puppetserver_metrics: true
+  server_puppetserver_metrics: false
+  server_puppetserver_profiler: false
   server_metrics_jmx_enable: true
   server_metrics_graphite_enable: false
   server_metrics_graphite_host: 127.0.0.1
@@ -654,5 +606,16 @@ puppet:
   server_metrics_allowed: 
   server_puppetserver_experimental: true
   server_puppetserver_trusted_agents: []
+  server_puppetserver_trusted_certificate_extensions: []
   server_compile_mode: 
-
+  server_acceptor_threads: 
+  server_selector_threads: 
+  server_ssl_acceptor_threads: 
+  server_ssl_selector_threads: 
+  server_max_threads: 
+  server_ca_allow_sans: false
+  server_ca_allow_auth_extensions: false
+  server_ca_enable_infra_crl: false
+  server_max_open_files: 
+  server_versioned_code_id: 
+  server_versioned_code_content:  

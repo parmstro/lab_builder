@@ -31,28 +31,27 @@
 #   max_connections: 600
 #   shared_buffers: 1024MB
 # Added by foreman-installer during upgrade, run the installer with --upgrade-mongo-storage to upgrade to WiredTiger.
-mongodb::server::storage_engine: 'mmapv1'
 
 # ABOVE THIS LINE IS PLAIN OLD SATELLITE-INSTALLER
 # BELOW added by lab_builder and is STRONGLY RECOMMENDED for all installations.
-# This is being added before satellite-installer is run, so will be handled from the outset.
+# These should now be defaults in Satellite 6.10.x
 
 # From: 7.1. Disabling Weak SSL 2.0 and SSL 3.0 Encryption
 # https://access.redhat.com/documentation/en-us/red_hat_satellite/6.6/html/administering_red_hat_satellite/disabling_weak_ssl_encryption
 
 # Foreman Proxy
-foreman_proxy::tls_disabled_versions: [ '1.1' ]
+#foreman_proxy::tls_disabled_versions: [ '1.1' ]
 
 # Dynflow
-foreman_proxy::plugin::dynflow::tls_disabled_versions: [ '1.1' ]
+#foreman_proxy::plugin::dynflow::tls_disabled_versions: [ '1.1' ]
 
 # Apache
-apache::mod::ssl::ssl_protocol: [ 'ALL' , '-SSLv3' , '-TLSv1' , '-TLSv1.1' , '+TLSv1.2' ]
+#apache::mod::ssl::ssl_protocol: [ 'ALL' , '-SSLv3' , '-TLSv1' , '-TLSv1.1' , '+TLSv1.2' ]
 
 # Tomcat / Candlepin
-candlepin::tls_versions: [ '1.2' ]
+#candlepin::tls_versions: [ '1.2' ]
 
 # QPID Dispatch
-foreman_proxy_content::qpid_router_ssl_protocols: [ 'TLSv1.2' ]
-foreman_proxy_content::qpid_router_ssl_ciphers: 'ALL:!aNULL:+HIGH:-SSLv3:!IDEA-CBC-SHA'
+#foreman_proxy_content::qpid_router_ssl_protocols: [ 'TLSv1.2' ]
+#foreman_proxy_content::qpid_router_ssl_ciphers: 'ALL:!aNULL:+HIGH:-SSLv3:!IDEA-CBC-SHA'
 
