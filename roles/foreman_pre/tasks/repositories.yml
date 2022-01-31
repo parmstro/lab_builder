@@ -1,20 +1,27 @@
 ---
 # Ensure that the proper repositories are enabled.
 # This playbook requires Satellite 6.4 
+- name: "Configure repositories for Satellite installation"
+  block:
+  
+  - name: "Disable all exiting repositories"
+    command: "subscription-manager repos --disable=*"
 
-- name: Disable all exiting repositories
-  command: subscription-manager repos --disable=*
+  - name: "Enable the required Satellite repositories"
+    command: "subscription-manager repos --enable={{ item.repoid }}"
+    loop: "{{ satellite_repos }}"
 
-- name: Enable the required Satellite repositories
-  command: "subscription-manager repos --enable={{ item.repoid }}"
-  loop: "{{ satellite_repos }}"
+  - name: "Ensure the release is not set"
+    command: "subscription-manager release --unset"
 
-- name: Ensure the release is not set
-  command: subscription-manager release --unset
+  - name: "Clean the yum metadata"
+    command: "yum clean all"
+    args:
+      warn: false
 
-- name: Clean the yum metadata
-  command: yum clean all
-  args:
-    warn: false
+  rescue:
+    
+  - name: "Configuration failed trying to reset RHEL 7 repo"
+    command: "subscription-manager repos --enable=rhel-7-server-rpms"
 
 
