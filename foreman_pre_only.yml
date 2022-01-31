@@ -1,0 +1,28 @@
+##############################################
+
+- name: "PHASE 1 - BEGIN bootstrap foreman_pre_only"
+  hosts: foreman
+  remote_user: root
+  gather_facts: yes
+  vars:
+    phase_name: test_foreman_pre
+ 
+  tasks:
+  
+  - name: "Phase initialization - {{ ansible_fqdn }} "
+    include_tasks: play_init.yml
+    tags:
+      - always 
+
+  - name: "Apply ONLY role of foreman_pre to existing foreman"
+    include_role:
+      name: foreman_pre
+    tags:
+      - always
+
+  - name: "END PHASE 1 - bootstrap complete"
+    file:
+      path: "{{ locks_dir }}/bootstrap_complete"
+      state: touch
+    tags:
+      - always
