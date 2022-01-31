@@ -11,7 +11,7 @@
     name: firewalld
     state: latest
 
-- name: Ensure that iptables is not installed
+- name: Ensure that iptables is not running and is masked
   systemd:
     name: iptables
     state: stopped
@@ -26,128 +26,9 @@
     enabled: yes
     masked: no
 
-- name: Configure Firewalld services and ports for Satellite - HTTP
+- name: Configure Firewalld services and ports for Satellite Services
   firewalld:
-    service: http
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - HTTPS
-  firewalld:
-    service: https
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - TFTP
-  firewalld:
-    service: tftp
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - DNS
-  firewalld:
-    service: dns
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - DHCP
-  firewalld:
-    service: dhcp
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - NTP
-  firewalld:
-    service: ntp
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - Docker Registry
-  firewalld:
-    service: docker-registry
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - ldap
-  firewalld:
-    service: ldap
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - ldaps
-  firewalld:
-    service: ldaps
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - VNC Server
-  firewalld:
-    service: vnc-server
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - Capsule qpid dispatch router
-  firewalld:
-    port: 5646/tcp
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - Katello Agent
-  firewalld:
-    port: 5647/tcp
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - Virtual Machine Consoles NoVNC
-  firewalld:
-    port: 5900-5930/tcp
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - Anaconda Kickstart
-  firewalld:
-    port: 8000/tcp
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - Puppet Master
-  firewalld:
-    port: 8140/tcp
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - Subscription Management
-  firewalld:
-    port: 8443/tcp
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - tcp Smart Proxy / SCAP reports
-  firewalld:
-    port: 9090/tcp
-    permanent: true
-    state: enabled
-    zone: "{{ sat_firewalld_zone }}"
-
-- name: Configure Firewalld services and ports for Satellite - udp Smart Proxy / SCAP reports
-  firewalld:
-    port: 9090/udp
+    service: RH-Satellite-6
     permanent: true
     state: enabled
     zone: "{{ sat_firewalld_zone }}"

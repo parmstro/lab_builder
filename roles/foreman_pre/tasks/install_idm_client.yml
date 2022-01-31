@@ -5,7 +5,6 @@
 - name: "Ensure that the RHEL repository is enabled"
   command: "subscription-manager repos --enable=rhel-7-server-rpms"
 
-# Changes to manage satellite-maintain package control
 - name: "Install the IdM client and associated tools"
   yum:
     name: "{{ pkgs | join(',') }}"
@@ -16,9 +15,6 @@
     - ipa-client
     - ipa-admintools
     - sssd
-
-# - name: "Use satellite-maintain to control IdM Client installation"
-#   command: "satellite-maintain packages install ipa-client"
 
 - name: "Unregister the host if it is already registered"
   command: "ipa-client-install --uninstall --unattended"
