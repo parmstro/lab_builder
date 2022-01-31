@@ -6,10 +6,10 @@
 # I am putting in bind-utils and screen
 # screen has been replaced by tmux in future releases of RHEL
 
-- name: Ensure RHEL 7 rpms repo is enabled
+- name: "Ensure RHEL 7 rpms repo is enabled"
   command: "subscription-manager repos --enable=rhel-7-server-rpms"
   
-- name: Install Lab Builder utilities
+- name: "Install Lab Builder utilities"
   yum:
     name: "{{ utils }}"
     state: latest
@@ -17,7 +17,7 @@
     utils:
       - pexpect
 
-- name: Install needed utilities.
+- name: "Install user specified utilities."
   yum:
     name: "{{ bootstrap_add_utils }}"
     state: latest
