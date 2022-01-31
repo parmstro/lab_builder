@@ -6,7 +6,8 @@
   gather_facts: yes
   vars:
     phase_name: test_foreman_pre
- 
+    epf_overwrite: false
+    
   tasks:
   
   - name: "Phase initialization - {{ ansible_fqdn }} "
