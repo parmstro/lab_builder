@@ -6,22 +6,22 @@
 # change the configuration to its final settings
 #
 
-- name: Install chrony for accurate time keeping
+- name: "Install chrony time keeping"
   yum:
-    name: chrony
+    name: "chrony"
     state: latest
 
-- name: Start the chronyd service with default settings
+- name: "Start the chronyd service with default settings"
   service:
-    name: chronyd
+    name: "chronyd"
     state: started
     enabled: true
 
 ## If you wish to override default time services, do it here
-#  otherwise, the IdM server will become the time server.
+## see sample chrony.j2 template
 
-- name: Install the SOS Report package while we are at it...
+- name: "Install the SOS Report package as required"
   yum:
-    name: sos
+    name: "sos"
     state: latest
 
